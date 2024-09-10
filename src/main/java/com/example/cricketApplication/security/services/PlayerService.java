@@ -1,10 +1,14 @@
 package com.example.cricketApplication.security.services;
 
 import com.example.cricketApplication.models.Player;
+import com.example.cricketApplication.models.PlayerStats;
+import com.example.cricketApplication.payload.response.PlayerResponse;
+import com.example.cricketApplication.payload.response.PlayerStatsResponse;
 import com.example.cricketApplication.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,6 +45,23 @@ public class PlayerService {
     public void deletePlayer(Long id) {
         Player player = getPlayerById(id);
         playerRepository.delete(player);
+    }
+
+
+    private List<PlayerResponse> RefactorResponse(List<Player> playerList) {
+        List<PlayerResponse> playerResponseList = new ArrayList<>();
+        for (Player player : playerList) {
+            PlayerResponse playerResponse = new PlayerResponse();
+            playerResponse.setName(player.getName());
+            playerResponse.setEmail(player.getEmail());
+            playerResponse.setContactNo(player.getContactNo());
+            playerResponse.setBattingStyle(player.getBattingStyle());
+            playerResponse.setBowlingStyle(player.getBowlingStyle());
+            playerResponse.setStatus(player.getStatus());
+
+            playerResponseList.add(playerResponse);
+        }
+        return playerResponseList;
     }
 }
 

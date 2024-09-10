@@ -6,6 +6,7 @@ import com.example.cricketApplication.payload.response.PlayerResponse;
 import com.example.cricketApplication.payload.response.PlayerStatsResponse;
 import com.example.cricketApplication.security.services.PlayerStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -96,6 +97,7 @@ public class PlayerStatsController {
         return new ResponseEntity<>(playerStatsResponses, HttpStatus.OK);
     }
 
+    @Cacheable("playerStatCache")
     @GetMapping("/summery")
     public ResponseEntity<PlayerStatsResponse> getOverallStatByMatchType(
             @RequestParam("playerId") Long playerId,
@@ -114,5 +116,14 @@ public class PlayerStatsController {
         playerStatsResponse.setInning(String.valueOf(playerStatsResponses.size()));
         return playerStatsResponse;
     }
+
+
+    @GetMapping("/match/player-stats")
+    public ResponseEntity<List<PlayerStatsResponse>> getPlayerStatsForMatch(
+            @RequestParam("matchId") Long matchId) {
+        List<PlayerStatsResponse> playerStatsResponses = playerStatsService.getPlayerStatsForMatch(matchId);
+        return new ResponseEntity<>(playerStatsResponses, HttpStatus.OK);
+    }
+
 
 }

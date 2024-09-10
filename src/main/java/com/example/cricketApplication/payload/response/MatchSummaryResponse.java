@@ -20,4 +20,7 @@ public class MatchSummaryResponse {
     private int oppositionOvers;
     private String result;
     private Long matchId; // Match ID for reference
+    private String venue;  // New field for venue
+    private String opposition;  // New field for opposition
+
 }

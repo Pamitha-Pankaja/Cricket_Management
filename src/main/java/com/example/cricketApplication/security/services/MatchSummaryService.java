@@ -5,6 +5,7 @@ import com.example.cricketApplication.exceptions.InvalidMatchSummaryException;
 import com.example.cricketApplication.exceptions.MatchNotFoundException;
 import com.example.cricketApplication.models.Match;
 import com.example.cricketApplication.models.MatchSummary;
+import com.example.cricketApplication.payload.response.MatchResponse;
 import com.example.cricketApplication.payload.response.MatchSummaryResponse;
 import com.example.cricketApplication.repository.MatchRepository;
 import com.example.cricketApplication.repository.MatchSummaryRepository;
@@ -61,8 +62,16 @@ public class MatchSummaryService {
             response.setOppositionWickets(matchSummary.getOppositionWickets());
             response.setOppositionOvers(matchSummary.getOppositionOvers());
             response.setResult(matchSummary.getResult());
-            response.setMatchId(matchSummary.getMatch().getMatchId()); // Get the match ID
+            response.setMatchId(matchSummary.getMatch().getMatchId());// Get the match ID
+
+            response.setMatchId(matchSummary.getMatch().getMatchId());  // Get the match ID
+            response.setVenue(matchSummary.getMatch().getVenue());  // Get the match venue
+            response.setOpposition(matchSummary.getMatch().getOpposition());  // Get the opposition team
             matchSummaryResponseList.add(response);
+
+
+
+
         }
         return matchSummaryResponseList;
     }

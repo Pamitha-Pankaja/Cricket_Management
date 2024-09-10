@@ -86,6 +86,21 @@ public class PlayerStatsService {
 
 
 
+    public List<PlayerStatsResponse> getPlayerStatsForMatch(Long matchId) {
+        // Fetch the match by matchId
+        Match match = matchRepository.findById(matchId)
+                .orElseThrow(() -> new RuntimeException("Match not found with ID: " + matchId));
+
+        // Fetch all PlayerStats associated with the match
+        List<PlayerStats> playerStatsList = playerStatsRepository.findByMatch(match);
+
+        // Use RefactorResponse to convert the list of PlayerStats to PlayerStatsResponse
+        return RefactorResponse(playerStatsList);
+    }
+
+
+
+
 
 
     private List<PlayerStatsResponse> RefactorResponse(List<PlayerStats> playerStatsList) {
@@ -105,12 +120,20 @@ public class PlayerStatsService {
             playerStatsResponse.setWickets(playerStats.getWickets());
             playerStatsResponse.setRunsConceded(playerStats.getRunsConceded());
 
+            PlayerResponse playerResponse = new PlayerResponse();
+            playerResponse.setPlayerId(playerStats.getPlayer().getPlayerId());
+            playerResponse.setName(playerStats.getPlayer().getName());
+
+            playerStatsResponse.setPlayer(playerResponse);
+
 //            MatchResponse matchResponse = new MatchResponse();
 //            matchResponse.setMatchId(playerStats.getMatch().getMatchId());
 //
 //
 //            PlayerResponse playerResponse = new PlayerResponse();
 //            playerResponse.setPlayerId(playerStats.getPlayer().getPlayerId());
+
+
 
             playerStatsResponseList.add(playerStatsResponse);
 

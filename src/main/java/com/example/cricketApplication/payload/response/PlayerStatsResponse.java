@@ -18,4 +18,10 @@ public class PlayerStatsResponse {
     private int balls;
     private int overs;
     private int runsConceded;
+
+    // Add player details
+    private PlayerResponse player;
+
+    // Add match details
+    private MatchResponse match;
 }

@@ -17,4 +17,5 @@ public interface PlayerStatsRepository extends JpaRepository<PlayerStats, Long> 
 
     List<PlayerStats> findByPlayerAndMatch(Player player, Match match);
     List<PlayerStats> findByPlayerAndMatch_Type(Player player, String matchType);
+    List<PlayerStats> findByMatch(Match match);
 }
