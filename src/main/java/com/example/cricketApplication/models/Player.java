@@ -39,6 +39,7 @@ public class Player {
 
     private String playerRole;
 
+
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PlayerStats> playerStats = new HashSet<>();
 
@@ -55,6 +56,9 @@ public class Player {
 
     @ManyToMany(mappedBy = "players")
     private Set<Team> teams = new HashSet<>();
+
+    @OneToOne(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Membership membership;
 
     // Getters and setters
 }

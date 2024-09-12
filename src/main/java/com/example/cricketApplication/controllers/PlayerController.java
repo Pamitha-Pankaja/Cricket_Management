@@ -2,6 +2,7 @@ package com.example.cricketApplication.controllers;
 
 import com.example.cricketApplication.models.Player;
 import com.example.cricketApplication.payload.response.MessageResponse;
+import com.example.cricketApplication.payload.response.PlayerResponse;
 import com.example.cricketApplication.security.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/admin/players")
 public class PlayerController {
@@ -20,30 +22,34 @@ public class PlayerController {
     @Autowired
     private PlayerService playerService;
 
-
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
         Player savedPlayer = playerService.savePlayer(player);
-        return ResponseEntity.ok(savedPlayer);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedPlayer);
     }
-
 
     @GetMapping("/{id}")
-    public ResponseEntity<Player> getPlayerById(@PathVariable Long id) {
-        Player player = playerService.getPlayerById(id);
-        return ResponseEntity.ok(player);
+    public ResponseEntity<PlayerResponse> getPlayerById(@PathVariable Long id) {
+        PlayerResponse playerResponse = playerService.getPlayerResponseById(id);
+        return ResponseEntity.ok(playerResponse);
     }
 
+    //    @GetMapping("/all")
+//    public ResponseEntity<List<Player>> getAllPlayers() {
+//        List<Player> players = playerService.getAllPlayers();
+//        return ResponseEntity.ok(players);
+//    }
     @GetMapping("/all")
-    public ResponseEntity<List<Player>> getAllPlayers() {
-        List<Player> players = playerService.getAllPlayers();
+//@PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<PlayerResponse>> getAllPlayers() {
+        List<PlayerResponse> players = playerService.getAllPlayerResponses();
         return ResponseEntity.ok(players);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Player> updatePlayer(@PathVariable Long id, @RequestBody Player playerDetails) {
-        Player updatedPlayer = playerService.updatePlayer(id, playerDetails);
+    public ResponseEntity<PlayerResponse> updatePlayer(@PathVariable Long id, @RequestBody Player playerDetails) {
+        PlayerResponse updatedPlayer = playerService.updatePlayer(id, playerDetails);
         return ResponseEntity.ok(updatedPlayer);
     }
 
@@ -53,3 +59,5 @@ public class PlayerController {
         return ResponseEntity.noContent().build();
     }
 }
+
+

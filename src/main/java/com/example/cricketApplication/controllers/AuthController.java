@@ -98,8 +98,16 @@ public class AuthController {
         User user = new User(
                 signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword())
-        );
+                encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getName(),
+                signUpRequest.getContactNo(),
+                signUpRequest.getBattingStyle(),
+                signUpRequest.getBowlingStyle(),
+                signUpRequest.getStatus(),
+                signUpRequest.getImage(),
+                signUpRequest.getPlayerRole()
+                );
+        //System.out.println(user.getName());
 
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -175,7 +183,13 @@ public class AuthController {
         if (roles.stream().anyMatch(role -> role.getName().equals(ERole.ROLE_PLAYER))) {
             Player player = new Player();
             player.setEmail(savedUser.getEmail());
-            player.setName(savedUser.getUsername());
+            player.setName(savedUser.getName());
+            player.setBattingStyle(savedUser.getBattingStyle());
+            player.setBowlingStyle(savedUser.getBowlingStyle());
+            player.setContactNo(savedUser.getContactNo());
+            player.setImage(savedUser.getImage());
+            player.setStatus(savedUser.getStatus());
+            player.setPlayerRole(savedUser.getPlayerRole());
             player.setRole(roleRepository.findByName(ERole.ROLE_PLAYER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found.")));
             player.setUser(savedUser);
