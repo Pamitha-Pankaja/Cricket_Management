@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,5 +24,6 @@ public class MatchSummaryResponse {
     private Long matchId; // Match ID for reference
     private String venue;  // New field for venue
     private String opposition;  // New field for opposition
+    private Date date;
 
 }

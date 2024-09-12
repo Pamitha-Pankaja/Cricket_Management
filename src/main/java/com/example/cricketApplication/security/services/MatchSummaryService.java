@@ -66,6 +66,7 @@ public class MatchSummaryService {
 
             response.setMatchId(matchSummary.getMatch().getMatchId());  // Get the match ID
             response.setVenue(matchSummary.getMatch().getVenue());  // Get the match venue
+            response.setDate(matchSummary.getMatch().getDate());
             response.setOpposition(matchSummary.getMatch().getOpposition());  // Get the opposition team
             matchSummaryResponseList.add(response);
 
