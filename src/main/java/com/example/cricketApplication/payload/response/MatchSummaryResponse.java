@@ -25,5 +25,6 @@ public class MatchSummaryResponse {
     private String venue;  // New field for venue
     private String opposition;  // New field for opposition
     private Date date;
+    private String type;
 
 }
