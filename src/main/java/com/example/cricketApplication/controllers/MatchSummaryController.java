@@ -44,11 +44,18 @@ public class MatchSummaryController {
         }
     }
 
+//    @GetMapping("/all")
+//    public ResponseEntity<List<MatchSummary>> getAllMatchSummaries() {
+//        List<MatchSummary> matchSummaries = matchSummaryService.getAllMatchSummaries();
+//        return ResponseEntity.ok(matchSummaries);
+//    }
+
     @GetMapping("/all")
-    public ResponseEntity<List<MatchSummary>> getAllMatchSummaries() {
-        List<MatchSummary> matchSummaries = matchSummaryService.getAllMatchSummaries();
-        return ResponseEntity.ok(matchSummaries);
+    public ResponseEntity<List<MatchSummaryResponse>> getAllMatchSummaries() {
+        List<MatchSummaryResponse> matchSummaryResponses = matchSummaryService.getAllMatchSummaries();
+        return ResponseEntity.ok(matchSummaryResponses);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMatchSummaryById(@PathVariable Long id) {

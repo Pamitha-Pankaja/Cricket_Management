@@ -1,11 +1,6 @@
 package com.example.cricketApplication.security.services;
 
-import com.example.cricketApplication.controllers.MatchSummaryController;
-import com.example.cricketApplication.exceptions.InvalidMatchSummaryException;
-import com.example.cricketApplication.exceptions.MatchNotFoundException;
-import com.example.cricketApplication.models.Match;
 import com.example.cricketApplication.models.MatchSummary;
-import com.example.cricketApplication.payload.response.MatchResponse;
 import com.example.cricketApplication.payload.response.MatchSummaryResponse;
 import com.example.cricketApplication.repository.MatchRepository;
 import com.example.cricketApplication.repository.MatchSummaryRepository;
@@ -35,9 +30,14 @@ public class MatchSummaryService {
         return matchSummaryRepository.findById(id);
     }
 
-    public List<MatchSummary> getAllMatchSummaries() {
-        return matchSummaryRepository.findAll();
-    }
+//    public List<MatchSummary> getAllMatchSummaries() {
+//        return matchSummaryRepository.findAll();
+//    }
+public List<MatchSummaryResponse> getAllMatchSummaries() {
+    List<MatchSummary> matchSummaries = matchSummaryRepository.findAll();
+    return RefactorResponse(matchSummaries);  // Convert to MatchSummaryResponse list
+}
+
 
     public void deleteMatchSummaryById(Long id) {
         matchSummaryRepository.deleteById(id);
@@ -69,6 +69,7 @@ public class MatchSummaryService {
             response.setDate(matchSummary.getMatch().getDate());
             response.setType(matchSummary.getMatch().getType());
             response.setOpposition(matchSummary.getMatch().getOpposition());  // Get the opposition team
+
             matchSummaryResponseList.add(response);
 
 
