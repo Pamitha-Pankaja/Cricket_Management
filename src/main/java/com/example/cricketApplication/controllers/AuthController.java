@@ -7,8 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.example.cricketApplication.models.*;
-import com.example.cricketApplication.repository.CoachRepository;
-import com.example.cricketApplication.repository.PlayerRepository;
+import com.example.cricketApplication.repository.*;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,6 @@ import com.example.cricketApplication.payload.request.LoginRequest;
 import com.example.cricketApplication.payload.request.SignupRequest;
 import com.example.cricketApplication.payload.response.JwtResponse;
 import com.example.cricketApplication.payload.response.MessageResponse;
-import com.example.cricketApplication.repository.RoleRepository;
-import com.example.cricketApplication.repository.UserRepository;
 import com.example.cricketApplication.security.jwt.JwtUtils;
 import com.example.cricketApplication.security.services.UserDetailsImpl;
 
@@ -58,6 +55,9 @@ public class AuthController {
     @Autowired
     PlayerRepository playerRepository;
 
+    @Autowired
+    MembershipRepository membershipRepository;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -80,7 +80,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/signup")
+    @PostMapping("/signupPlayer")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
@@ -95,10 +95,7 @@ public class AuthController {
         }
 
         // Create new user's account
-        User user = new User(
-                signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()),
+        Player user = new Player(
                 signUpRequest.getName(),
                 signUpRequest.getContactNo(),
                 signUpRequest.getBattingStyle(),
@@ -165,37 +162,46 @@ public class AuthController {
                 }
             });
         }
-
-        user.setRoles(roles);
-        User savedUser = userRepository.save(user); // Save the User entity first
+        User newUser = new User();
+        newUser.setRoles(roles);
+        newUser.setUsername(signUpRequest.getUsername());
+        newUser.setEmail(signUpRequest.getEmail());
+        newUser.setPassword(
+                encoder.encode(signUpRequest.getPassword()));
+        user.setUser(newUser);
+        user.setMembership(signUpRequest.getMembership());
+        membershipRepository.save(signUpRequest.getMembership());
+//        user.setMembership(signUpRequest.getMembership());
+        userRepository.save(newUser);
+        playerRepository.save(user); // Save the User entity first
 
         // If the user has the coach role, save them to the Coach table
-        if (roles.stream().anyMatch(role -> role.getName().equals(ERole.ROLE_COACH))) {
-            Coach coach = new Coach();
-            coach.setEmail(savedUser.getEmail());
-            coach.setName(savedUser.getUsername());
-            coach.setRole(roleRepository.findByName(ERole.ROLE_COACH)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found.")));
-            coach.setUser(savedUser);
-            coachRepository.save(coach);
-        }
+//        if (roles.stream().anyMatch(role -> role.getName().equals(ERole.ROLE_COACH))) {
+//            Coach coach = new Coach();
+//            coach.setEmail(savedUser.getEmail());
+//            coach.setName(savedUser.getUsername());
+//            coach.setRole(roleRepository.findByName(ERole.ROLE_COACH)
+//                    .orElseThrow(() -> new RuntimeException("Error: Role is not found.")));
+//            coach.setUser(savedUser);
+//            coachRepository.save(coach);
+//        }
 
         // If the user has the player role, save them to the Player table
-        if (roles.stream().anyMatch(role -> role.getName().equals(ERole.ROLE_PLAYER))) {
-            Player player = new Player();
-            player.setEmail(savedUser.getEmail());
-            player.setName(savedUser.getName());
-            player.setBattingStyle(savedUser.getBattingStyle());
-            player.setBowlingStyle(savedUser.getBowlingStyle());
-            player.setContactNo(savedUser.getContactNo());
-            player.setImage(savedUser.getImage());
-            player.setStatus(savedUser.getStatus());
-            player.setPlayerRole(savedUser.getPlayerRole());
-            player.setRole(roleRepository.findByName(ERole.ROLE_PLAYER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found.")));
-            player.setUser(savedUser);
-            playerRepository.save(player);
-        }
+//        if (roles.stream().anyMatch(role -> role.getName().equals(ERole.ROLE_PLAYER))) {
+//            Player player = new Player();
+//            player.setEmail(savedUser.getEmail());
+//            player.setName(savedUser.getName());
+//            player.setBattingStyle(savedUser.getBattingStyle());
+//            player.setBowlingStyle(savedUser.getBowlingStyle());
+//            player.setContactNo(savedUser.getContactNo());
+//            player.setImage(savedUser.getImage());
+//            player.setStatus(savedUser.getStatus());
+//            player.setPlayerRole(savedUser.getPlayerRole());
+//            player.setRole(roleRepository.findByName(ERole.ROLE_PLAYER)
+//                    .orElseThrow(() -> new RuntimeException("Error: Role is not found.")));
+//            player.setUser(savedUser);
+//            playerRepository.save(player);
+//        }
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

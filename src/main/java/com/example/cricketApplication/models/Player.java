@@ -19,6 +19,11 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long playerId;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+
     @NotBlank
     private String name;
 
@@ -50,16 +55,23 @@ public class Player {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @ManyToMany(mappedBy = "players")
     private Set<Team> teams = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn( name = "membership_id",referencedColumnName = "id",nullable = false)
+    @JoinColumn( name = "membership_id",referencedColumnName = "id",nullable = true)
     private Membership membership;
+
+    public Player(String name, String contactNo, String battingStyle, String bowlingStyle, String status, String image,String playerRole) {
+    this.name = name;
+    this.contactNo = contactNo;
+    this.battingStyle = battingStyle;
+    this.bowlingStyle = bowlingStyle;
+    this.status = status;
+    this.image = image;
+    this.playerRole = playerRole;
+  }
+
 
     // Getters and setters
 }
