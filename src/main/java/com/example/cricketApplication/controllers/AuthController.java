@@ -106,6 +106,7 @@ public class AuthController {
                 signUpRequest.getStatus(),
                 signUpRequest.getImage(),
                 signUpRequest.getPlayerRole()
+
                 );
         //System.out.println(user.getName());
 

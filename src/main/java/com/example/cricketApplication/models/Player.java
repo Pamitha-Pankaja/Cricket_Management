@@ -57,7 +57,8 @@ public class Player {
     @ManyToMany(mappedBy = "players")
     private Set<Team> teams = new HashSet<>();
 
-    @OneToOne(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn( name = "membership_id",referencedColumnName = "id",nullable = false)
     private Membership membership;
 
     // Getters and setters
