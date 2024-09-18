@@ -2,6 +2,7 @@ package com.example.cricketApplication.models;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -42,6 +43,11 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
+
+  @OneToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(  name = "user_privileges",
+          joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "privileges_id"))
+  private Set<Privilege> privileges = new HashSet<>();
 
   //@NotBlank
 //  private String name;

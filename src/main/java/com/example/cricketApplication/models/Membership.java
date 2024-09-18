@@ -39,11 +39,11 @@ public class Membership {
 //    @Transient
 //    // This field is not stored in the database, it's calculated on the fly.
 //    private boolean isActive;
-//
-//    public boolean getIsActive() {
-//        Date now = new Date();
-//        return now.after(startDate) && now.before(endDate);
-//    }
+
+    public boolean getIsActive() {
+        Date now = new Date();
+        return now.after(startDate) && now.before(endDate);
+    }
 
     // Getters and setters
 }
