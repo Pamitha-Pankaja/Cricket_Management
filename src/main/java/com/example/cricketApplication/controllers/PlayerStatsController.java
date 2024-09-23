@@ -127,4 +127,12 @@ public class PlayerStatsController {
     }
 
 
+    // New endpoint to get all player stats by player ID
+    @GetMapping("/all-stats/{playerId}")
+    public ResponseEntity<List<PlayerStatsResponse>> getAllStatsByPlayerId(@PathVariable Long playerId) {
+        List<PlayerStatsResponse> playerStatsResponses = playerStatsService.getAllStatsByPlayerId(playerId);
+        return ResponseEntity.ok(playerStatsResponses);
+    }
+
+
 }

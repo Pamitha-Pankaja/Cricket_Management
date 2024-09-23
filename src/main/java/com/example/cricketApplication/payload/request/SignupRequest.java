@@ -1,6 +1,7 @@
 package com.example.cricketApplication.payload.request;
 
 import com.example.cricketApplication.models.Membership;
+import com.example.cricketApplication.models.Role;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
@@ -50,6 +51,8 @@ public class SignupRequest {
   private String playerRole;
 
   private Membership membership;
+
+
 
 
 

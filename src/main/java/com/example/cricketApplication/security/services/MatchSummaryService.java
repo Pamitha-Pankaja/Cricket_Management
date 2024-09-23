@@ -1,6 +1,7 @@
 package com.example.cricketApplication.security.services;
 
 import com.example.cricketApplication.models.MatchSummary;
+import com.example.cricketApplication.models.Team;
 import com.example.cricketApplication.payload.response.MatchSummaryResponse;
 import com.example.cricketApplication.repository.MatchRepository;
 import com.example.cricketApplication.repository.MatchSummaryRepository;
@@ -69,6 +70,11 @@ public List<MatchSummaryResponse> getAllMatchSummaries() {
             response.setDate(matchSummary.getMatch().getDate());
             response.setType(matchSummary.getMatch().getType());
             response.setOpposition(matchSummary.getMatch().getOpposition());  // Get the opposition team
+
+            // Fetch and set the "under" age group from the team
+            response.setUnder(matchSummary.getMatch().getTeam().getUnder());  // Get the Under age group
+
+
 
             matchSummaryResponseList.add(response);
 

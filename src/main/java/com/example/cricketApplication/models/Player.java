@@ -62,7 +62,7 @@ public class Player {
     @JoinColumn( name = "membership_id",referencedColumnName = "id",nullable = true)
     private Membership membership;
 
-    public Player(String name, String contactNo, String battingStyle, String bowlingStyle, String status, String image,String playerRole,Membership membership) {
+    public Player(String name, String contactNo, String battingStyle, String bowlingStyle, String status, String image,String playerRole,Membership membership,String email,Date dateOfBirth,Role role) {
     this.name = name;
     this.contactNo = contactNo;
     this.battingStyle = battingStyle;
@@ -71,6 +71,9 @@ public class Player {
     this.image = image;
     this.playerRole = playerRole;
     this.membership = membership;
+    this.email = email;
+    this.dateOfBirth=dateOfBirth;
+    this.role=role;
   }
 
 

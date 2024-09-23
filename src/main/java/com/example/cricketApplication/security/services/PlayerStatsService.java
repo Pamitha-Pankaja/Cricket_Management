@@ -4,6 +4,7 @@ import com.example.cricketApplication.models.Match;
 import com.example.cricketApplication.models.Player;
 import com.example.cricketApplication.models.PlayerStats;
 import com.example.cricketApplication.payload.response.MatchResponse;
+import com.example.cricketApplication.payload.response.MatchResponseWithStat;
 import com.example.cricketApplication.payload.response.PlayerResponse;
 import com.example.cricketApplication.payload.response.PlayerStatsResponse;
 import com.example.cricketApplication.repository.MatchRepository;
@@ -99,6 +100,21 @@ public class PlayerStatsService {
     }
 
 
+    // New method to get all player stats by player ID
+    public List<PlayerStatsResponse> getAllStatsByPlayerId(Long playerId) {
+        // Find the player by ID
+        Player player = playerRepository.findById(playerId)
+                .orElseThrow(() -> new RuntimeException("Player not found with ID: " + playerId));
+
+        // Fetch all PlayerStats for the player
+        List<PlayerStats> playerStatsList = playerStatsRepository.findByPlayer_PlayerId(playerId);
+
+        // Use the RefactorResponse method to convert the list of PlayerStats to PlayerStatsResponse
+        return RefactorResponse(playerStatsList);
+    }
+
+
+
 
 
 
@@ -126,13 +142,16 @@ public class PlayerStatsService {
 
             playerStatsResponse.setPlayer(playerResponse);
 
+            MatchResponseWithStat matchResponseWithStat = new MatchResponseWithStat();
+            if (playerStats.getMatch() != null) {
+                matchResponseWithStat.setMatchId(String.valueOf(playerStats.getMatch().getMatchId()));
+                matchResponseWithStat.setType(playerStats.getMatch().getType());
+            }
+            playerStatsResponse.setMatch(matchResponseWithStat);
+
 //            MatchResponse matchResponse = new MatchResponse();
 //            matchResponse.setMatchId(playerStats.getMatch().getMatchId());
-//
-//
-//            PlayerResponse playerResponse = new PlayerResponse();
-//            playerResponse.setPlayerId(playerStats.getPlayer().getPlayerId());
-
+//            matchResponse.setType(playerStats.getMatch().getType());
 
 
             playerStatsResponseList.add(playerStatsResponse);

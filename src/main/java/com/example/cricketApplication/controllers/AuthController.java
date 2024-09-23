@@ -301,6 +301,69 @@ public class AuthController {
 //        return ResponseEntity.ok(new MessageResponse("Player registered successfully!"));
 //    }
 
+//    @PostMapping("/signupPlayer")
+//    public ResponseEntity<?> registerPlayer(@Valid @RequestBody SignupRequest signUpRequest) {
+//        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body(new MessageResponse("Error: Username is already taken!"));
+//        }
+//
+//        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body(new MessageResponse("Error: Email is already in use!"));
+//        }
+//
+//        // Save membership entity first
+//        Membership membership = signUpRequest.getMembership();
+//        if (membership != null) {
+//            membership = membershipRepository.save(membership); // Save membership
+//        }
+//
+//        // Create new player's account
+//        Player player = new Player(
+//                signUpRequest.getName(),
+//                signUpRequest.getContactNo(),
+//                signUpRequest.getBattingStyle(),
+//                signUpRequest.getBowlingStyle(),
+//                signUpRequest.getStatus(),
+//                signUpRequest.getImage(),
+//                signUpRequest.getPlayerRole(),
+//                membership,
+//                signUpRequest.getEmail(),
+//                signUpRequest.getDateOfBirth(),
+//                // Set the saved membership
+//        );
+//
+//        // Create and set user entity
+//        User newUser = new User();
+//        newUser.setUsername(signUpRequest.getUsername());
+//        newUser.setEmail(signUpRequest.getEmail());
+//        newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
+//
+//        // Set default role for player
+//        Role playerRole = roleRepository.findByName(ERole.ROLE_PLAYER)
+//                .orElseGet(() -> {
+//                    Role newRole = new Role(ERole.ROLE_PLAYER);
+//                    roleRepository.save(newRole);
+//                    return newRole;
+//                });
+//        Set<Role> roles = new HashSet<>();
+//        roles.add(playerRole);
+//        newUser.setRoles(roles);
+//
+//        // Link the player to the user entity
+//        player.setUser(newUser);
+//
+//        // Save the user and player entities
+//        userRepository.save(newUser);
+//        playerRepository.save(player);
+//
+//        return ResponseEntity.ok(new MessageResponse("Player registered successfully!"));
+//    }
+
+
     @PostMapping("/signupPlayer")
     public ResponseEntity<?> registerPlayer(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -321,6 +384,24 @@ public class AuthController {
             membership = membershipRepository.save(membership); // Save membership
         }
 
+        // Set default role for player
+        Role playerRole = roleRepository.findByName(ERole.ROLE_PLAYER)
+                .orElseGet(() -> {
+                    Role newRole = new Role(ERole.ROLE_PLAYER);
+                    roleRepository.save(newRole);
+                    return newRole;
+                });
+
+        // Create and set user entity
+        User newUser = new User();
+        newUser.setUsername(signUpRequest.getUsername());
+        newUser.setEmail(signUpRequest.getEmail());
+        newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(playerRole);
+        newUser.setRoles(roles);
+
         // Create new player's account
         Player player = new Player(
                 signUpRequest.getName(),
@@ -330,25 +411,11 @@ public class AuthController {
                 signUpRequest.getStatus(),
                 signUpRequest.getImage(),
                 signUpRequest.getPlayerRole(),
-                membership // Set the saved membership
+                membership,
+                signUpRequest.getEmail(),
+                signUpRequest.getDateOfBirth(),
+                playerRole // Set the role for the player
         );
-
-        // Create and set user entity
-        User newUser = new User();
-        newUser.setUsername(signUpRequest.getUsername());
-        newUser.setEmail(signUpRequest.getEmail());
-        newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
-
-        // Set default role for player
-        Role playerRole = roleRepository.findByName(ERole.ROLE_PLAYER)
-                .orElseGet(() -> {
-                    Role newRole = new Role(ERole.ROLE_PLAYER);
-                    roleRepository.save(newRole);
-                    return newRole;
-                });
-        Set<Role> roles = new HashSet<>();
-        roles.add(playerRole);
-        newUser.setRoles(roles);
 
         // Link the player to the user entity
         player.setUser(newUser);
@@ -359,6 +426,7 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("Player registered successfully!"));
     }
+
 
 
 
