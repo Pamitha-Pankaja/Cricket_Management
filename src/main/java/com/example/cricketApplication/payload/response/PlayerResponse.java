@@ -1,5 +1,6 @@
 package com.example.cricketApplication.payload.response;
 
+import com.example.cricketApplication.models.Membership;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
@@ -23,4 +24,8 @@ public class PlayerResponse {
     private String status;
     private String image;
     private String playerRole;
+    private String startDate;
+    private String endDate;
+    private String password;
+    private String username;
 }

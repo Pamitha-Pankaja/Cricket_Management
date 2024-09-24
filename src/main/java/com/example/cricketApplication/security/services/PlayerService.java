@@ -86,6 +86,10 @@ public class PlayerService {
         playerResponse.setStatus(player.getStatus());
         playerResponse.setImage(player.getImage());
         playerResponse.setPlayerRole(player.getPlayerRole());
+        playerResponse.setStartDate(String.valueOf(player.getMembership().getStartDate()));
+        playerResponse.setEndDate(String.valueOf(player.getMembership().getEndDate()));
+        playerResponse.setPassword(player.getUser().getPassword());
+        playerResponse.setUsername(player.getUser().getUsername());
 
         return playerResponse;
     }
