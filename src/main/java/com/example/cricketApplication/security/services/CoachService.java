@@ -1,10 +1,14 @@
 package com.example.cricketApplication.security.services;
 
 import com.example.cricketApplication.models.Coach;
+import com.example.cricketApplication.models.Team;
+import com.example.cricketApplication.payload.response.CoachResponse;
+import com.example.cricketApplication.payload.response.TeamResponse;
 import com.example.cricketApplication.repository.CoachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +26,16 @@ public class CoachService {
         return coachRepository.findById(coachId);
     }
 
-    public List<Coach> getAllCoaches() {
-        return coachRepository.findAll();
+//    public List<Coach> getAllCoaches() {
+//        return coachRepository.findAll();
+//    }
+
+    public List<CoachResponse> getAllCoaches() {
+        List<Coach> coach = coachRepository.findAll();
+        return RefactorResponse(coach);  // Convert to MatchResponse list
     }
+
+
 
     public Optional<Coach> getCoachByUserId(Long userId) {
         return coachRepository.findByUser_Id(userId);
@@ -36,6 +47,23 @@ public class CoachService {
 
     public void deleteCoachById(Long coachId) {
         coachRepository.deleteById(coachId);
+    }
+
+    private List<CoachResponse> RefactorResponse(List<Coach> team) {
+        List<CoachResponse> coachResponses = new ArrayList<>();
+        for (Coach coach : team) {
+            CoachResponse coachResponse = new CoachResponse();
+            coachResponse.setCoachId(coach.getCoachId());
+            coachResponse.setName(coach.getName());
+            coachResponse.setEmail(coach.getEmail());
+            coachResponse.setAddress(coach.getAddress());
+            coachResponse.setDescription(coach.getDescription());
+            coachResponse.setContactNo(coach.getContactNo());
+            coachResponse.setPractiseSessions(coach.getPractiseSessions());
+            coachResponses.add(coachResponse);
+        }
+        return coachResponses;
+
     }
 }
 
