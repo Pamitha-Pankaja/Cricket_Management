@@ -92,6 +92,7 @@ public class MatchService {
             matchResponse.setVenue(match.getVenue());
             matchResponse.setMatchCaptain(match.getMatchCaptain());
             matchResponse.setTime(match.getTime());
+            matchResponse.setType(match.getType());
 
             matchResponseList.add(matchResponse);
 

@@ -1,6 +1,7 @@
 package com.example.cricketApplication.controllers;
 
 import com.example.cricketApplication.models.Team;
+import com.example.cricketApplication.payload.response.TeamResponse;
 import com.example.cricketApplication.security.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,8 @@ public class TeamController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Team>> getAllTeams() {
-        List<Team> teams = teamService.getAllTeams();
+    public ResponseEntity<List<TeamResponse>> getAllTeams() {
+        List<TeamResponse> teams = teamService.getAllTeams();
         return ResponseEntity.ok(teams);
     }
 
