@@ -445,13 +445,7 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
 
-        // Create new user's account
-        Coach coach = new Coach();
-        coach.setName(signUpRequest.getName());
-        coach.setContactNo(signUpRequest.getContactNo());
-        coach.setEmail(signUpRequest.getEmail());
-        coach.setImage(signUpRequest.getImage());
-        coach.setDescription("Coach Description"); // Set other coach-specific fields as needed
+
 
         // Create and set user entity
         User newUser = new User();
@@ -469,6 +463,17 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
         roles.add(coachRole);
         newUser.setRoles(roles);
+
+        // Create new user's account
+        Coach coach = new Coach();
+        coach.setName(signUpRequest.getName());
+        coach.setContactNo(signUpRequest.getContactNo());
+        coach.setEmail(signUpRequest.getEmail());
+        coach.setImage(signUpRequest.getImage());
+        coach.setDateOfBirth(signUpRequest.getDateOfBirth());
+        coach.setAddress(signUpRequest.getAddress());
+        coach.setDescription(signUpRequest.getDescription());
+        coach.setRole(coachRole);// Set other coach-specific fields as needed
 
         // Link the coach to the user entity
         coach.setUser(newUser);

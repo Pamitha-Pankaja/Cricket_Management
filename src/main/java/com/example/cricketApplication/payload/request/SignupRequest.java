@@ -51,6 +51,8 @@ public class SignupRequest {
   private String playerRole;
 
   private Membership membership;
+  private String address;
+  private String description;
 
 
 
