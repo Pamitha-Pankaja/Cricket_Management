@@ -40,4 +40,21 @@ public class TeamController {
         teamService.deleteTeamById(id);
         return ResponseEntity.ok("Team deleted successfully!");
     }
+
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Team> updateTeam(@PathVariable Long id, @RequestBody Team teamDetails) {
+//        return teamService.updateTeam(id, teamDetails)
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
+//    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamResponse> updateTeam(@PathVariable Long id, @RequestBody Team teamDetails) {
+        return teamService.updateTeam(id, teamDetails)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
+
 }

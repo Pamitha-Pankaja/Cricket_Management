@@ -41,6 +41,37 @@ public class TeamService {
     }
 
 
+//    public Optional<Team> updateTeam(Long id, Team teamDetails) {
+//        return teamRepository.findById(id).map(existingTeam -> {
+//            // Update team details
+//            existingTeam.setUnder(teamDetails.getUnder());
+//            existingTeam.setYear(teamDetails.getYear());
+//            existingTeam.setCaptain(teamDetails.getCaptain());
+//            existingTeam.setPlayers(teamDetails.getPlayers());
+//
+//            // Save updated team
+//            return teamRepository.save(existingTeam);
+//        });
+//    }
+
+    public Optional<TeamResponse> updateTeam(Long id, Team teamDetails) {
+        return teamRepository.findById(id).map(existingTeam -> {
+            // Update team details
+            existingTeam.setUnder(teamDetails.getUnder());
+            existingTeam.setYear(teamDetails.getYear());
+            existingTeam.setCaptain(teamDetails.getCaptain());
+            existingTeam.setPlayers(teamDetails.getPlayers());
+
+            // Save updated team
+            Team updatedTeam = teamRepository.save(existingTeam);
+
+            // Convert updated team to TeamResponse
+            return RefactorResponse(updatedTeam);
+        });
+    }
+
+
+
     private List<TeamResponse> RefactorResponse(List<Team> team) {
         List<TeamResponse> teamResponses = new ArrayList<>();
         for (Team team1 : team) {
@@ -54,6 +85,16 @@ public class TeamService {
         }
         return teamResponses;
     }
+
+    private TeamResponse RefactorResponse(Team team) {
+        TeamResponse teamResponse = new TeamResponse();
+        teamResponse.setTeamId(team.getTeamId());
+        teamResponse.setYear(team.getYear());
+        teamResponse.setCaptain(team.getCaptain());
+        teamResponse.setUnder(team.getUnder());
+        return teamResponse;
+    }
+
 
 
 

@@ -48,8 +48,8 @@ public class Player {
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PlayerStats> playerStats = new HashSet<>();
 
-    @ManyToMany(mappedBy = "players")
-    private Set<PractiseSession> practiseSessions = new HashSet<>();
+//    @ManyToMany(mappedBy = "players")
+//    private Set<PractiseSession> practiseSessions = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
