@@ -1,6 +1,7 @@
 package com.example.cricketApplication.controllers;
 
 import com.example.cricketApplication.models.Team;
+import com.example.cricketApplication.payload.response.PlayerResponse;
 import com.example.cricketApplication.payload.response.TeamResponse;
 import com.example.cricketApplication.security.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,13 @@ public class TeamController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/{id}/players")
+    public ResponseEntity<List<PlayerResponse>> getPlayersByTeamId(@PathVariable Long id) {
+        List<PlayerResponse> players = teamService.getPlayersByTeamId(id);
+        return ResponseEntity.ok(players);
+    }
+
 
 
 

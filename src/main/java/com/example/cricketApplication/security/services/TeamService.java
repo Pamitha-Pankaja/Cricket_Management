@@ -1,7 +1,9 @@
 package com.example.cricketApplication.security.services;
 import com.example.cricketApplication.models.Match;
+import com.example.cricketApplication.models.Player;
 import com.example.cricketApplication.models.Team;
 import com.example.cricketApplication.payload.response.MatchResponse;
+import com.example.cricketApplication.payload.response.PlayerResponse;
 import com.example.cricketApplication.payload.response.TeamResponse;
 import com.example.cricketApplication.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TeamService {
@@ -71,6 +74,13 @@ public class TeamService {
     }
 
 
+    public List<PlayerResponse> getPlayersByTeamId(Long teamId) {
+        return teamRepository.findById(teamId)
+                .map(team -> RefactorPlayerResponse(team.getPlayers()))
+                .orElseThrow();
+    }
+
+
 
     private List<TeamResponse> RefactorResponse(List<Team> team) {
         List<TeamResponse> teamResponses = new ArrayList<>();
@@ -93,6 +103,24 @@ public class TeamService {
         teamResponse.setCaptain(team.getCaptain());
         teamResponse.setUnder(team.getUnder());
         return teamResponse;
+    }
+
+
+
+    private List<PlayerResponse> RefactorPlayerResponse(Set<Player> players) {
+        List<PlayerResponse> playerResponses = new ArrayList<>();
+        for (Player player : players) {
+            PlayerResponse playerResponse = new PlayerResponse();
+            playerResponse.setPlayerId(player.getPlayerId());
+            playerResponse.setName(player.getName());
+            playerResponse.setEmail(player.getEmail());
+            playerResponse.setContactNo(player.getContactNo());
+            playerResponse.setBattingStyle(player.getBattingStyle());
+            playerResponse.setBowlingStyle(player.getBowlingStyle());
+            playerResponse.setPlayerRole(player.getPlayerRole());
+            playerResponses.add(playerResponse);
+        }
+        return playerResponses;
     }
 
 
