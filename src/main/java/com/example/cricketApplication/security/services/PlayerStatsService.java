@@ -114,6 +114,29 @@ public class PlayerStatsService {
     }
 
 
+    public PlayerStats updatePlayerStats(Long id, PlayerStats updatedPlayerStats) {
+        PlayerStats existingPlayerStats = playerStatsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("PlayerStats not found with ID: " + id));
+
+        // Updating fields
+        existingPlayerStats.setRuns(updatedPlayerStats.getRuns());
+        existingPlayerStats.setBalls(updatedPlayerStats.getBalls());
+        existingPlayerStats.setOvers(updatedPlayerStats.getOvers());
+        existingPlayerStats.setCenturies(updatedPlayerStats.getCenturies());
+        existingPlayerStats.setFifties(updatedPlayerStats.getFifties());
+        existingPlayerStats.setFours(updatedPlayerStats.getFours());
+        existingPlayerStats.setSixers(updatedPlayerStats.getSixers());
+        existingPlayerStats.setWickets(updatedPlayerStats.getWickets());
+        existingPlayerStats.setRunsConceded(updatedPlayerStats.getRunsConceded());
+        existingPlayerStats.setInning(updatedPlayerStats.getInning());
+        existingPlayerStats.setPlayer(updatedPlayerStats.getPlayer());
+        existingPlayerStats.setMatch(updatedPlayerStats.getMatch());
+
+        return playerStatsRepository.save(existingPlayerStats);
+    }
+
+
+
 
 
 

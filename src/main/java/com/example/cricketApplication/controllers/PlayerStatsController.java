@@ -70,6 +70,7 @@ public class PlayerStatsController {
     }
 
 
+
 //
 //    @GetMapping("/match")
 //    public ResponseEntity<List<PlayerStats>> getPlayerStatsByMatch(
@@ -133,6 +134,19 @@ public class PlayerStatsController {
         List<PlayerStatsResponse> playerStatsResponses = playerStatsService.getAllStatsByPlayerId(playerId);
         return ResponseEntity.ok(playerStatsResponses);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updatePlayerStats(@PathVariable Long id, @RequestBody PlayerStats updatedPlayerStats) {
+        try {
+            PlayerStats playerStats = playerStatsService.updatePlayerStats(id, updatedPlayerStats);
+            return ResponseEntity.ok(playerStats);
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("Error: " + e.getMessage()));
+        }
+    }
+
 
 
 }
