@@ -486,6 +486,47 @@ public class AuthController {
     }
 
 
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
+        // Check if the username already exists
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Username is already taken!"));
+        }
+
+        // Check if the email already exists
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Email is already in use!"));
+        }
+
+        // Create and set user entity
+        User newUser = new User();
+        newUser.setUsername(signUpRequest.getUsername());
+        newUser.setEmail(signUpRequest.getEmail());
+        newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
+
+        // Set default role for admin
+        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                .orElseGet(() -> {
+                    Role newRole = new Role(ERole.ROLE_ADMIN);
+                    roleRepository.save(newRole);
+                    return newRole;
+                });
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(adminRole);
+        newUser.setRoles(roles);
+
+        // Save the user entity with admin role
+        userRepository.save(newUser);
+
+        return ResponseEntity.ok(new MessageResponse("Admin registered successfully!"));
+    }
+
+
 
 
 
