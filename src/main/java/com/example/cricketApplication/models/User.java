@@ -2,6 +2,7 @@ package com.example.cricketApplication.models;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -43,40 +44,45 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
+  @OneToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(  name = "user_privileges",
+          joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "privileges_id"))
+  private Set<Privilege> privileges = new HashSet<>();
+
   //@NotBlank
-  private String name;
-
-  @Temporal(TemporalType.DATE)
-  private Date dateOfBirth;
-
-  private String contactNo;
-
-  private String battingStyle;
-  private String bowlingStyle;
-
-  private String status;
-
-  private String image;
-
-  private String playerRole;
+//  private String name;
+//
+//  @Temporal(TemporalType.DATE)
+//  private Date dateOfBirth;
+//
+//  private String contactNo;
+//
+//  private String battingStyle;
+//  private String bowlingStyle;
+//
+//  private String status;
+//
+//  private String image;
+//
+//  private String playerRole;
 
 
 //  public User(@NotBlank @Size(min = 3, max = 20) String username, @NotBlank @Size(max = 50) @Email String email, @NotBlank @Size(min = 6, max = 40) String password, String name, String contactNo, String battingStyle, String bowlingStyle, String status, String image, String playerRole, String encode) {
 //  }
 
-  public User(String username, String email, String password, String name, String contactNo, String battingStyle, String bowlingStyle, String status, String image,String playerRole) {
-    this.username = username;
-    this.email = email;
-    this.password = password;
-    this.name = name;
-    this.contactNo = contactNo;
-    this.battingStyle = battingStyle;
-    this.bowlingStyle = bowlingStyle;
-    this.status = status;
-    this.image = image;
-    this.playerRole = playerRole;
-
-  }
+//  public User(String username, String email, String password, String name, String contactNo, String battingStyle, String bowlingStyle, String status, String image,String playerRole) {
+//    this.username = username;
+//    this.email = email;
+//    this.password = password;
+//    this.name = name;
+//    this.contactNo = contactNo;
+//    this.battingStyle = battingStyle;
+//    this.bowlingStyle = bowlingStyle;
+//    this.status = status;
+//    this.image = image;
+//    this.playerRole = playerRole;
+//
+//  }
 
 //  public Long getId() {
 //    return id;

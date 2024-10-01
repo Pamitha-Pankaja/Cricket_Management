@@ -1,5 +1,6 @@
 package com.example.cricketApplication.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -33,15 +34,16 @@ public class PractiseSession {
     )
     private Set<Coach> coaches = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "player_practise_sessions",
-            joinColumns = @JoinColumn(name = "prac_id"),
-            inverseJoinColumns = @JoinColumn(name = "player_id"))
-    private Set<Player> players = new HashSet<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "player_practise_sessions",
+//            joinColumns = @JoinColumn(name = "prac_id"),
+//            inverseJoinColumns = @JoinColumn(name = "player_id"))
+//    private Set<Player> players = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id", nullable = false)
+    @JsonBackReference
     private Team team;
 
     // Getters and setters

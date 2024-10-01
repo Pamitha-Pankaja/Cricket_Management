@@ -17,6 +17,13 @@ public class PractiseSessionController {
     @Autowired
     private PractiseSessionService practiseSessionService;
 
+//    @PostMapping("/add")
+//    public ResponseEntity<PractiseSession> addPractiseSession(@RequestBody PractiseSession practiseSession) {
+//        PractiseSession savedPractiseSession = practiseSessionService.addPractiseSession(practiseSession);
+//        return ResponseEntity.ok(savedPractiseSession);
+//    }
+
+
     @PostMapping("/add")
     public ResponseEntity<PractiseSession> addPractiseSession(@RequestBody PractiseSession practiseSession) {
         PractiseSession savedPractiseSession = practiseSessionService.addPractiseSession(practiseSession);

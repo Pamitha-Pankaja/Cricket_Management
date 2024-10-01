@@ -23,5 +23,8 @@ public class PlayerStatsResponse {
     private PlayerResponse player;
 
     // Add match details
-    private MatchResponse match;
+    //private MatchResponse match;
+
+    private MatchResponseWithStat match;
+
 }

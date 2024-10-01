@@ -1,6 +1,7 @@
 package com.example.cricketApplication.controllers;
 
 import com.example.cricketApplication.models.Coach;
+import com.example.cricketApplication.payload.response.CoachResponse;
 import com.example.cricketApplication.payload.response.MessageResponse;
 import com.example.cricketApplication.security.services.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/coaches")
 public class CoachController {
@@ -36,8 +38,8 @@ public class CoachController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Coach>> getAllCoaches() {
-        List<Coach> coaches = coachService.getAllCoaches();
+    public ResponseEntity<List<CoachResponse>> getAllCoaches() {
+        List<CoachResponse> coaches = coachService.getAllCoaches();
         return ResponseEntity.ok(coaches);
     }
 

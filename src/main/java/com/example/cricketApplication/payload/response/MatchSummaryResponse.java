@@ -1,5 +1,6 @@
 package com.example.cricketApplication.payload.response;
 
+import com.example.cricketApplication.models.Team;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,6 @@ public class MatchSummaryResponse {
     private String opposition;  // New field for opposition
     private Date date;
     private String type;
+    private String under;
 
 }
