@@ -59,7 +59,6 @@ public class CoachService {
             coachResponse.setAddress(coach.getAddress());
             coachResponse.setDescription(coach.getDescription());
             coachResponse.setContactNo(coach.getContactNo());
-            coachResponse.setPractiseSessions(coach.getPractiseSessions());
             coachResponses.add(coachResponse);
         }
         return coachResponses;
