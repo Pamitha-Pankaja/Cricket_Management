@@ -68,18 +68,18 @@ public class CoachService {
 
         // Get and update the associated user (username, email, password)
         User user = coach.getUser();
-        if (coachDetails.getUser() != null) {
-            if (coachDetails.getUser().getUsername() != null) {
-                user.setUsername(coachDetails.getUser().getUsername());
-            }
-            if (coachDetails.getUser().getEmail() != null) {
-                user.setEmail(coachDetails.getUser().getEmail());
-            }
-            if (coachDetails.getUser().getPassword() != null) {
-                String encodedPassword = passwordEncoder.encode(coachDetails.getUser().getPassword());
-                user.setPassword(encodedPassword);
-            }
-        }
+//        if (coachDetails.getUser() != null) {
+//            if (coachDetails.getUser().getUsername() != null) {
+//                user.setUsername(coachDetails.getUser().getUsername());
+//            }
+//            if (coachDetails.getUser().getEmail() != null) {
+//                user.setEmail(coachDetails.getUser().getEmail());
+//            }
+//            if (coachDetails.getUser().getPassword() != null) {
+//                String encodedPassword = passwordEncoder.encode(coachDetails.getUser().getPassword());
+//                user.setPassword(encodedPassword);
+//            }
+//        }
 
         // Update coach details
         coach.setImage(coachDetails.getImage());
@@ -88,6 +88,9 @@ public class CoachService {
         coach.setAddress(coachDetails.getAddress());
         coach.setDescription(coachDetails.getDescription());
         coach.setContactNo(coachDetails.getContactNo());
+        coach.setEmail(coachDetails.getEmail());
+        user.setUsername(coachDetails.getUser().getUsername());
+        user.setEmail(coachDetails.getUser().getEmail());
 
         // Save user and coach
         userRepository.save(user);
@@ -109,6 +112,7 @@ public class CoachService {
             coachResponse.setDateOfBirth(coach.getDateOfBirth());
             coachResponse.setImage(coach.getImage());
             coachResponse.setDescription(coach.getDescription());
+            coachResponse.setUsername(coach.getUser().getUsername());
             coachResponses.add(coachResponse);
         }
         return coachResponses;

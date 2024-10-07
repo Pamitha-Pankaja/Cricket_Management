@@ -23,4 +23,6 @@ public class CoachResponse {
     private String image; // URL or path to the coach's image
     private String description;
 
+    private String username;
+
 }
