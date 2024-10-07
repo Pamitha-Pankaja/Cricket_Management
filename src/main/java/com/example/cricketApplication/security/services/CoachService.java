@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,11 +62,11 @@ public class CoachService {
     }
 
 
-    public Coach updateCoach(Long coachId, Coach coachDetails) throws EntityNotFoundException {
+    public CoachResponse updateCoach(Long coachId, Coach coachDetails) throws EntityNotFoundException {
         Coach coach = coachRepository.findById(coachId)
                 .orElseThrow(() -> new EntityNotFoundException("Coach not found with ID: " + coachId));
 
-        // Get the associated user and update relevant fields (like username, email, and password)
+        // Get and update the associated user (username, email, password)
         User user = coach.getUser();
         if (coachDetails.getUser() != null) {
             if (coachDetails.getUser().getUsername() != null) {
@@ -75,13 +76,12 @@ public class CoachService {
                 user.setEmail(coachDetails.getUser().getEmail());
             }
             if (coachDetails.getUser().getPassword() != null) {
-                // Make sure to encode the password before saving
                 String encodedPassword = passwordEncoder.encode(coachDetails.getUser().getPassword());
                 user.setPassword(encodedPassword);
             }
         }
 
-        // Update the coach details
+        // Update coach details
         coach.setImage(coachDetails.getImage());
         coach.setDateOfBirth(coachDetails.getDateOfBirth());
         coach.setName(coachDetails.getName());
@@ -89,27 +89,29 @@ public class CoachService {
         coach.setDescription(coachDetails.getDescription());
         coach.setContactNo(coachDetails.getContactNo());
 
-        // Save the updated coach and user
-        userRepository.save(user);  // Save the updated user
-        return coachRepository.save(coach);  // Save the updated coach
+        // Save user and coach
+        userRepository.save(user);
+        Coach updatedCoach = coachRepository.save(coach);
+
+        // Return the updated response
+        return RefactorResponse(Collections.singletonList(updatedCoach)).get(0);
     }
 
-
-
-    private List<CoachResponse> RefactorResponse(List<Coach> team) {
+    private List<CoachResponse> RefactorResponse(List<Coach> coaches) {
         List<CoachResponse> coachResponses = new ArrayList<>();
-        for (Coach coach : team) {
+        for (Coach coach : coaches) {
             CoachResponse coachResponse = new CoachResponse();
             coachResponse.setCoachId(coach.getCoachId());
             coachResponse.setName(coach.getName());
             coachResponse.setEmail(coach.getEmail());
-            coachResponse.setAddress(coach.getAddress());
-            coachResponse.setDescription(coach.getDescription());
             coachResponse.setContactNo(coach.getContactNo());
+            coachResponse.setAddress(coach.getAddress());
+            coachResponse.setDateOfBirth(coach.getDateOfBirth());
+            coachResponse.setImage(coach.getImage());
+            coachResponse.setDescription(coach.getDescription());
             coachResponses.add(coachResponse);
         }
         return coachResponses;
-
     }
 }
 

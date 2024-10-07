@@ -74,17 +74,14 @@ public class CoachController {
 
 
 
-    @PutMapping("/update/{coachId}")
+    @PutMapping("/{coachId}")
     public ResponseEntity<?> updateCoach(@PathVariable Long coachId, @RequestBody Coach coachDetails) {
         try {
-            Coach updatedCoach = coachService.updateCoach(coachId, coachDetails);
+            CoachResponse updatedCoach = coachService.updateCoach(coachId, coachDetails);
             return ResponseEntity.ok(updatedCoach);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MessageResponse("Error: " + e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new MessageResponse("Error: Could not update coach"));
         }
     }
 
