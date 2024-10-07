@@ -4,6 +4,7 @@ import com.example.cricketApplication.models.Coach;
 import com.example.cricketApplication.payload.response.CoachResponse;
 import com.example.cricketApplication.payload.response.MessageResponse;
 import com.example.cricketApplication.security.services.CoachService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,5 +71,19 @@ public class CoachController {
                     .body(new MessageResponse("Error: " + e.getMessage()));
         }
     }
+
+
+
+    @PutMapping("/{coachId}")
+    public ResponseEntity<?> updateCoach(@PathVariable Long coachId, @RequestBody Coach coachDetails) {
+        try {
+            CoachResponse updatedCoach = coachService.updateCoach(coachId, coachDetails);
+            return ResponseEntity.ok(updatedCoach);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("Error: " + e.getMessage()));
+        }
+    }
+
 }
 
