@@ -93,6 +93,7 @@ public class MatchService {
             matchResponse.setMatchCaptain(match.getMatchCaptain());
             matchResponse.setTime(match.getTime());
             matchResponse.setType(match.getType());
+            matchResponse.setUnder(match.getTeam().getUnder());
 
             matchResponseList.add(matchResponse);
 
