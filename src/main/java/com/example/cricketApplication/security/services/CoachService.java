@@ -5,6 +5,7 @@ import com.example.cricketApplication.models.Team;
 import com.example.cricketApplication.payload.response.CoachResponse;
 import com.example.cricketApplication.payload.response.TeamResponse;
 import com.example.cricketApplication.repository.CoachRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,23 @@ public class CoachService {
     public void deleteCoachById(Long coachId) {
         coachRepository.deleteById(coachId);
     }
+
+
+    public Coach updateCoach(Long coachId, Coach coachDetails) throws EntityNotFoundException {
+        Coach coach = coachRepository.findById(coachId)
+                .orElseThrow(() -> new EntityNotFoundException("Coach not found with ID: " + coachId));
+
+        // Update the coach details
+        coach.setName(coachDetails.getName());
+        coach.setEmail(coachDetails.getEmail());
+        coach.setAddress(coachDetails.getAddress());
+        coach.setDescription(coachDetails.getDescription());
+        coach.setContactNo(coachDetails.getContactNo());
+
+        // Save the updated coach
+        return coachRepository.save(coach);
+    }
+
 
     private List<CoachResponse> RefactorResponse(List<Coach> team) {
         List<CoachResponse> coachResponses = new ArrayList<>();
