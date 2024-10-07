@@ -8,6 +8,7 @@ import com.example.cricketApplication.payload.response.TeamResponse;
 import com.example.cricketApplication.repository.CoachRepository;
 import com.example.cricketApplication.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,43 +63,54 @@ public class CoachService {
     }
 
 
+    @Transactional
     public CoachResponse updateCoach(Long coachId, Coach coachDetails) throws EntityNotFoundException {
+        // Fetch the coach by ID, throw an exception if not found
         Coach coach = coachRepository.findById(coachId)
                 .orElseThrow(() -> new EntityNotFoundException("Coach not found with ID: " + coachId));
 
-        // Get and update the associated user (username, email, password)
+        // Fetch the associated user from the coach
         User user = coach.getUser();
-//        if (coachDetails.getUser() != null) {
-//            if (coachDetails.getUser().getUsername() != null) {
-//                user.setUsername(coachDetails.getUser().getUsername());
-//            }
-//            if (coachDetails.getUser().getEmail() != null) {
-//                user.setEmail(coachDetails.getUser().getEmail());
-//            }
-//            if (coachDetails.getUser().getPassword() != null) {
-//                String encodedPassword = passwordEncoder.encode(coachDetails.getUser().getPassword());
-//                user.setPassword(encodedPassword);
-//            }
-//        }
 
-        // Update coach details
+        // Ensure the coachDetails contains user information before updating
+        if (coachDetails.getUser() != null) {
+            // Update the username if provided in the request body
+            if (coachDetails.getUser().getUsername() != null && !coachDetails.getUser().getUsername().isEmpty()) {
+                user.setUsername(coachDetails.getUser().getUsername());
+            }
+
+            // Update the email if provided in the request body
+            if (coachDetails.getUser().getEmail() != null && !coachDetails.getUser().getEmail().isEmpty()) {
+                user.setEmail(coachDetails.getUser().getEmail());
+            }
+
+            // Update the password if provided in the request body and encode it
+            if (coachDetails.getUser().getPassword() != null && !coachDetails.getUser().getPassword().isEmpty()) {
+                String encodedPassword = passwordEncoder.encode(coachDetails.getUser().getPassword());
+                user.setPassword(encodedPassword);
+            }
+
+            // Save the updated user
+            userRepository.save(user);
+        }
+
+        // Update the other coach details
         coach.setImage(coachDetails.getImage());
         coach.setDateOfBirth(coachDetails.getDateOfBirth());
         coach.setName(coachDetails.getName());
         coach.setAddress(coachDetails.getAddress());
         coach.setDescription(coachDetails.getDescription());
         coach.setContactNo(coachDetails.getContactNo());
-        coach.setEmail(coachDetails.getEmail());
-        user.setUsername(coachDetails.getUser().getUsername());
-        user.setEmail(coachDetails.getUser().getEmail());
+        coach.setEmail(coachDetails.getUser().getEmail());
 
-        // Save user and coach
-        userRepository.save(user);
+        // Save the updated coach
         Coach updatedCoach = coachRepository.save(coach);
 
-        // Return the updated response
+        // Return the updated response using the refactorResponse method
         return RefactorResponse(Collections.singletonList(updatedCoach)).get(0);
     }
+
+
 
     private List<CoachResponse> RefactorResponse(List<Coach> coaches) {
         List<CoachResponse> coachResponses = new ArrayList<>();
@@ -113,6 +125,16 @@ public class CoachService {
             coachResponse.setImage(coach.getImage());
             coachResponse.setDescription(coach.getDescription());
             coachResponse.setUsername(coach.getUser().getUsername());
+
+            // Handle the case where the User is null
+            if (coach.getUser() != null) {
+                coachResponse.setUsername(coach.getUser().getUsername());
+                coachResponse.setEmail(coach.getUser().getEmail());
+            } else {
+                coachResponse.setUsername(null); // Or set a default value
+                coachResponse.setEmail(null); // Or set a default value
+            }
+
             coachResponses.add(coachResponse);
         }
         return coachResponses;
