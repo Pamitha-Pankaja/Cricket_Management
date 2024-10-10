@@ -1,6 +1,7 @@
 package com.example.cricketApplication.controllers;
 
 import com.example.cricketApplication.models.PractiseSession;
+import com.example.cricketApplication.payload.response.PracticeSessionResponse;
 import com.example.cricketApplication.security.services.PractiseSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,5 +71,15 @@ public class PractiseSessionController {
                     .status(HttpStatus.BAD_REQUEST)
                     .body("Error: " + e.getMessage());
         }
+    }
+
+
+    @GetMapping("/coach/{coachId}")
+    public ResponseEntity<List<PracticeSessionResponse>> getPractiseSessionsByCoachId(@PathVariable Long coachId) {
+        List<PracticeSessionResponse> practiseSessions = practiseSessionService.getPractiseSessionsByCoachId(coachId);
+        if (practiseSessions.isEmpty()) {
+            return ResponseEntity.noContent().build(); // Return 204 No Content if no sessions found
+        }
+        return ResponseEntity.ok(practiseSessions); // Return 200 OK with the list of sessions
     }
 }
