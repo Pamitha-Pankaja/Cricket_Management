@@ -36,6 +36,5 @@ public class Official {
     @JoinColumn(name = "user_id")
     private User user;
 
-
 }
 
