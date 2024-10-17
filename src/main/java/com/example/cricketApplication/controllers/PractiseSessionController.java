@@ -83,4 +83,21 @@ public class PractiseSessionController {
         }
         return ResponseEntity.ok(practiseSessions); // Return 200 OK with the list of sessions
     }
+
+
+    @PutMapping("/update/{pracId}")
+    public ResponseEntity<PracticeSessionResponse> updatePractiseSession(
+            @PathVariable Long pracId,
+            @RequestBody PractiseSession practiseSessionDetails) {
+        try {
+            PracticeSessionResponse updatedPractiseSessionResponse = practiseSessionService.updatePractiseSession(pracId, practiseSessionDetails);
+            return ResponseEntity.ok(updatedPractiseSessionResponse);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(null); // Return appropriate error response
+        }
+    }
+
+
 }
