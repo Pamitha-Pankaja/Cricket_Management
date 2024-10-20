@@ -39,8 +39,22 @@ public class PractiseSessionService {
         return practiseSessionRepository.save(practiseSession);
     }
 
-    public List<PractiseSession> getAllPractiseSessions() {
-        return practiseSessionRepository.findAll();
+//    public List<PractiseSession> getAllPractiseSessions() {
+//        return practiseSessionRepository.findAll();
+//    }
+
+//    public List<PracticeSessionResponse> getAllPractiseSessions() {
+//        List<PractiseSession> practiceSessions =  practiseSessionRepository.findAll();
+//        return refactorResponse(practiceSessions);
+//    }
+
+    public List<PracticeSessionResponse> getAllPractiseSessions() {
+        List<PractiseSession> practiseSessions = practiseSessionRepository.findAll();
+
+        // Map each PractiseSession to PracticeSessionResponse using the refactorResponse method
+        return practiseSessions.stream()
+                .map(this::refactorResponse)  // Use method reference to convert each PractiseSession
+                .collect(Collectors.toList());
     }
 
     public Optional<PractiseSession> getPractiseSessionById(Long pracId) {

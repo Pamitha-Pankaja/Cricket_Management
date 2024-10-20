@@ -53,11 +53,14 @@ public class CoachService {
         coachResponse.setImage(coach.getImage());
         coachResponse.setDescription(coach.getDescription());
         coachResponse.setUsername(coach.getUser().getUsername());
+        coachResponse.setPassword(coach.getUser().getPassword());
+
 
         // Handle the case where the User is null
         if (coach.getUser() != null) {
             coachResponse.setUsername(coach.getUser().getUsername());
             coachResponse.setEmail(coach.getUser().getEmail());
+            coachResponse.setPassword(coach.getUser().getPassword());
         } else {
             coachResponse.setUsername(null); // Or set a default value
             coachResponse.setEmail(null); // Or set a default value
@@ -151,6 +154,7 @@ public class CoachService {
             coachResponse.setImage(coach.getImage());
             coachResponse.setDescription(coach.getDescription());
             coachResponse.setUsername(coach.getUser().getUsername());
+            coachResponse.setPassword(coach.getUser().getPassword());
 
             // Handle the case where the User is null
             if (coach.getUser() != null) {

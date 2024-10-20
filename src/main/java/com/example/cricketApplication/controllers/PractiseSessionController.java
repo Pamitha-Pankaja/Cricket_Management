@@ -32,9 +32,15 @@ public class PractiseSessionController {
         return ResponseEntity.ok(savedPractiseSession);
     }
 
+//    @GetMapping("/all")
+//    public ResponseEntity<List<PractiseSession>> getAllPractiseSessions() {
+//        List<PractiseSession> practiseSessions = practiseSessionService.getAllPractiseSessions();
+//        return ResponseEntity.ok(practiseSessions);
+//    }
+
     @GetMapping("/all")
-    public ResponseEntity<List<PractiseSession>> getAllPractiseSessions() {
-        List<PractiseSession> practiseSessions = practiseSessionService.getAllPractiseSessions();
+    public ResponseEntity<List<PracticeSessionResponse>> getAllPractiseSessions() {
+        List<PracticeSessionResponse> practiseSessions = practiseSessionService.getAllPractiseSessions();
         return ResponseEntity.ok(practiseSessions);
     }
 
