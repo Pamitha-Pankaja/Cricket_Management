@@ -77,9 +77,13 @@ public class PractiseSessionService {
     // Method to get all practice sessions for a specific coach ID
     public List<PracticeSessionResponse> getPractiseSessionsByCoachId(Long coachId) {
         List<PractiseSession> practiceSessions =  practiseSessionRepository.findAllByCoachId(coachId);
-        return RefactorResponse(practiceSessions);
+        List<PracticeSessionResponse> practiceSessionResponses = new ArrayList<>();
+        for (PractiseSession practiceSession : practiceSessions) {
+            PracticeSessionResponse practiceSessionResponse = refactorResponse(practiceSession);
+            practiceSessionResponses.add(practiceSessionResponse);
+        }
+        return practiceSessionResponses;
     }
-
 
     public PracticeSessionResponse updatePractiseSession(Long pracId, PractiseSession practiseSessionDetails) {
         // Fetch the existing PractiseSession by ID
