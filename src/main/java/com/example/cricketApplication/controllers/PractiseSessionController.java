@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/practiseSessions")
 public class PractiseSessionController {
@@ -31,9 +32,15 @@ public class PractiseSessionController {
         return ResponseEntity.ok(savedPractiseSession);
     }
 
+//    @GetMapping("/all")
+//    public ResponseEntity<List<PractiseSession>> getAllPractiseSessions() {
+//        List<PractiseSession> practiseSessions = practiseSessionService.getAllPractiseSessions();
+//        return ResponseEntity.ok(practiseSessions);
+//    }
+
     @GetMapping("/all")
-    public ResponseEntity<List<PractiseSession>> getAllPractiseSessions() {
-        List<PractiseSession> practiseSessions = practiseSessionService.getAllPractiseSessions();
+    public ResponseEntity<List<PracticeSessionResponse>> getAllPractiseSessions() {
+        List<PracticeSessionResponse> practiseSessions = practiseSessionService.getAllPractiseSessions();
         return ResponseEntity.ok(practiseSessions);
     }
 
@@ -82,4 +89,21 @@ public class PractiseSessionController {
         }
         return ResponseEntity.ok(practiseSessions); // Return 200 OK with the list of sessions
     }
+
+
+    @PutMapping("/update/{pracId}")
+    public ResponseEntity<PracticeSessionResponse> updatePractiseSession(
+            @PathVariable Long pracId,
+            @RequestBody PractiseSession practiseSessionDetails) {
+        try {
+            PracticeSessionResponse updatedPractiseSessionResponse = practiseSessionService.updatePractiseSession(pracId, practiseSessionDetails);
+            return ResponseEntity.ok(updatedPractiseSessionResponse);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(null); // Return appropriate error response
+        }
+    }
+
+
 }
