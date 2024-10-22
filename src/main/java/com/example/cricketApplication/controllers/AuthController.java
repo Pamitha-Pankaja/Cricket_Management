@@ -60,17 +60,37 @@ public class AuthController {
 
 //    @PostMapping("/signin")
 //    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-//
+//        // Authenticate the user
 //        Authentication authentication = authenticationManager.authenticate(
 //                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 //
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        String jwt = jwtUtils.generateJwtToken(authentication);
-//
 //        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 //        List<String> roles = userDetails.getAuthorities().stream()
 //                .map(item -> item.getAuthority())
 //                .collect(Collectors.toList());
+//
+//        // Fetch the User entity from the database
+//        User user = userRepository.findByUsername(userDetails.getUsername())
+//                .orElseThrow(() -> new RuntimeException("Error: User not found."));
+//
+//        // Check if the user has the ROLE_PLAYER
+//        if (roles.contains("ROLE_PLAYER")) {
+//            Player player = playerRepository.findByUser(user)
+//                    .orElseThrow(() -> new RuntimeException("Error: Player not found."));
+//
+//            // Check if the player has a membership and if it is active
+//            Membership membership = player.getMembership();
+//            if (membership == null || !membership.getIsActive()) {
+//                return ResponseEntity
+//                        .badRequest()
+//                        .body(new MessageResponse("Error: Player's membership is expired or not available."));
+//            }
+//
+//        }
+//
+//        // Generate JWT token if all checks passed
+//        String jwt = jwtUtils.generateJwtToken(authentication);
 //
 //        return ResponseEntity.ok(new JwtResponse(jwt,
 //                userDetails.getId(),
@@ -78,6 +98,7 @@ public class AuthController {
 //                userDetails.getEmail(),
 //                roles));
 //    }
+
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -95,6 +116,10 @@ public class AuthController {
         User user = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("Error: User not found."));
 
+        Long playerId = null;
+        Long coachId = null;
+        Long officialId = null;
+
         // Check if the user has the ROLE_PLAYER
         if (roles.contains("ROLE_PLAYER")) {
             Player player = playerRepository.findByUser(user)
@@ -107,7 +132,21 @@ public class AuthController {
                         .badRequest()
                         .body(new MessageResponse("Error: Player's membership is expired or not available."));
             }
+            playerId = player.getPlayerId();  // Store playerId
+        }
 
+        // Check if the user has the ROLE_COACH
+        if (roles.contains("ROLE_COACH")) {
+            Coach coach = (Coach) coachRepository.findByUser(user)
+                    .orElseThrow(() -> new RuntimeException("Error: Coach not found."));
+            coachId = coach.getCoachId();  // Store coachId
+        }
+
+        // Check if the user has the ROLE_OFFICIAL
+        if (roles.contains("ROLE_OFFICIAL")) {
+            Official official = officialRepository.findByUser(user)
+                    .orElseThrow(() -> new RuntimeException("Error: Official not found."));
+            officialId = official.getId();  // Store officialId
         }
 
         // Generate JWT token if all checks passed
@@ -117,8 +156,13 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                roles));
+                roles,
+                playerId,  // Include playerId
+                coachId,   // Include coachId
+                officialId // Include officialId
+        ));
     }
+
 
 
 
