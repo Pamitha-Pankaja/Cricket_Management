@@ -118,6 +118,7 @@ public class TeamService {
             playerResponse.setBattingStyle(player.getBattingStyle());
             playerResponse.setBowlingStyle(player.getBowlingStyle());
             playerResponse.setPlayerRole(player.getPlayerRole());
+            playerResponse.setImage(player.getImage());
             playerResponses.add(playerResponse);
         }
         return playerResponses;
