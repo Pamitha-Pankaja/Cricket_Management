@@ -1,5 +1,6 @@
 package com.example.cricketApplication.security.services;
 
+import com.example.cricketApplication.exceptions.PlayerAlreadyExistsException;
 import com.example.cricketApplication.models.Coach;
 import com.example.cricketApplication.models.Team;
 import com.example.cricketApplication.models.User;
@@ -118,7 +119,6 @@ public class CoachService {
                 String encodedPassword = passwordEncoder.encode(coachDetails.getUser().getPassword());
                 user.setPassword(encodedPassword);
             }
-
             // Save the updated user
             userRepository.save(user);
         }
