@@ -64,6 +64,18 @@ public class PlayerService {
 
         User user = player.getUser();
 
+        // Check if the email is already taken by another user
+        if (userRepository.existsByEmail(playerDetails.getUser().getEmail())
+                && !user.getEmail().equals(playerDetails.getUser().getEmail())) {
+            throw new PlayerAlreadyExistsException("Player with email " + playerDetails.getUser().getEmail() + " already exists.");
+        }
+
+        // Check if the username is already taken by another user
+        if (userRepository.existsByUsername(playerDetails.getUser().getUsername())
+                && !user.getUsername().equals(playerDetails.getUser().getUsername())) {
+            throw new PlayerAlreadyExistsException("Plyer with username " + playerDetails.getUser().getUsername() + " already exists.");
+        }
+
         // Ensure the coachDetails contains user information before updating
         if (playerDetails.getUser() != null) {
             // Update the username if provided in the request body

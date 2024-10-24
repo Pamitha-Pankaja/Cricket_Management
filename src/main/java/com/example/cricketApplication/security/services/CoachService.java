@@ -102,6 +102,19 @@ public class CoachService {
         // Fetch the associated user from the coach
         User user = coach.getUser();
 
+        // Check if the email is already taken by another user
+        if (userRepository.existsByEmail(coachDetails.getUser().getEmail())
+                && !user.getEmail().equals(coachDetails.getUser().getEmail())) {
+            throw new PlayerAlreadyExistsException("Coach with email " + coachDetails.getUser().getEmail() + " already exists.");
+        }
+
+        // Check if the username is already taken by another user
+        if (userRepository.existsByUsername(coachDetails.getUser().getUsername())
+                && !user.getUsername().equals(coachDetails.getUser().getUsername())) {
+            throw new PlayerAlreadyExistsException("Coach with username " + coachDetails.getUser().getUsername() + " already exists.");
+        }
+
+
         // Ensure the coachDetails contains user information before updating
         if (coachDetails.getUser() != null) {
             // Update the username if provided in the request body
