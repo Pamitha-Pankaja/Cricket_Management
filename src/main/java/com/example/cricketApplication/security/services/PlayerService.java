@@ -5,10 +5,13 @@ import com.example.cricketApplication.exceptions.PlayerNotFoundException;
 import com.example.cricketApplication.models.Player;
 import com.example.cricketApplication.models.PlayerStats;
 import com.example.cricketApplication.models.Team;
+import com.example.cricketApplication.models.User;
 import com.example.cricketApplication.payload.response.PlayerResponse;
 import com.example.cricketApplication.payload.response.PlayerStatsResponse;
 import com.example.cricketApplication.repository.PlayerRepository;
+import com.example.cricketApplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +26,12 @@ public class PlayerService {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public Player savePlayer(Player player) {
         if (playerRepository.existsByEmail(player.getEmail())) {
@@ -53,10 +62,33 @@ public class PlayerService {
         Player player = playerRepository.findById(id)
                 .orElseThrow(() -> new PlayerNotFoundException("Player not found with ID: " + id));
 
+        User user = player.getUser();
+
+        // Ensure the coachDetails contains user information before updating
+        if (playerDetails.getUser() != null) {
+            // Update the username if provided in the request body
+            if (playerDetails.getUser().getUsername() != null && !playerDetails.getUser().getUsername().isEmpty()) {
+                user.setUsername(playerDetails.getUser().getUsername());
+            }
+
+            // Update the email if provided in the request body
+            if (playerDetails.getUser().getEmail() != null && !playerDetails.getUser().getEmail().isEmpty()) {
+                user.setEmail(playerDetails.getUser().getEmail());
+            }
+
+            // Update the password if provided in the request body and encode it
+            if (playerDetails.getUser().getPassword() != null && !playerDetails.getUser().getPassword().isEmpty()) {
+                String encodedPassword = passwordEncoder.encode(playerDetails.getUser().getPassword());
+                user.setPassword(encodedPassword);
+            }
+
+            // Save the updated user
+            userRepository.save(user);
+        }
         // Update player details
         player.setName(playerDetails.getName());
         player.setDateOfBirth(playerDetails.getDateOfBirth());
-        player.setEmail(playerDetails.getEmail());
+        player.setEmail(playerDetails.getUser().getEmail());
         player.setContactNo(playerDetails.getContactNo());
         player.setBattingStyle(playerDetails.getBattingStyle());
         player.setBowlingStyle(playerDetails.getBowlingStyle());
