@@ -107,6 +107,7 @@ public class PlayerService {
         player.setStatus(playerDetails.getStatus());
         player.setImage(playerDetails.getImage());
         player.setPlayerRole(playerDetails.getPlayerRole());
+        player.setMembership(playerDetails.getMembership());
 
         Player updatedPlayer = playerRepository.save(player);
 
@@ -135,6 +136,9 @@ public class PlayerService {
         playerResponse.setEndDate(String.valueOf(player.getMembership().getEndDate()));
         playerResponse.setPassword(player.getUser().getPassword());
         playerResponse.setUsername(player.getUser().getUsername());
+        playerResponse.setMembershipId(player.getMembership().getId());
+        playerResponse.setMembershipStartDate(player.getMembership().getStartDate());
+        playerResponse.setMembershipEndDate(player.getMembership().getEndDate());
 
         // Extract the 'under' values from the teams associated with the player
         List<String> teamUnders = player.getTeams().stream()
