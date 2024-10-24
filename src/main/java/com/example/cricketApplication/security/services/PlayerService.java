@@ -8,6 +8,7 @@ import com.example.cricketApplication.models.Team;
 import com.example.cricketApplication.models.User;
 import com.example.cricketApplication.payload.response.PlayerResponse;
 import com.example.cricketApplication.payload.response.PlayerStatsResponse;
+import com.example.cricketApplication.repository.MembershipRepository;
 import com.example.cricketApplication.repository.PlayerRepository;
 import com.example.cricketApplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class PlayerService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MembershipRepository membershipRepository;
 
     public Player savePlayer(Player player) {
         if (playerRepository.existsByEmail(player.getEmail())) {
@@ -108,6 +112,7 @@ public class PlayerService {
         player.setImage(playerDetails.getImage());
         player.setPlayerRole(playerDetails.getPlayerRole());
         player.setMembership(playerDetails.getMembership());
+        membershipRepository.save(playerDetails.getMembership());
 
         Player updatedPlayer = playerRepository.save(player);
 
