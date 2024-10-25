@@ -146,7 +146,7 @@ public class PractiseSessionService {
             practiceSessionResponse.setPracId(practiceSession.getPracId());
             practiceSessionResponse.setVenue(practiceSession.getVenue());
             practiceSessionResponse.setDate(practiceSession.getDate());
-            practiceSessionResponse.setStarTime(practiceSession.getStarTime());
+            practiceSessionResponse.setStartTime(practiceSession.getStarTime());
             practiceSessionResponse.setEndTime(practiceSession.getEndTime());
             practiceSessionResponse.setPracType(practiceSession.getPracType());
             practiceSessionResponse.setTeamUnder(practiceSession.getTeam().getUnder());
