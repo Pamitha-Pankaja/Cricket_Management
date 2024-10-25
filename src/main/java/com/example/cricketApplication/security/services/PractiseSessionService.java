@@ -122,7 +122,7 @@ public class PractiseSessionService {
         response.setPracId(practiseSession.getPracId());
         response.setVenue(practiseSession.getVenue());
         response.setDate(practiseSession.getDate());
-        response.setStarTime(practiseSession.getStarTime());
+        response.setStartTime(practiseSession.getStarTime());
         response.setEndTime(practiseSession.getEndTime());
         response.setPracType(practiseSession.getPracType());
         response.setTeamUnder(practiseSession.getTeam().getUnder());
@@ -146,7 +146,7 @@ public class PractiseSessionService {
             practiceSessionResponse.setPracId(practiceSession.getPracId());
             practiceSessionResponse.setVenue(practiceSession.getVenue());
             practiceSessionResponse.setDate(practiceSession.getDate());
-            practiceSessionResponse.setStarTime(practiceSession.getStarTime());
+            practiceSessionResponse.setStartTime(practiceSession.getStarTime());
             practiceSessionResponse.setEndTime(practiceSession.getEndTime());
             practiceSessionResponse.setPracType(practiceSession.getPracType());
             practiceSessionResponse.setTeamUnder(practiceSession.getTeam().getUnder());
