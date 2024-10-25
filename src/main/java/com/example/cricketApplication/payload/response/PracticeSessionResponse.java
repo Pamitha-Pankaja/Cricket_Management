@@ -18,9 +18,9 @@ public class PracticeSessionResponse {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    private String starTime;
     private String endTime;
     private String pracType;
     private String teamUnder;
     private List<CoachPractiseSession> coaches;
+    private String startTime;
 }
