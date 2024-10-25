@@ -93,7 +93,7 @@ public class PractiseSessionService {
         // Update the fields
         existingPractiseSession.setVenue(practiseSessionDetails.getVenue());
         existingPractiseSession.setDate(practiseSessionDetails.getDate());
-        existingPractiseSession.setStarTime(practiseSessionDetails.getStarTime());
+        existingPractiseSession.setStartTime(practiseSessionDetails.getStartTime());
         existingPractiseSession.setEndTime(practiseSessionDetails.getEndTime());
         existingPractiseSession.setPracType(practiseSessionDetails.getPracType());
 
@@ -122,7 +122,7 @@ public class PractiseSessionService {
         response.setPracId(practiseSession.getPracId());
         response.setVenue(practiseSession.getVenue());
         response.setDate(practiseSession.getDate());
-        response.setStartTime(practiseSession.getStarTime());
+        response.setStartTime(practiseSession.getStartTime());
         response.setEndTime(practiseSession.getEndTime());
         response.setPracType(practiseSession.getPracType());
         response.setTeamUnder(practiseSession.getTeam().getUnder());
@@ -146,7 +146,7 @@ public class PractiseSessionService {
             practiceSessionResponse.setPracId(practiceSession.getPracId());
             practiceSessionResponse.setVenue(practiceSession.getVenue());
             practiceSessionResponse.setDate(practiceSession.getDate());
-            practiceSessionResponse.setStartTime(practiceSession.getStarTime());
+            practiceSessionResponse.setStartTime(practiceSession.getStartTime());
             practiceSessionResponse.setEndTime(practiceSession.getEndTime());
             practiceSessionResponse.setPracType(practiceSession.getPracType());
             practiceSessionResponse.setTeamUnder(practiceSession.getTeam().getUnder());
