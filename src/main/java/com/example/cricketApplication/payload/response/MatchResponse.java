@@ -4,6 +4,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 import java.util.Date;
+import java.util.List;
 
 @lombok.Getter
 @lombok.Setter
@@ -27,4 +28,5 @@ public class MatchResponse {
     private String time;
     private String under;
     private String logo;
+    private List<MatchCoachResponse> coaches;
 }

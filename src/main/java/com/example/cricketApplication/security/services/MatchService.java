@@ -1,6 +1,8 @@
 package com.example.cricketApplication.security.services;
 
+import com.example.cricketApplication.models.Coach;
 import com.example.cricketApplication.models.Match;
+import com.example.cricketApplication.payload.response.MatchCoachResponse;
 import com.example.cricketApplication.payload.response.MatchResponse;
 import com.example.cricketApplication.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MatchService {
@@ -47,6 +50,24 @@ public class MatchService {
     public List<MatchResponse> getAllMatches() {
         List<Match> matches = matchRepository.findAll();
         return RefactorResponse(matches);  // Convert to MatchResponse list
+    }
+
+    public boolean hasRequiredMatchSummaries(Long matchId) {
+        // Retrieve match by id
+        Match match = matchRepository.findById(matchId)
+                .orElseThrow(() -> new IllegalArgumentException("Match not found"));
+
+        int summaryCount = match.getMatchSummaries().size();
+
+        switch (match.getType()) {
+            case "Test":
+                return summaryCount == 2;
+            case "T20":
+            case "ODI":
+                return summaryCount == 1;
+            default:
+                throw new IllegalArgumentException("Unknown match type");
+        }
     }
 
 
@@ -96,7 +117,16 @@ public class MatchService {
             matchResponse.setType(match.getType());
             matchResponse.setUnder(match.getTeam().getUnder());
             matchResponse.setLogo(match.getLogo());
+            List<MatchCoachResponse> coaches = match.getCoaches().stream()
+                    .map(coach -> {
+                        MatchCoachResponse coachResponse = new MatchCoachResponse();
+                        coachResponse.setCoachId(coach.getCoachId());
+                        coachResponse.setCoachName(coach.getName());
+                        return coachResponse;
+                    })
+                    .collect(Collectors.toList());
 
+            matchResponse.setCoaches(coaches);
             matchResponseList.add(matchResponse);
 
         }

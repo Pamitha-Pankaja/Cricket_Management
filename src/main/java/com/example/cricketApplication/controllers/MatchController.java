@@ -47,6 +47,12 @@ public class MatchController {
         return ResponseEntity.ok(matchResponse);
     }
 
+    @GetMapping("/{matchId}/hasRequiredSummaries")
+    public ResponseEntity<Boolean> hasRequiredMatchSummaries(@PathVariable Long matchId) {
+        boolean hasRequiredSummaries = matchService.hasRequiredMatchSummaries(matchId);
+        return ResponseEntity.ok(hasRequiredSummaries);
+    }
+
 
 
     // Get all matches
