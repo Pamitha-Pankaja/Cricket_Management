@@ -22,7 +22,7 @@ public class PractiseSession {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    private String starTime;
+    private String startTime;
     private String endTime;
     private String pracType;
 
