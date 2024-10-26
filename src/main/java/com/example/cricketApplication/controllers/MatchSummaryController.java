@@ -79,5 +79,17 @@ public class MatchSummaryController {
                     .body(new ArrayList<>()); // or some meaningful error response
         }
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateMatchSummary(@PathVariable Long id, @RequestBody MatchSummary matchSummary) {
+        try {
+            MatchSummaryResponse updatedMatchSummary = matchSummaryService.updateMatchSummary(id, matchSummary);
+            return ResponseEntity.ok(updatedMatchSummary);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new MessageResponse("Error: " + e.getMessage()));
+        }
+    }
 }
 
