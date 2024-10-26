@@ -123,6 +123,7 @@ public class PlayerService {
         Player player = playerRepository.findById(id)
                 .orElseThrow(() -> new PlayerNotFoundException("Player not found with ID: " + id));
         playerRepository.delete(player);
+        userRepository.delete(player.getUser());
     }
 
     private PlayerResponse refactorResponse(Player player) {
