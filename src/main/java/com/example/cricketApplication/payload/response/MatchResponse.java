@@ -27,6 +27,7 @@ public class MatchResponse {
     private String matchCaptain;
     private String time;
     private String under;
+    private Long teamId;
     private String logo;
     private List<MatchCoachResponse> coaches;
 }

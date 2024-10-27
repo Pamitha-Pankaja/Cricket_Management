@@ -92,6 +92,8 @@ public class MatchService {
         match.setMatchCaptain(matchDetails.getMatchCaptain());
         match.setTime(matchDetails.getTime());
         match.setLogo(matchDetails.getLogo());
+        match.setCoaches(matchDetails.getCoaches());
+        match.setTeam(matchDetails.getTeam());
 
         // Save the updated match
         Match updatedMatch = matchRepository.save(match);
@@ -116,6 +118,7 @@ public class MatchService {
             matchResponse.setTime(match.getTime());
             matchResponse.setType(match.getType());
             matchResponse.setUnder(match.getTeam().getUnder());
+            matchResponse.setTeamId(match.getTeam().getTeamId());
             matchResponse.setLogo(match.getLogo());
             List<MatchCoachResponse> coaches = match.getCoaches().stream()
                     .map(coach -> {
