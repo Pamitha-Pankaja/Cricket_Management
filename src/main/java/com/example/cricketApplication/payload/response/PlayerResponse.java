@@ -34,5 +34,5 @@ public class PlayerResponse {
     private Date membershipEndDate;
 
     // Add a list for 'under' values from the teams
-    private List<String> teamsUnder;
+    private List<PlayerResponseWithTeamDetails> teamDetails;
 }

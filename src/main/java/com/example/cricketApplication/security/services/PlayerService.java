@@ -7,6 +7,7 @@ import com.example.cricketApplication.models.PlayerStats;
 import com.example.cricketApplication.models.Team;
 import com.example.cricketApplication.models.User;
 import com.example.cricketApplication.payload.response.PlayerResponse;
+import com.example.cricketApplication.payload.response.PlayerResponseWithTeamDetails;
 import com.example.cricketApplication.payload.response.PlayerStatsResponse;
 import com.example.cricketApplication.repository.MembershipRepository;
 import com.example.cricketApplication.repository.PlayerRepository;
@@ -146,11 +147,11 @@ public class PlayerService {
         playerResponse.setMembershipStartDate(player.getMembership().getStartDate());
         playerResponse.setMembershipEndDate(player.getMembership().getEndDate());
 
-        // Extract the 'under' values from the teams associated with the player
-        List<String> teamUnders = player.getTeams().stream()
-                .map(Team::getUnder)  // Get the 'under' value for each team
+        // Populate team details using PlayerResponseWithTeamDetails
+        List<PlayerResponseWithTeamDetails> teamDetails = player.getTeams().stream()
+                .map(team -> new PlayerResponseWithTeamDetails(team.getUnder(), String.valueOf(team.getYear())))
                 .collect(Collectors.toList());
-        playerResponse.setTeamsUnder(teamUnders);  // Set the list of 'under' values in the response
+        playerResponse.setTeamDetails(teamDetails);
 
         return playerResponse;
     }
