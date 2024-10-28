@@ -20,9 +20,20 @@ public class TeamService {
     @Autowired
     private TeamRepository teamRepository;
 
+//    public Team addTeam(Team team) {
+//        return teamRepository.save(team);
+//    }
+
     public Team addTeam(Team team) {
+        Optional<Team> existingTeam = teamRepository.findByUnderAndYear(team.getUnder(), team.getYear());
+
+        if (existingTeam.isPresent()) {
+            throw new IllegalArgumentException("A team with the same 'under' category and year already exists.");
+        }
+
         return teamRepository.save(team);
     }
+
 
     public Optional<Team> getTeamById(Long id) {
         return teamRepository.findById(id);
