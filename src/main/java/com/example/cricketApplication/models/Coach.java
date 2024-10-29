@@ -28,6 +28,7 @@ public class Coach {
 
     private String image; // URL or path to the coach's image
     private String description;
+    private String status;
 
     @ManyToMany(mappedBy = "coaches")
     private Set<PractiseSession> practiseSessions = new HashSet<>();
