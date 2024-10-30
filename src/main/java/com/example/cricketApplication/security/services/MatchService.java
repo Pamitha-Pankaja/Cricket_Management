@@ -94,6 +94,8 @@ public class MatchService {
         match.setLogo(matchDetails.getLogo());
         match.setCoaches(matchDetails.getCoaches());
         match.setTeam(matchDetails.getTeam());
+        match.setUpdatedBy(matchDetails.getUpdatedBy());
+        match.setUpdatedOn(matchDetails.getUpdatedOn());
 
         // Save the updated match
         Match updatedMatch = matchRepository.save(match);

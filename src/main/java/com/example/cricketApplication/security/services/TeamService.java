@@ -75,6 +75,8 @@ public class TeamService {
             existingTeam.setYear(teamDetails.getYear());
             existingTeam.setCaptain(teamDetails.getCaptain());
             existingTeam.setPlayers(teamDetails.getPlayers());
+            existingTeam.setUpdatedBy(teamDetails.getUpdatedBy());
+            existingTeam.setUpdatedOn(teamDetails.getUpdatedOn());
 
             // Save updated team
             Team updatedTeam = teamRepository.save(existingTeam);

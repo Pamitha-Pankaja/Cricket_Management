@@ -136,6 +136,8 @@ public class PlayerStatsService {
         existingPlayerStats.setInning(updatedPlayerStats.getInning());
         existingPlayerStats.setPlayer(updatedPlayerStats.getPlayer());
         existingPlayerStats.setMatch(updatedPlayerStats.getMatch());
+        existingPlayerStats.setUpdatedBy(updatedPlayerStats.getUpdatedBy());
+        existingPlayerStats.setUpdatedOn(updatedPlayerStats.getUpdatedOn());
 
         return playerStatsRepository.save(existingPlayerStats);
     }
