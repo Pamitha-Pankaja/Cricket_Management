@@ -55,6 +55,7 @@ public class CoachService {
         coachResponse.setDescription(coach.getDescription());
         coachResponse.setUsername(coach.getUser().getUsername());
         coachResponse.setPassword(coach.getUser().getPassword());
+        coachResponse.setStatus(coach.getStatus());
 
 
         // Handle the case where the User is null
@@ -144,6 +145,7 @@ public class CoachService {
         coach.setDescription(coachDetails.getDescription());
         coach.setContactNo(coachDetails.getContactNo());
         coach.setEmail(coachDetails.getUser().getEmail());
+        coach.setStatus(coachDetails.getStatus());
 
         // Save the updated coach
         Coach updatedCoach = coachRepository.save(coach);
@@ -168,6 +170,7 @@ public class CoachService {
             coachResponse.setDescription(coach.getDescription());
             coachResponse.setUsername(coach.getUser().getUsername());
             coachResponse.setPassword(coach.getUser().getPassword());
+            coachResponse.setStatus(coach.getStatus());
 
             // Handle the case where the User is null
             if (coach.getUser() != null) {
