@@ -113,6 +113,8 @@ public class PlayerService {
         player.setImage(playerDetails.getImage());
         player.setPlayerRole(playerDetails.getPlayerRole());
         player.setMembership(playerDetails.getMembership());
+        player.setUpdatedOn(playerDetails.getUpdatedOn());
+        player.setUpdatedBy(playerDetails.getUpdatedBy());
         membershipRepository.save(playerDetails.getMembership());
 
         Player updatedPlayer = playerRepository.save(player);

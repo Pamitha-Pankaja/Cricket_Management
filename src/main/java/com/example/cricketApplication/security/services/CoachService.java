@@ -146,6 +146,8 @@ public class CoachService {
         coach.setContactNo(coachDetails.getContactNo());
         coach.setEmail(coachDetails.getUser().getEmail());
         coach.setStatus(coachDetails.getStatus());
+        coach.setUpdatedOn(coachDetails.getUpdatedOn());
+        coach.setUpdatedBy(coachDetails.getUpdatedBy());
 
         // Save the updated coach
         Coach updatedCoach = coachRepository.save(coach);
