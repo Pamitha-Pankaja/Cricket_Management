@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import com.example.cricketApplication.models.*;
 import com.example.cricketApplication.repository.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,6 +165,18 @@ public class AuthController {
                 officialId // Include officialId
         ));
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        // Clear the security context to invalidate the authentication session
+        SecurityContextHolder.clearContext();
+
+        // Set the JWT token in response headers to be empty or removed
+        response.setHeader("Authorization", "");
+
+        return ResponseEntity.ok(new MessageResponse("User logged out successfully!"));
+    }
+
 
 
 
