@@ -65,6 +65,8 @@ public List<MatchSummaryResponse> getAllMatchSummaries() {
         matchSummary.setOppositionWickets(updatedMatchSummary.getOppositionWickets());
         matchSummary.setOppositionOvers(updatedMatchSummary.getOppositionOvers());
         matchSummary.setResult(updatedMatchSummary.getResult());
+        matchSummary.setUpdatedBy(updatedMatchSummary.getUpdatedBy());
+        matchSummary.setUpdatedOn(updatedMatchSummary.getUpdatedOn());
 
         // Update the related match (optional)
         if (updatedMatchSummary.getMatch() != null) {

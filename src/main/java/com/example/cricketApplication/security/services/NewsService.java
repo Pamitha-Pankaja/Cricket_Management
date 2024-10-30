@@ -34,6 +34,8 @@ public class NewsService {
             news.setImageUrl(newsDetails.getImageUrl());
             news.setLink(newsDetails.getLink());
             news.setDateTime(newsDetails.getDateTime());
+            news.setUpdatedBy(newsDetails.getUpdatedBy());
+            news.setUpdatedOn(newsDetails.getUpdatedOn());
             return newsRepository.save(news);
         }).orElseThrow(() -> new EntityNotFoundException("News not found with id: " + id));
     }

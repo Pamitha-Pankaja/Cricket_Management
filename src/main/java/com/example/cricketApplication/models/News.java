@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @lombok.Getter
 @lombok.Setter
@@ -28,5 +29,9 @@ public class News {
     private LocalDateTime dateTime;
 
     private String author;
+    private String createdBy;
+    private Date createdOn;
+    private String updatedBy;
+    private Date updatedOn;
 
 }

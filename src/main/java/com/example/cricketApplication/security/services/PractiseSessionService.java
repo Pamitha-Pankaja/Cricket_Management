@@ -96,6 +96,8 @@ public class PractiseSessionService {
         existingPractiseSession.setStartTime(practiseSessionDetails.getStartTime());
         existingPractiseSession.setEndTime(practiseSessionDetails.getEndTime());
         existingPractiseSession.setPracType(practiseSessionDetails.getPracType());
+        existingPractiseSession.setUpdatedBy(practiseSessionDetails.getUpdatedBy());
+        existingPractiseSession.setUpdatedOn(practiseSessionDetails.getUpdatedOn());
 
         // Update coaches
         if (practiseSessionDetails.getCoaches() != null) {
