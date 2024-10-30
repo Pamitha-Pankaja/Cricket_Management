@@ -61,6 +61,10 @@ public class Player {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn( name = "membership_id",referencedColumnName = "id",nullable = true)
     private Membership membership;
+    private String createdBy;
+    private Date createdOn;
+    private String updatedBy;
+    private Date updatedOn;
 
     public Player(String name, String contactNo, String battingStyle, String bowlingStyle, String status, String image,String playerRole,Membership membership,String email,Date dateOfBirth,Role role) {
     this.name = name;
