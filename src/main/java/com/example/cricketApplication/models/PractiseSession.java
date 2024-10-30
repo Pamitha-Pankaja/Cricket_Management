@@ -45,6 +45,10 @@ public class PractiseSession {
     @JoinColumn(name = "team_id", nullable = false)
     @JsonBackReference
     private Team team;
+    private String createdBy;
+    private Date createdOn;
+    private String updatedBy;
+    private Date updatedOn;
 
     // Getters and setters
 }

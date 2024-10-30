@@ -2,6 +2,8 @@ package com.example.cricketApplication.models;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @lombok.Getter
 @lombok.Setter
 @lombok.NoArgsConstructor
@@ -25,6 +27,10 @@ public class MatchSummary {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "match_id", nullable = false)
     private Match match;
+    private String createdBy;
+    private Date createdOn;
+    private String updatedBy;
+    private Date updatedOn;
 
 
 
