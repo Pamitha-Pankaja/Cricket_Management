@@ -10,6 +10,5 @@ import java.util.Optional;
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
     Optional<Team> findByUnderAndYear(String under, int year);
-
 }
 
