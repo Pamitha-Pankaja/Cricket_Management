@@ -54,6 +54,10 @@ public class SignupRequest {
   private String address;
   private String description;
   private String position;
+  private String createdBy;
+  private Date createdOn;
+  private String updatedBy;
+  private Date updatedOn;
 
 
 

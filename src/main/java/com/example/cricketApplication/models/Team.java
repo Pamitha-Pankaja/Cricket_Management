@@ -24,6 +24,7 @@ public class Team {
     private String under; // "Under 13", "Under 15", etc.
     private int year;
     private String captain;
+    private String viceCaptain;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference

@@ -35,6 +35,7 @@ public class Match {
     private Date createdOn;
     private String updatedBy;
     private Date updatedOn;
+    private String matchViceCaptain;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PlayerStats> playerStats = new HashSet<>();
