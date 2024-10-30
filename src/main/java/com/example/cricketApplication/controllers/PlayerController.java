@@ -22,6 +22,7 @@ public class PlayerController {
     @Autowired
     private PlayerService playerService;
 
+
     @PostMapping("/add")
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
