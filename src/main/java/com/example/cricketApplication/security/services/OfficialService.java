@@ -82,6 +82,8 @@ public class OfficialService {
         official.setName(officialDetails.getName());
         official.setContactNo(officialDetails.getContactNo());
         official.setPosition(officialDetails.getPosition());
+        official.setUpdatedOn(officialDetails.getUpdatedOn());
+        official.setUpdatedBy(officialDetails.getUpdatedBy());
         Official updatedOfficial = officialRepository.save(official);
 
         return refactorResponse(updatedOfficial);

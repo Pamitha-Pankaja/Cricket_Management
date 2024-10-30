@@ -467,6 +467,8 @@ public class AuthController {
 
         // Link the player to the user entity
         player.setUser(newUser);
+        player.setCreatedBy(signUpRequest.getCreatedBy());
+        player.setCreatedOn(signUpRequest.getCreatedOn());
 
         // Save the user and player entities
         userRepository.save(newUser);
@@ -522,6 +524,8 @@ public class AuthController {
         coach.setAddress(signUpRequest.getAddress());
         coach.setDescription(signUpRequest.getDescription());
         coach.setRole(coachRole);// Set other coach-specific fields as needed
+        coach.setCreatedBy(signUpRequest.getCreatedBy());
+        coach.setCreatedOn(signUpRequest.getCreatedOn());
 
         // Link the coach to the user entity
         coach.setUser(newUser);
@@ -616,6 +620,8 @@ public class AuthController {
         official.setName(signUpRequest.getName());
         official.setContactNo(signUpRequest.getContactNo());
         official.setPosition(signUpRequest.getPosition());
+        official.setCreatedBy(signUpRequest.getCreatedBy());
+        official.setCreatedOn(signUpRequest.getCreatedOn());
 
         // Link the official to the user entity
         official.setUser(newUser);
