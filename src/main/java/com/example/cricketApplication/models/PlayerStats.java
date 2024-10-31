@@ -2,6 +2,7 @@ package com.example.cricketApplication.models;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @lombok.Getter
@@ -23,7 +24,7 @@ public class PlayerStats {
     private int fifties;
     private int centuries;
     private int balls;
-    private int overs;
+    private BigDecimal overs;
     private int runsConceded;
 
     @ManyToOne(fetch = FetchType.LAZY)
