@@ -5,6 +5,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @lombok.Getter
 @lombok.Setter
@@ -19,9 +21,7 @@ public class News {
     private String heading;
 
     @Column(columnDefinition = "TEXT")
-    private String body; // To store larger text for the news body
-
-    private String imageUrl;
+    private String body;
 
     private String link;
 
@@ -33,5 +33,9 @@ public class News {
     private Date createdOn;
     private String updatedBy;
     private Date updatedOn;
+
+    // One news item can have multiple images
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Image> images = new HashSet<>();
 
 }
