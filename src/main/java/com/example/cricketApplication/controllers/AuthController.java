@@ -425,7 +425,7 @@ public class AuthController {
 //        return ResponseEntity.ok(new MessageResponse("Player registered successfully!"));
 //    }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/signupPlayer")
     public ResponseEntity<?> registerPlayer(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -494,7 +494,7 @@ public class AuthController {
 
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/signupCoach")
     public ResponseEntity<?> registerCoach(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -594,7 +594,7 @@ public class AuthController {
 
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/signupOfficial")
     public ResponseEntity<?> registerOfficial(@Valid @RequestBody SignupRequest signUpRequest) {
         // Check if the username already exists
