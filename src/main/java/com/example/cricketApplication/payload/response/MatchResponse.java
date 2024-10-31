@@ -28,6 +28,7 @@ public class MatchResponse {
     private String time;
     private String under;
     private Long teamId;
+    private int teamYear;
     private String logo;
     private List<MatchCoachResponse> coaches;
 }

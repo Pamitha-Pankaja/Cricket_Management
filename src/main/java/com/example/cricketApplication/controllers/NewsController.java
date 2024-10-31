@@ -35,11 +35,11 @@ public class NewsController {
         return newsService.createNews(news);
     }
 
-//    @PutMapping("/{newsId}")
-//    public ResponseEntity<NewsResponse> updateNews(@PathVariable Long newsId, @RequestBody News updatedNews) {
-//        NewsResponse newsResponse = newsService.updateNews(newsId, updatedNews);
-//        return ResponseEntity.ok(newsResponse);
-//    }
+    @PutMapping("/{newsId}")
+    public ResponseEntity<NewsResponse> updateNews(@PathVariable Long newsId, @RequestBody News updatedNews) {
+        NewsResponse newsResponse = newsService.updateNews(newsId, updatedNews);
+        return ResponseEntity.ok(newsResponse);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
