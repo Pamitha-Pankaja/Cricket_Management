@@ -121,6 +121,7 @@ public class MatchService {
             matchResponse.setType(match.getType());
             matchResponse.setUnder(match.getTeam().getUnder());
             matchResponse.setTeamId(match.getTeam().getTeamId());
+            matchResponse.setTeamYear(match.getTeam().getYear());
             matchResponse.setLogo(match.getLogo());
             List<MatchCoachResponse> coaches = match.getCoaches().stream()
                     .map(coach -> {

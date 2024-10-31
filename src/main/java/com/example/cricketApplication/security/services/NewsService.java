@@ -81,6 +81,36 @@ public class NewsService {
 //        return new NewsResponse(savedNews);
 //    }
 
+    public NewsResponse updateNews(Long id, News newsDetails) {
+        return newsRepository.findById(id).map(news -> {
+            news.setHeading(newsDetails.getHeading());
+            news.setBody(newsDetails.getBody());
+            news.setLink(newsDetails.getLink());
+            news.setDateTime(newsDetails.getDateTime());
+            news.setUpdatedBy(newsDetails.getUpdatedBy());
+            news.setUpdatedOn(newsDetails.getUpdatedOn());
+
+            // Remove existing images from the database
+            if (news.getImages() != null) {
+                news.getImages().forEach(image -> imageRepository.delete(image)); // Assuming imageRepository is injected and available
+                news.getImages().clear(); // Clear the in-memory list after deletion
+            }
+
+            // Add new images
+//            if (newsDetails.getImages() != null) {
+//                newsDetails.getImages().forEach(image -> {
+//                    image.setNews(news); // Associate each new image with this news item
+//                    news.getImages().add(image);
+//                });
+//            }
+
+            News Updatednews = newsRepository.save(news);
+            return new NewsResponse(Updatednews);
+
+        }).orElseThrow(() -> new EntityNotFoundException("News not found with id: " + id));
+    }
+
+
 
     public void deleteNews(Long id) {
         newsRepository.deleteById(id);
