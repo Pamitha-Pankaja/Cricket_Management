@@ -1,6 +1,7 @@
 package com.example.cricketApplication.controllers;
 
 import com.example.cricketApplication.models.News;
+import com.example.cricketApplication.payload.response.MessageResponse;
 import com.example.cricketApplication.payload.response.NewsResponse;
 import com.example.cricketApplication.security.services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,15 @@ public class NewsController {
     private NewsService newsService;
 
     @GetMapping
-    public List<News> getAllNews() {
+    public List<NewsResponse> getAllNews() {
         return newsService.getAllNews();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<News> getNewsById(@PathVariable Long id) {
+    public ResponseEntity<NewsResponse> getNewsById(@PathVariable Long id) {
         return newsService.getNewsById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok) // Return 200 OK with the NewsResponse
+                .orElse(ResponseEntity.notFound().build()); // Return 404 Not Found
     }
 
     @PostMapping
@@ -46,4 +47,11 @@ public class NewsController {
         newsService.deleteNews(id);
         return ResponseEntity.noContent().build();
     }
+    @PostMapping("/deleteImages/{newsId}")
+    public ResponseEntity<?> deleteImages(@PathVariable Long newsId) {
+        // Call the service method to delete images
+        newsService.deleteImagesByNewsId(newsId);
+        return ResponseEntity.ok(new MessageResponse("Images deleted successfully."));
+    }
+
 }

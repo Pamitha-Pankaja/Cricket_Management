@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class NewsService {
@@ -20,12 +21,15 @@ public class NewsService {
     @Autowired
     private ImageRepository imageRepository;
 
-    public List<News> getAllNews() {
-        return newsRepository.findAll();
+    // Method to get all news and convert them to NewsResponse
+    public List<NewsResponse> getAllNews() {
+        return newsRepository.findAll().stream()
+                .map(NewsResponse::new) // Convert each News entity to NewsResponse
+                .collect(Collectors.toList());
     }
 
-    public Optional<News> getNewsById(Long id) {
-        return newsRepository.findById(id);
+    public Optional<NewsResponse> getNewsById(Long id) {
+        return newsRepository.findById(id).map(NewsResponse::new); // Convert News to NewsResponse
     }
 
     public NewsResponse createNews(News news) {
@@ -90,19 +94,15 @@ public class NewsService {
             news.setUpdatedBy(newsDetails.getUpdatedBy());
             news.setUpdatedOn(newsDetails.getUpdatedOn());
 
-            // Remove existing images from the database
-            if (news.getImages() != null) {
-                news.getImages().forEach(image -> imageRepository.delete(image)); // Assuming imageRepository is injected and available
-                news.getImages().clear(); // Clear the in-memory list after deletion
-            }
-
+            //deleteImagesByNewsId(id);
+            news.getImages().clear();
             // Add new images
-//            if (newsDetails.getImages() != null) {
-//                newsDetails.getImages().forEach(image -> {
-//                    image.setNews(news); // Associate each new image with this news item
-//                    news.getImages().add(image);
-//                });
-//            }
+            if (newsDetails.getImages() != null) {
+                newsDetails.getImages().forEach(image -> {
+                    image.setNews(news); // Associate each new image with this news item
+                    news.getImages().add(image);
+                });
+            }
 
             News Updatednews = newsRepository.save(news);
             return new NewsResponse(Updatednews);
@@ -110,6 +110,10 @@ public class NewsService {
         }).orElseThrow(() -> new EntityNotFoundException("News not found with id: " + id));
     }
 
+    @Transactional
+    public void deleteImagesByNewsId(Long newsId) {
+        imageRepository.deleteByNewsId(newsId);
+    }
 
 
     public void deleteNews(Long id) {
