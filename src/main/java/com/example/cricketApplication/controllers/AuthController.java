@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.example.cricketApplication.models.*;
+import com.example.cricketApplication.payload.response.CoachResponse;
+import com.example.cricketApplication.payload.response.NewsResponse;
 import com.example.cricketApplication.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -540,6 +542,7 @@ public class AuthController {
         coach.setRole(coachRole);// Set other coach-specific fields as needed
         coach.setCreatedBy(signUpRequest.getCreatedBy());
         coach.setCreatedOn(signUpRequest.getCreatedOn());
+        coach.setStatus(signUpRequest.getStatus());
 
         // Link the coach to the user entity
         coach.setUser(newUser);
@@ -548,7 +551,7 @@ public class AuthController {
         userRepository.save(newUser);
         coachRepository.save(coach);
 
-        return ResponseEntity.ok(new MessageResponse("Coach registered successfully!"));
+        return ResponseEntity.ok(new CoachResponse(coach));
     }
 
 

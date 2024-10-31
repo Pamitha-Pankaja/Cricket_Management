@@ -1,6 +1,7 @@
 package com.example.cricketApplication.controllers;
 
 import com.example.cricketApplication.models.News;
+import com.example.cricketApplication.payload.response.NewsResponse;
 import com.example.cricketApplication.security.services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +31,15 @@ public class NewsController {
     }
 
     @PostMapping
-    public News createNews(@RequestBody News news) {
+    public NewsResponse createNews(@RequestBody News news) {
         return newsService.createNews(news);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<News> updateNews(@PathVariable Long id, @RequestBody News newsDetails) {
-        return ResponseEntity.ok(newsService.updateNews(id, newsDetails));
-    }
+//    @PutMapping("/{newsId}")
+//    public ResponseEntity<NewsResponse> updateNews(@PathVariable Long newsId, @RequestBody News updatedNews) {
+//        NewsResponse newsResponse = newsService.updateNews(newsId, updatedNews);
+//        return ResponseEntity.ok(newsResponse);
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
