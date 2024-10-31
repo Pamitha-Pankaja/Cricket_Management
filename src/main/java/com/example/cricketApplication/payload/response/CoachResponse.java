@@ -4,6 +4,7 @@ import com.example.cricketApplication.models.PractiseSession;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
+import com.example.cricketApplication.models.Coach;
 
 import java.util.Date;
 import java.util.Set;
@@ -26,5 +27,20 @@ public class CoachResponse {
     private String username;
     private String password;
     private String status;
+
+    // Constructor that takes a Coach object as a parameter
+    public CoachResponse(Coach coach) {
+        this.coachId = coach.getCoachId();
+        this.name = coach.getName();
+        this.contactNo = coach.getContactNo();
+        this.email = coach.getEmail();
+        this.address = coach.getAddress();
+        this.dateOfBirth = coach.getDateOfBirth();
+        this.image = coach.getImage();
+        this.description = coach.getDescription();
+        this.username = coach.getUser().getUsername();
+        this.password = coach.getUser().getPassword();
+        this.status = coach.getStatus();
+    }
 
 }
