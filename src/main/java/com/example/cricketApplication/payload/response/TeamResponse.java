@@ -11,4 +11,5 @@ public class TeamResponse {
     private String under; // "Under 13", "Under 15", etc.
     private int year;
     private String captain;
+    private String ViceCaptain;
 }

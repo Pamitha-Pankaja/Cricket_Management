@@ -25,6 +25,7 @@ public class MatchResponse {
     private String type;
     private String umpires;
     private String matchCaptain;
+    private String matchViceCaptain;
     private String time;
     private String under;
     private Long teamId;
