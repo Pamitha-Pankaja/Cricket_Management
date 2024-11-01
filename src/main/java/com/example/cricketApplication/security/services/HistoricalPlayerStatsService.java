@@ -76,7 +76,7 @@ public class HistoricalPlayerStatsService {
         return response;
     }
 
-    public HistoricalPlayerStats updateHistoricalPlayerStats(Long id, HistoricalPlayerStats updatedStats) {
+    public HistoricalPlayerStatsResponse updateHistoricalPlayerStats(Long id, HistoricalPlayerStats updatedStats) {
         return statsRepository.findById(id).map(stats -> {
             stats.setInning(updatedStats.getInning());
             stats.setRuns(updatedStats.getRuns());
@@ -92,7 +92,7 @@ public class HistoricalPlayerStatsService {
             stats.setUpdatedBy(updatedStats.getUpdatedBy());
             stats.setUpdatedOn(updatedStats.getUpdatedOn());
             //stats.setPlayer(updatedStats.getPlayer());
-            return statsRepository.save(stats);
+            return refactorResponse(statsRepository.save(stats));
         }).orElseThrow(() -> new RuntimeException("HistoricalPlayerStats not found with id: " + id));
     }
 }

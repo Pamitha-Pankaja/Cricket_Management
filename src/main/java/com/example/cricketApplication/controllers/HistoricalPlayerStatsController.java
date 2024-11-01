@@ -48,7 +48,7 @@ public class HistoricalPlayerStatsController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<HistoricalPlayerStats> updateHistoricalPlayerStats(
+    public ResponseEntity<HistoricalPlayerStatsResponse> updateHistoricalPlayerStats(
             @PathVariable Long id, @RequestBody HistoricalPlayerStats updatedStats) {
         return ResponseEntity.ok(statsService.updateHistoricalPlayerStats(id, updatedStats));
     }
