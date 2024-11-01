@@ -84,7 +84,7 @@ public class NewsService {
 //        News savedNews = newsRepository.save(existingNews);
 //        return new NewsResponse(savedNews);
 //    }
-
+    @Transactional
     public NewsResponse updateNews(Long id, News newsDetails) {
         return newsRepository.findById(id).map(news -> {
             news.setHeading(newsDetails.getHeading());
@@ -95,6 +95,7 @@ public class NewsService {
             news.setUpdatedOn(newsDetails.getUpdatedOn());
 
             //deleteImagesByNewsId(id);
+            imageRepository.deleteByNewsId(id);
             news.getImages().clear();
             // Add new images
             if (newsDetails.getImages() != null) {
