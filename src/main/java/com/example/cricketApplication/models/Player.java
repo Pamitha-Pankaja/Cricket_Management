@@ -48,6 +48,9 @@ public class Player {
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PlayerStats> playerStats = new HashSet<>();
 
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<HistoricalPlayerStats> historicalPlayerStats = new HashSet<>();
+
 //    @ManyToMany(mappedBy = "players")
 //    private Set<PractiseSession> practiseSessions = new HashSet<>();
 

@@ -9,14 +9,12 @@ import java.util.Date;
 @lombok.Setter
 @lombok.NoArgsConstructor
 @Entity
-@Table(name = "player_stats")
-public class PlayerStats {
+@Table(name = "historical_player_stats")
+public class HistoricalPlayerStats {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String inning; // "1st Inning", "2nd Inning", etc.
-
     private int runs;
     private int wickets;
     private int fours;
@@ -26,20 +24,14 @@ public class PlayerStats {
     private int balls;
     private BigDecimal overs;
     private int runsConceded;
+    private String matchType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id", nullable = false)
     private Player player;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "match_id", nullable = false)
-    private Match match;
-
-
     private String createdBy;
     private Date createdOn;
     private String updatedBy;
     private Date updatedOn;
-
-    // Getters and setters
 }
