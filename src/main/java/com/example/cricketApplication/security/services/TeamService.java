@@ -74,6 +74,7 @@ public class TeamService {
             existingTeam.setUnder(teamDetails.getUnder());
             existingTeam.setYear(teamDetails.getYear());
             existingTeam.setCaptain(teamDetails.getCaptain());
+            existingTeam.setViceCaptain(teamDetails.getViceCaptain());
             existingTeam.setPlayers(teamDetails.getPlayers());
             existingTeam.setUpdatedBy(teamDetails.getUpdatedBy());
             existingTeam.setUpdatedOn(teamDetails.getUpdatedOn());
@@ -102,8 +103,8 @@ public class TeamService {
             teamResponse.setTeamId(team1.getTeamId());
             teamResponse.setYear(team1.getYear());
             teamResponse.setCaptain(team1.getCaptain());
+            teamResponse.setViceCaptain(team1.getViceCaptain());
             teamResponse.setUnder(team1.getUnder());
-
             teamResponses.add(teamResponse);
         }
         return teamResponses;
@@ -114,6 +115,7 @@ public class TeamService {
         teamResponse.setTeamId(team.getTeamId());
         teamResponse.setYear(team.getYear());
         teamResponse.setCaptain(team.getCaptain());
+        teamResponse.setViceCaptain(team.getViceCaptain());
         teamResponse.setUnder(team.getUnder());
         return teamResponse;
     }

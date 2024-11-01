@@ -90,6 +90,7 @@ public class MatchService {
         match.setType(matchDetails.getType());
         match.setUmpires(matchDetails.getUmpires());
         match.setMatchCaptain(matchDetails.getMatchCaptain());
+        match.setMatchViceCaptain(matchDetails.getMatchViceCaptain());
         match.setTime(matchDetails.getTime());
         match.setLogo(matchDetails.getLogo());
         match.setCoaches(matchDetails.getCoaches());
@@ -117,6 +118,7 @@ public class MatchService {
             matchResponse.setUmpires(match.getUmpires());
             matchResponse.setVenue(match.getVenue());
             matchResponse.setMatchCaptain(match.getMatchCaptain());
+            matchResponse.setMatchViceCaptain(match.getMatchViceCaptain());
             matchResponse.setTime(match.getTime());
             matchResponse.setType(match.getType());
             matchResponse.setUnder(match.getTeam().getUnder());
