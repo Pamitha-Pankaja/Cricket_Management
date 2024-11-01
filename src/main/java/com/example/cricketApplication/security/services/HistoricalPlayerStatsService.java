@@ -1,11 +1,14 @@
 package com.example.cricketApplication.security.services;
 
 import com.example.cricketApplication.models.HistoricalPlayerStats;
+import com.example.cricketApplication.payload.response.HistoricalPlayerStatsResponse;
 import com.example.cricketApplication.repository.HistoricalPlayerStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HistoricalPlayerStatsService {
@@ -21,13 +24,19 @@ public class HistoricalPlayerStatsService {
         return statsRepository.save(stats);
     }
 
-    public HistoricalPlayerStats getHistoricalPlayerStatsById(Long id) {
-        return statsRepository.findById(id)
+    public HistoricalPlayerStatsResponse getHistoricalPlayerStatsById(Long id) {
+        HistoricalPlayerStats historicalPlayerStats = statsRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("HistoricalPlayerStats not found with id: " + id));
+        return refactorResponse(historicalPlayerStats);
     }
 
-    public List<HistoricalPlayerStats> getAllHistoricalPlayerStats() {
-        return statsRepository.findAll();
+    public List<HistoricalPlayerStatsResponse> getAllHistoricalPlayerStats() {
+        List<HistoricalPlayerStats> historicalStatList = statsRepository.findAll();
+        List<HistoricalPlayerStatsResponse> responseList = new ArrayList<>();
+        for (HistoricalPlayerStats historicalStat : historicalStatList) {
+            responseList.add(refactorResponse(historicalStat));
+        }
+        return responseList;
     }
 
     public void deleteHistoricalPlayerStats(Long id) {
@@ -36,6 +45,35 @@ public class HistoricalPlayerStatsService {
         } else {
             throw new RuntimeException("HistoricalPlayerStats not found with id: " + id);
         }
+    }
+
+    public List<HistoricalPlayerStatsResponse> getHistoricalPlayerStatsByPlayerId(Long playerId) {
+        List<HistoricalPlayerStats> statsList = statsRepository.findByPlayer_PlayerId(playerId);
+        return statsList.stream()
+                .map(this::refactorResponse)
+                .collect(Collectors.toList());
+    }
+
+    private HistoricalPlayerStatsResponse refactorResponse(HistoricalPlayerStats stats) {
+        HistoricalPlayerStatsResponse response = new HistoricalPlayerStatsResponse();
+        response.setId(stats.getId());
+        response.setInning(stats.getInning());
+        response.setRuns(stats.getRuns());
+        response.setWickets(stats.getWickets());
+        response.setFours(stats.getFours());
+        response.setSixers(stats.getSixers());
+        response.setFifties(stats.getFifties());
+        response.setCenturies(stats.getCenturies());
+        response.setBalls(stats.getBalls());
+        response.setOvers(stats.getOvers());
+        response.setRunsConceded(stats.getRunsConceded());
+        response.setMatchType(stats.getMatchType());
+        response.setPlayerId(stats.getPlayer().getPlayerId());
+        response.setCreatedBy(stats.getCreatedBy());
+        response.setCreatedOn(stats.getCreatedOn());
+        response.setUpdatedBy(stats.getUpdatedBy());
+        response.setUpdatedOn(stats.getUpdatedOn());
+        return response;
     }
 
     public HistoricalPlayerStats updateHistoricalPlayerStats(Long id, HistoricalPlayerStats updatedStats) {
@@ -53,6 +91,7 @@ public class HistoricalPlayerStatsService {
             stats.setMatchType(updatedStats.getMatchType());
             stats.setUpdatedBy(updatedStats.getUpdatedBy());
             stats.setUpdatedOn(updatedStats.getUpdatedOn());
+            //stats.setPlayer(updatedStats.getPlayer());
             return statsRepository.save(stats);
         }).orElseThrow(() -> new RuntimeException("HistoricalPlayerStats not found with id: " + id));
     }
