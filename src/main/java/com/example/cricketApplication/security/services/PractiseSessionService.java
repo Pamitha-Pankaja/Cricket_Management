@@ -128,6 +128,8 @@ public class PractiseSessionService {
         response.setEndTime(practiseSession.getEndTime());
         response.setPracType(practiseSession.getPracType());
         response.setTeamUnder(practiseSession.getTeam().getUnder());
+        response.setTeamYear(practiseSession.getTeam().getYear());
+        response.setTeamId(practiseSession.getTeam().getTeamId());
 
         // Set coaches in the response
         List<CoachPractiseSession> coachResponses = practiseSession.getCoaches().stream()
