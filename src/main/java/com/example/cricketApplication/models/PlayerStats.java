@@ -18,12 +18,13 @@ public class PlayerStats {
     private String inning; // "1st Inning", "2nd Inning", etc.
 
     private int runs;
-    private int wickets;
     private int fours;
     private int sixers;
+    private int balls;
+    private String howOut;
     private int fifties;
     private int centuries;
-    private int balls;
+    private int wickets;
     private BigDecimal overs;
     private int runsConceded;
 
