@@ -21,6 +21,8 @@ public class PracticeSessionResponse {
     private String endTime;
     private String pracType;
     private String teamUnder;
+    private int teamYear;
+    private long teamId;
     private List<CoachPractiseSession> coaches;
     private String startTime;
 }
