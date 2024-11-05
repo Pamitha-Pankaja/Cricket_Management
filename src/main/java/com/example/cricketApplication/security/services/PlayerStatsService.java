@@ -138,6 +138,7 @@ public class PlayerStatsService {
         existingPlayerStats.setMatch(updatedPlayerStats.getMatch());
         existingPlayerStats.setUpdatedBy(updatedPlayerStats.getUpdatedBy());
         existingPlayerStats.setUpdatedOn(updatedPlayerStats.getUpdatedOn());
+        existingPlayerStats.setHowOut(updatedPlayerStats.getHowOut());
 
         return playerStatsRepository.save(existingPlayerStats);
     }
@@ -165,6 +166,7 @@ public class PlayerStatsService {
             playerStatsResponse.setSixers(playerStats.getSixers());
             playerStatsResponse.setWickets(playerStats.getWickets());
             playerStatsResponse.setRunsConceded(playerStats.getRunsConceded());
+            playerStatsResponse.setHowOut(playerStats.getHowOut());
 
             PlayerResponse playerResponse = new PlayerResponse();
             playerResponse.setPlayerId(playerStats.getPlayer().getPlayerId());

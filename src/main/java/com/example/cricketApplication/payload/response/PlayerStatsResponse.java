@@ -20,6 +20,7 @@ public class PlayerStatsResponse {
     private int balls;
     private BigDecimal overs;
     private int runsConceded;
+    private String howOut;
 
     // Add player details
     private PlayerResponse player;
