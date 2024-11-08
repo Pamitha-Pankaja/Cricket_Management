@@ -27,6 +27,10 @@ public class CoachResponse {
     private String username;
     private String password;
     private String status;
+    private String createdBy;
+    private Date createdOn;
+    private String updatedBy;
+    private Date updatedOn;
 
     // Constructor that takes a Coach object as a parameter
     public CoachResponse(Coach coach) {
@@ -41,6 +45,10 @@ public class CoachResponse {
         this.username = coach.getUser().getUsername();
         this.password = coach.getUser().getPassword();
         this.status = coach.getStatus();
+        this.createdBy = coach.getCreatedBy();
+        this.createdOn = coach.getCreatedOn();
+        this.updatedBy = coach.getUpdatedBy();
+        this.updatedOn = coach.getUpdatedOn();
     }
 
 }

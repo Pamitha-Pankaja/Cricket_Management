@@ -143,13 +143,6 @@ public class PlayerStatsService {
         return playerStatsRepository.save(existingPlayerStats);
     }
 
-
-
-
-
-
-
-
     private List<PlayerStatsResponse> RefactorResponse(List<PlayerStats> playerStatsList) {
         List<PlayerStatsResponse> playerStatsResponseList = new ArrayList<>();
         for (PlayerStats playerStats : playerStatsList) {
