@@ -32,4 +32,8 @@ public class MatchResponse {
     private int teamYear;
     private String logo;
     private List<MatchCoachResponse> coaches;
+    private String createdBy;
+    private Date createdOn;
+    private String updatedBy;
+    private Date updatedOn;
 }
