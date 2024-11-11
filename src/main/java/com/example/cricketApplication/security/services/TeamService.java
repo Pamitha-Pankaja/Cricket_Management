@@ -105,6 +105,10 @@ public class TeamService {
             teamResponse.setCaptain(team1.getCaptain());
             teamResponse.setViceCaptain(team1.getViceCaptain());
             teamResponse.setUnder(team1.getUnder());
+            teamResponse.setCreatedBy(team1.getCreatedBy());
+            teamResponse.setUpdatedBy(team1.getUpdatedBy());
+            teamResponse.setCreatedOn(team1.getCreatedOn());
+            teamResponse.setUpdatedOn(team1.getUpdatedOn());
             teamResponses.add(teamResponse);
         }
         return teamResponses;
@@ -117,6 +121,10 @@ public class TeamService {
         teamResponse.setCaptain(team.getCaptain());
         teamResponse.setViceCaptain(team.getViceCaptain());
         teamResponse.setUnder(team.getUnder());
+        teamResponse.setCreatedBy(team.getCreatedBy());
+        teamResponse.setUpdatedBy(team.getUpdatedBy());
+        teamResponse.setCreatedOn(team.getCreatedOn());
+        teamResponse.setUpdatedOn(team.getUpdatedOn());
         return teamResponse;
     }
 
@@ -134,6 +142,10 @@ public class TeamService {
             playerResponse.setBowlingStyle(player.getBowlingStyle());
             playerResponse.setPlayerRole(player.getPlayerRole());
             playerResponse.setImage(player.getImage());
+            playerResponse.setCreatedBy(player.getCreatedBy());
+            playerResponse.setUpdatedBy(player.getUpdatedBy());
+            playerResponse.setCreatedOn(player.getCreatedOn());
+            playerResponse.setUpdatedOn(player.getUpdatedOn());
             playerResponses.add(playerResponse);
         }
         return playerResponses;
