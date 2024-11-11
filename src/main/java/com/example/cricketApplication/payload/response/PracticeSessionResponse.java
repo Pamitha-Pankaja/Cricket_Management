@@ -25,4 +25,8 @@ public class PracticeSessionResponse {
     private long teamId;
     private List<CoachPractiseSession> coaches;
     private String startTime;
+    private String createdBy;
+    private Date createdOn;
+    private String updatedBy;
+    private Date updatedOn;
 }

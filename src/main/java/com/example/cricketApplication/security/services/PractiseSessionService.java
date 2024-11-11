@@ -130,7 +130,10 @@ public class PractiseSessionService {
         response.setTeamUnder(practiseSession.getTeam().getUnder());
         response.setTeamYear(practiseSession.getTeam().getYear());
         response.setTeamId(practiseSession.getTeam().getTeamId());
-
+        response.setCreatedBy(practiseSession.getCreatedBy());
+        response.setUpdatedBy(practiseSession.getUpdatedBy());
+        response.setCreatedOn(practiseSession.getCreatedOn());
+        response.setUpdatedOn(practiseSession.getUpdatedOn());
         // Set coaches in the response
         List<CoachPractiseSession> coachResponses = practiseSession.getCoaches().stream()
                 .map(coach -> new CoachPractiseSession(coach.getCoachId(), coach.getName())) // Assuming 'getName()' exists in Coach entity
