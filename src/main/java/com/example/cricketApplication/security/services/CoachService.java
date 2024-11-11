@@ -56,6 +56,10 @@ public class CoachService {
         coachResponse.setUsername(coach.getUser().getUsername());
         coachResponse.setPassword(coach.getUser().getPassword());
         coachResponse.setStatus(coach.getStatus());
+        coachResponse.setCreatedBy(coach.getCreatedBy());
+        coachResponse.setUpdatedBy(coach.getUpdatedBy());
+        coachResponse.setCreatedOn(coach.getCreatedOn());
+        coachResponse.setUpdatedOn(coach.getUpdatedOn());
 
 
         // Handle the case where the User is null
@@ -173,6 +177,10 @@ public class CoachService {
             coachResponse.setUsername(coach.getUser().getUsername());
             coachResponse.setPassword(coach.getUser().getPassword());
             coachResponse.setStatus(coach.getStatus());
+            coachResponse.setCreatedBy(coach.getCreatedBy());
+            coachResponse.setUpdatedBy(coach.getUpdatedBy());
+            coachResponse.setCreatedOn(coach.getCreatedOn());
+            coachResponse.setUpdatedOn(coach.getUpdatedOn());
 
             // Handle the case where the User is null
             if (coach.getUser() != null) {
