@@ -102,6 +102,10 @@ public List<MatchSummaryResponse> getAllMatchSummaries() {
         // Fetch and set the "under" age group from the team
         response.setUnder(matchSummary.getMatch().getTeam().getUnder());  // Get the Under age group
         response.setLogo(matchSummary.getMatch().getLogo());
+        response.setCreatedBy(matchSummary.getCreatedBy());
+        response.setUpdatedBy(matchSummary.getUpdatedBy());
+        response.setCreatedOn(matchSummary.getCreatedOn());
+        response.setUpdatedOn(matchSummary.getUpdatedOn());
 
         return response;
     }
@@ -130,6 +134,10 @@ public List<MatchSummaryResponse> getAllMatchSummaries() {
             // Fetch and set the "under" age group from the team
             response.setUnder(matchSummary.getMatch().getTeam().getUnder());  // Get the Under age group
             response.setLogo(matchSummary.getMatch().getLogo());
+            response.setCreatedBy(matchSummary.getCreatedBy());
+            response.setUpdatedBy(matchSummary.getUpdatedBy());
+            response.setCreatedOn(matchSummary.getCreatedOn());
+            response.setUpdatedOn(matchSummary.getUpdatedOn());
 
             matchSummaryResponseList.add(response);
 

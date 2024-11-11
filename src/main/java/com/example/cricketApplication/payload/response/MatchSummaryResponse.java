@@ -30,5 +30,9 @@ public class MatchSummaryResponse {
     private String type;
     private String under;
     private String logo;
+    private String createdBy;
+    private Date createdOn;
+    private String updatedBy;
+    private Date updatedOn;
 
 }
