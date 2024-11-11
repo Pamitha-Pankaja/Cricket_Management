@@ -160,6 +160,10 @@ public class PlayerStatsService {
             playerStatsResponse.setWickets(playerStats.getWickets());
             playerStatsResponse.setRunsConceded(playerStats.getRunsConceded());
             playerStatsResponse.setHowOut(playerStats.getHowOut());
+            playerStatsResponse.setCreatedBy(playerStats.getCreatedBy());
+            playerStatsResponse.setUpdatedBy(playerStats.getUpdatedBy());
+            playerStatsResponse.setCreatedOn(playerStats.getCreatedOn());
+            playerStatsResponse.setUpdatedOn(playerStats.getUpdatedOn());
 
             PlayerResponse playerResponse = new PlayerResponse();
             playerResponse.setPlayerId(playerStats.getPlayer().getPlayerId());
