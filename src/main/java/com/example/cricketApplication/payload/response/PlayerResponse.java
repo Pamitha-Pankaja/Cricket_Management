@@ -32,7 +32,10 @@ public class PlayerResponse {
     private Long membershipId;
     private Date membershipStartDate;
     private Date membershipEndDate;
-
+    private String createdBy;
+    private Date createdOn;
+    private String updatedBy;
+    private Date updatedOn;
     // Add a list for 'under' values from the teams
     private List<PlayerResponseWithTeamDetails> teamDetails;
 }
