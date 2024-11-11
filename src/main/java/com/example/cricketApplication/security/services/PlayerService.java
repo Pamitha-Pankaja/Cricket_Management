@@ -148,6 +148,10 @@ public class PlayerService {
         playerResponse.setMembershipId(player.getMembership().getId());
         playerResponse.setMembershipStartDate(player.getMembership().getStartDate());
         playerResponse.setMembershipEndDate(player.getMembership().getEndDate());
+        playerResponse.setCreatedBy(player.getCreatedBy());
+        playerResponse.setUpdatedBy(player.getUpdatedBy());
+        playerResponse.setCreatedOn(player.getCreatedOn());
+        playerResponse.setUpdatedOn(player.getUpdatedOn());
 
         // Populate team details using PlayerResponseWithTeamDetails
         List<PlayerResponseWithTeamDetails> teamDetails = player.getTeams().stream()
