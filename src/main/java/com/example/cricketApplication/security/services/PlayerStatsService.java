@@ -133,6 +133,9 @@ public class PlayerStatsService {
         existingPlayerStats.setSixers(updatedPlayerStats.getSixers());
         existingPlayerStats.setWickets(updatedPlayerStats.getWickets());
         existingPlayerStats.setRunsConceded(updatedPlayerStats.getRunsConceded());
+        existingPlayerStats.setWides(updatedPlayerStats.getWides());
+        existingPlayerStats.setNoBalls(updatedPlayerStats.getNoBalls());
+        existingPlayerStats.setMaidens(updatedPlayerStats.getMaidens());
         existingPlayerStats.setInning(updatedPlayerStats.getInning());
         existingPlayerStats.setPlayer(updatedPlayerStats.getPlayer());
         existingPlayerStats.setMatch(updatedPlayerStats.getMatch());
@@ -159,6 +162,9 @@ public class PlayerStatsService {
             playerStatsResponse.setSixers(playerStats.getSixers());
             playerStatsResponse.setWickets(playerStats.getWickets());
             playerStatsResponse.setRunsConceded(playerStats.getRunsConceded());
+            playerStatsResponse.setWides(playerStats.getWides());
+            playerStatsResponse.setNoBalls(playerStats.getNoBalls());
+            playerStatsResponse.setMaidens(playerStats.getMaidens());
             playerStatsResponse.setHowOut(playerStats.getHowOut());
             playerStatsResponse.setCreatedBy(playerStats.getCreatedBy());
             playerStatsResponse.setUpdatedBy(playerStats.getUpdatedBy());

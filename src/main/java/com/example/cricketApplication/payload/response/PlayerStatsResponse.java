@@ -21,6 +21,9 @@ public class PlayerStatsResponse {
     private int balls;
     private BigDecimal overs;
     private int runsConceded;
+    private int noBalls;
+    private int wides;
+    private int maidens;
     private String howOut;
     private String createdBy;
     private Date createdOn;
