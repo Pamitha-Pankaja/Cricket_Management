@@ -27,6 +27,9 @@ public class PlayerStats {
     private int wickets;
     private BigDecimal overs;
     private int runsConceded;
+    private int noBalls;
+    private int wides;
+    private int maidens;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id", nullable = false)
