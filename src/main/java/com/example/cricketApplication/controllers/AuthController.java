@@ -72,7 +72,7 @@ public class AuthController {
     @Autowired
     OfficialRepository officialRepository;
 
-    private static final String IMAGE_DIRECTORY = "D:\\DocyardAssignments\\players\\";
+    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
 
 
 //    @PostMapping("/signin")
