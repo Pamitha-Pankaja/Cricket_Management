@@ -15,6 +15,7 @@ import com.example.cricketApplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +140,14 @@ public class PlayerService {
         playerResponse.setBattingStyle(player.getBattingStyle());
         playerResponse.setBowlingStyle(player.getBowlingStyle());
         playerResponse.setStatus(player.getStatus());
-        playerResponse.setImage(player.getImage());
+//        playerResponse.setImage(player.getImage());
+        String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/images/")
+                .path(player.getImage())
+                .toUriString();
+
+        playerResponse.setImage(imageUrl);
+
         playerResponse.setPlayerRole(player.getPlayerRole());
         playerResponse.setStartDate(String.valueOf(player.getMembership().getStartDate()));
         playerResponse.setEndDate(String.valueOf(player.getMembership().getEndDate()));

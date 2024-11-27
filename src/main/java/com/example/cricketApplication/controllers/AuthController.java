@@ -446,7 +446,8 @@ public class AuthController {
                     signUpRequest.getBattingStyle(),
                     signUpRequest.getBowlingStyle(),
                     signUpRequest.getStatus(),
-                    imagePath, // Save image path as URL
+                    //imagePath, // Save image path as URL
+                    fileName,
                     signUpRequest.getPlayerRole(),
                     membership,
                     signUpRequest.getEmail(),
