@@ -1,5 +1,6 @@
 package com.example.cricketApplication.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -428,6 +429,8 @@ public class AuthController {
             String fileName = signUpRequest.getUsername() + ".jpg"; // Adjust the extension as needed
             String imagePath = IMAGE_DIRECTORY + fileName;
             Files.write(Paths.get(imagePath), imageFile.getBytes());
+
+
 
             // Create and set user entity
             User newUser = new User();

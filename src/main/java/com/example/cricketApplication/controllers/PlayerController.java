@@ -66,38 +66,38 @@ public class PlayerController {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping("/upload")
-    public class FileUploadController {
-
-        private static final String UPLOAD_DIR = "C:/inetpub/wwwroot/upload";
-
-        @PostMapping
-        public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
-            try {
-                // Ensure the upload directory exists
-                File uploadDir = new File(UPLOAD_DIR);
-                if (!uploadDir.exists()) {
-                    uploadDir.mkdirs(); // Create directories if they don't exist
-                }
-
-                // Save the file to the upload directory
-                String fileName = file.getOriginalFilename();
-                Path filePath = Paths.get(UPLOAD_DIR, fileName);
-                Files.write(filePath, file.getBytes());
-
-                // Construct the public URL for the uploaded file
-                String fileUrl = "http://rcc.dockyardsoftware.com/upload/" + fileName;
-
-                // Return the file URL as a response
-                return ResponseEntity.ok().body("{\"fileUrl\": \"" + fileUrl + "\"}");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("File upload failed: " + e.getMessage());
-            }
-        }
-    }
+//    @RequestMapping("/upload")
+//    public class FileUploadController {
+//
+//        private static final String UPLOAD_DIR = "C:/inetpub/wwwroot/upload";
+//
+//        @PostMapping
+//        public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+//            try {
+//                // Ensure the upload directory exists
+//                File uploadDir = new File(UPLOAD_DIR);
+//                if (!uploadDir.exists()) {
+//                    uploadDir.mkdirs(); // Create directories if they don't exist
+//                }
+//
+//                // Save the file to the upload directory
+//                String fileName = file.getOriginalFilename();
+//                Path filePath = Paths.get(UPLOAD_DIR, fileName);
+//                Files.write(filePath, file.getBytes());
+//
+//                // Construct the public URL for the uploaded file
+//                String fileUrl = "http://rcc.dockyardsoftware.com/upload/" + fileName;
+//
+//                // Return the file URL as a response
+//                return ResponseEntity.ok().body("{\"fileUrl\": \"" + fileUrl + "\"}");
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                        .body("File upload failed: " + e.getMessage());
+//            }
+//        }
+//    }
 }
 
 

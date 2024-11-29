@@ -29,6 +29,9 @@ public class PlayerStatsResponse {
     private Date createdOn;
     private String updatedBy;
     private Date updatedOn;
+    private int catches;
+    private int stumps;
+    private int runOuts;
 
     // Add player details
     private PlayerResponse player;
