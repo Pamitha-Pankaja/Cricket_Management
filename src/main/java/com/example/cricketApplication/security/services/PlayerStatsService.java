@@ -133,19 +133,21 @@ public class PlayerStatsService {
         existingPlayerStats.setSixers(updatedPlayerStats.getSixers());
         existingPlayerStats.setWickets(updatedPlayerStats.getWickets());
         existingPlayerStats.setRunsConceded(updatedPlayerStats.getRunsConceded());
+        existingPlayerStats.setWides(updatedPlayerStats.getWides());
+        existingPlayerStats.setNoBalls(updatedPlayerStats.getNoBalls());
+        existingPlayerStats.setMaidens(updatedPlayerStats.getMaidens());
         existingPlayerStats.setInning(updatedPlayerStats.getInning());
         existingPlayerStats.setPlayer(updatedPlayerStats.getPlayer());
         existingPlayerStats.setMatch(updatedPlayerStats.getMatch());
+        existingPlayerStats.setUpdatedBy(updatedPlayerStats.getUpdatedBy());
+        existingPlayerStats.setUpdatedOn(updatedPlayerStats.getUpdatedOn());
+        existingPlayerStats.setHowOut(updatedPlayerStats.getHowOut());
+        existingPlayerStats.setCatches(updatedPlayerStats.getCatches());
+        existingPlayerStats.setStumps(updatedPlayerStats.getStumps());
+        existingPlayerStats.setRunOuts(updatedPlayerStats.getRunOuts());
 
         return playerStatsRepository.save(existingPlayerStats);
     }
-
-
-
-
-
-
-
 
     private List<PlayerStatsResponse> RefactorResponse(List<PlayerStats> playerStatsList) {
         List<PlayerStatsResponse> playerStatsResponseList = new ArrayList<>();
@@ -163,6 +165,17 @@ public class PlayerStatsService {
             playerStatsResponse.setSixers(playerStats.getSixers());
             playerStatsResponse.setWickets(playerStats.getWickets());
             playerStatsResponse.setRunsConceded(playerStats.getRunsConceded());
+            playerStatsResponse.setWides(playerStats.getWides());
+            playerStatsResponse.setNoBalls(playerStats.getNoBalls());
+            playerStatsResponse.setMaidens(playerStats.getMaidens());
+            playerStatsResponse.setHowOut(playerStats.getHowOut());
+            playerStatsResponse.setCreatedBy(playerStats.getCreatedBy());
+            playerStatsResponse.setUpdatedBy(playerStats.getUpdatedBy());
+            playerStatsResponse.setCreatedOn(playerStats.getCreatedOn());
+            playerStatsResponse.setUpdatedOn(playerStats.getUpdatedOn());
+            playerStatsResponse.setCatches(playerStats.getCatches());
+            playerStatsResponse.setStumps(playerStats.getStumps());
+            playerStatsResponse.setRunOuts(playerStats.getRunOuts());
 
             PlayerResponse playerResponse = new PlayerResponse();
             playerResponse.setPlayerId(playerStats.getPlayer().getPlayerId());

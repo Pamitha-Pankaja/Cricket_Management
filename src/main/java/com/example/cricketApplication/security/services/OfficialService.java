@@ -82,6 +82,8 @@ public class OfficialService {
         official.setName(officialDetails.getName());
         official.setContactNo(officialDetails.getContactNo());
         official.setPosition(officialDetails.getPosition());
+        official.setUpdatedOn(officialDetails.getUpdatedOn());
+        official.setUpdatedBy(officialDetails.getUpdatedBy());
         Official updatedOfficial = officialRepository.save(official);
 
         return refactorResponse(updatedOfficial);
@@ -104,7 +106,10 @@ public class OfficialService {
         officialResponse.setPassword(official.getUser().getPassword());
         officialResponse.setEmail(official.getUser().getEmail());
         officialResponse.setUsername(official.getUser().getUsername());
-
+        officialResponse.setCreatedBy(official.getCreatedBy());
+        officialResponse.setUpdatedBy(official.getUpdatedBy());
+        officialResponse.setCreatedOn(official.getCreatedOn());
+        officialResponse.setUpdatedOn(official.getUpdatedOn());
         // Assuming the official is associated with teams or events, get them
 
         return officialResponse;

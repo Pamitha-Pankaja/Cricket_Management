@@ -14,6 +14,7 @@ import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,6 +56,11 @@ public class CoachService {
         coachResponse.setDescription(coach.getDescription());
         coachResponse.setUsername(coach.getUser().getUsername());
         coachResponse.setPassword(coach.getUser().getPassword());
+        coachResponse.setStatus(coach.getStatus());
+        coachResponse.setCreatedBy(coach.getCreatedBy());
+        coachResponse.setUpdatedBy(coach.getUpdatedBy());
+        coachResponse.setCreatedOn(coach.getCreatedOn());
+        coachResponse.setUpdatedOn(coach.getUpdatedOn());
 
 
         // Handle the case where the User is null
@@ -144,6 +150,9 @@ public class CoachService {
         coach.setDescription(coachDetails.getDescription());
         coach.setContactNo(coachDetails.getContactNo());
         coach.setEmail(coachDetails.getUser().getEmail());
+        coach.setStatus(coachDetails.getStatus());
+        coach.setUpdatedOn(coachDetails.getUpdatedOn());
+        coach.setUpdatedBy(coachDetails.getUpdatedBy());
 
         // Save the updated coach
         Coach updatedCoach = coachRepository.save(coach);
@@ -165,9 +174,20 @@ public class CoachService {
             coachResponse.setAddress(coach.getAddress());
             coachResponse.setDateOfBirth(coach.getDateOfBirth());
             coachResponse.setImage(coach.getImage());
+            String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/images/")
+                    .path(coach.getImage())
+                    .toUriString();
+            coachResponse.setImage(imageUrl);
+
             coachResponse.setDescription(coach.getDescription());
             coachResponse.setUsername(coach.getUser().getUsername());
             coachResponse.setPassword(coach.getUser().getPassword());
+            coachResponse.setStatus(coach.getStatus());
+            coachResponse.setCreatedBy(coach.getCreatedBy());
+            coachResponse.setUpdatedBy(coach.getUpdatedBy());
+            coachResponse.setCreatedOn(coach.getCreatedOn());
+            coachResponse.setUpdatedOn(coach.getUpdatedOn());
 
             // Handle the case where the User is null
             if (coach.getUser() != null) {

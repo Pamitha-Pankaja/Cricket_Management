@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/static/css/main.bfd11abf.css",
-    "main.js": "/static/js/main.ebd4e2bd.js",
-    "static/js/453.7c3ab6d3.chunk.js": "/static/js/453.7c3ab6d3.chunk.js",
+    "main.css": "/static/css/main.24677ea4.css",
+    "main.js": "/static/js/main.bd3c579d.js",
+    "static/js/453.eec523e5.chunk.js": "/static/js/453.eec523e5.chunk.js",
     "static/media/IMG5.png": "/static/media/IMG5.785ae980a34c8d800c76.png",
     "static/media/Cropped.png": "/static/media/Cropped.f4922adc9b3644f05ea8.png",
     "static/media/backDrop.png": "/static/media/backDrop.abe051dfe3e7e0f0bd13.png",
+    "static/media/CricketBall-unscreen.gif": "/static/media/CricketBall-unscreen.47e83ba41f559355da13.gif",
     "static/media/CricketBall.gif": "/static/media/CricketBall.17ea4d0bbaeadfd2e2e5.gif",
     "static/media/flag.png": "/static/media/flag.69fd7829aff006bd4b48.png",
     "static/media/new.mp4": "/static/media/new.4fbf8a200e214efa9698.mp4",
@@ -20,6 +21,7 @@
     "static/media/charith.png": "/static/media/charith.648a5b539b2eb4382428.png",
     "static/media/dhananjay.png": "/static/media/dhananjay.5e11679d0068419c53a8.png",
     "static/media/pabasara.png": "/static/media/pabasara.b5ff6ac5ee754159318c.png",
+    "static/media/MP5.mp4": "/static/media/MP5.f0464b34aab1e0d1be68.mp4",
     "static/media/Hero.png": "/static/media/Hero.defbe34d7df238d4a63c.png",
     "static/media/Highlightss.png": "/static/media/Highlightss.7a483dee328a82821f85.png",
     "static/media/FooterLogo.png": "/static/media/FooterLogo.8be7d5d5e116037e4daf.png",
@@ -50,12 +52,12 @@
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
-    "main.bfd11abf.css.map": "/static/css/main.bfd11abf.css.map",
-    "main.ebd4e2bd.js.map": "/static/js/main.ebd4e2bd.js.map",
-    "453.7c3ab6d3.chunk.js.map": "/static/js/453.7c3ab6d3.chunk.js.map"
+    "main.24677ea4.css.map": "/static/css/main.24677ea4.css.map",
+    "main.bd3c579d.js.map": "/static/js/main.bd3c579d.js.map",
+    "453.eec523e5.chunk.js.map": "/static/js/453.eec523e5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bfd11abf.css",
-    "static/js/main.ebd4e2bd.js"
+    "static/css/main.24677ea4.css",
+    "static/js/main.bd3c579d.js"
   ]
 }
