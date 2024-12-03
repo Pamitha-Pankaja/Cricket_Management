@@ -19,6 +19,12 @@ public class HistoricalPlayerStatsResponse {
     private int balls;
     private BigDecimal overs;
     private int runsConceded;
+    private int noBalls;
+    private int wides;
+    private int maidens;
+    private int catches;
+    private int stumps;
+    private int runOuts;
     private String matchType;
     private Long playerId;  // Assuming player ID is enough for the response
     private String createdBy;
