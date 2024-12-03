@@ -481,62 +481,134 @@ public class AuthController {
 
 
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/signupCoach")
-    public ResponseEntity<?> registerCoach(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+//    @PostMapping("/signupCoach")
+//    public ResponseEntity<?> registerCoach(@Valid @RequestBody SignupRequest signUpRequest) {
+//        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body(new MessageResponse("Error: Username is already taken!"));
+//        }
+//
+//        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body(new MessageResponse("Error: Email is already in use!"));
+//        }
+//
+//
+//
+//        // Create and set user entity
+//        User newUser = new User();
+//        newUser.setUsername(signUpRequest.getUsername());
+//        newUser.setEmail(signUpRequest.getEmail());
+//        newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
+//
+//        // Set default role for coach
+//        Role coachRole = roleRepository.findByName(ERole.ROLE_COACH)
+//                .orElseGet(() -> {
+//                    Role newRole = new Role(ERole.ROLE_COACH);
+//                    roleRepository.save(newRole);
+//                    return newRole;
+//                });
+//        Set<Role> roles = new HashSet<>();
+//        roles.add(coachRole);
+//        newUser.setRoles(roles);
+//
+//        // Create new user's account
+//        Coach coach = new Coach();
+//        coach.setName(signUpRequest.getName());
+//        coach.setContactNo(signUpRequest.getContactNo());
+//        coach.setEmail(signUpRequest.getEmail());
+//        coach.setImage(signUpRequest.getImage());
+//        coach.setDateOfBirth(signUpRequest.getDateOfBirth());
+//        coach.setAddress(signUpRequest.getAddress());
+//        coach.setDescription(signUpRequest.getDescription());
+//        coach.setRole(coachRole);// Set other coach-specific fields as needed
+//        coach.setCreatedBy(signUpRequest.getCreatedBy());
+//        coach.setCreatedOn(signUpRequest.getCreatedOn());
+//        coach.setStatus(signUpRequest.getStatus());
+//
+//        // Link the coach to the user entity
+//        coach.setUser(newUser);
+//
+//        // Save the user and coach entities
+//        userRepository.save(newUser);
+//        coachRepository.save(coach);
+//
+//        return ResponseEntity.ok(new CoachResponse(coach));
+//    }
+
+    @PostMapping(value = "/signupCoach", consumes = "multipart/form-data")
+    public ResponseEntity<?> registerCoach(
+            @RequestParam("userData") String userData,
+            @RequestParam("image") MultipartFile imageFile) {
+        try {
+            // Parse the JSON payload
+            ObjectMapper objectMapper = new ObjectMapper();
+            SignupRequest signUpRequest = objectMapper.readValue(userData, SignupRequest.class);
+
+            // Check for duplicate username and email
+            if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+                return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+            }
+
+            if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+                return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+            }
+
+            // Save the image locally
+            String fileName = signUpRequest.getUsername() + ".jpg"; // Adjust the extension as needed
+            String imagePath = IMAGE_DIRECTORY + fileName;
+            Files.write(Paths.get(imagePath), imageFile.getBytes());
+
+            // Set default role for coach
+            Role coachRole = roleRepository.findByName(ERole.ROLE_COACH)
+                    .orElseGet(() -> {
+                        Role newRole = new Role(ERole.ROLE_COACH);
+                        roleRepository.save(newRole);
+                        return newRole;
+                    });
+
+            // Create and set user entity
+            User newUser = new User();
+            newUser.setUsername(signUpRequest.getUsername());
+            newUser.setEmail(signUpRequest.getEmail());
+            newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
+
+            Set<Role> roles = new HashSet<>();
+            roles.add(coachRole);
+            newUser.setRoles(roles);
+
+            // Create new coach's account
+            Coach coach = new Coach();
+            coach.setName(signUpRequest.getName());
+            coach.setContactNo(signUpRequest.getContactNo());
+            coach.setEmail(signUpRequest.getEmail());
+            coach.setImage(fileName); // Save image filename as reference
+            coach.setDateOfBirth(signUpRequest.getDateOfBirth());
+            coach.setAddress(signUpRequest.getAddress());
+            coach.setDescription(signUpRequest.getDescription());
+            coach.setRole(coachRole); // Set the role for the coach
+            coach.setCreatedBy(signUpRequest.getCreatedBy());
+            coach.setCreatedOn(signUpRequest.getCreatedOn());
+            coach.setStatus(signUpRequest.getStatus());
+
+            // Link the coach to the user entity
+            coach.setUser(newUser);
+
+            // Save the user and coach entities
+            userRepository.save(newUser);
+            coachRepository.save(coach);
+
+            return ResponseEntity.ok(new MessageResponse("Coach registered successfully!"));
+
+        } catch (Exception e) {
             return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new MessageResponse("Error: " + e.getMessage()));
         }
-
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
-        }
-
-
-
-        // Create and set user entity
-        User newUser = new User();
-        newUser.setUsername(signUpRequest.getUsername());
-        newUser.setEmail(signUpRequest.getEmail());
-        newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
-
-        // Set default role for coach
-        Role coachRole = roleRepository.findByName(ERole.ROLE_COACH)
-                .orElseGet(() -> {
-                    Role newRole = new Role(ERole.ROLE_COACH);
-                    roleRepository.save(newRole);
-                    return newRole;
-                });
-        Set<Role> roles = new HashSet<>();
-        roles.add(coachRole);
-        newUser.setRoles(roles);
-
-        // Create new user's account
-        Coach coach = new Coach();
-        coach.setName(signUpRequest.getName());
-        coach.setContactNo(signUpRequest.getContactNo());
-        coach.setEmail(signUpRequest.getEmail());
-        coach.setImage(signUpRequest.getImage());
-        coach.setDateOfBirth(signUpRequest.getDateOfBirth());
-        coach.setAddress(signUpRequest.getAddress());
-        coach.setDescription(signUpRequest.getDescription());
-        coach.setRole(coachRole);// Set other coach-specific fields as needed
-        coach.setCreatedBy(signUpRequest.getCreatedBy());
-        coach.setCreatedOn(signUpRequest.getCreatedOn());
-        coach.setStatus(signUpRequest.getStatus());
-
-        // Link the coach to the user entity
-        coach.setUser(newUser);
-
-        // Save the user and coach entities
-        userRepository.save(newUser);
-        coachRepository.save(coach);
-
-        return ResponseEntity.ok(new CoachResponse(coach));
     }
+
 
 
     @PostMapping("/signup")
