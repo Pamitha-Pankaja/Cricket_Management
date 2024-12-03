@@ -24,6 +24,12 @@ public class HistoricalPlayerStats {
     private int balls;
     private BigDecimal overs;
     private int runsConceded;
+    private int noBalls;
+    private int wides;
+    private int maidens;
+    private int catches;
+    private int stumps;
+    private int runOuts;
     private String matchType;
 
     @ManyToOne(fetch = FetchType.LAZY)
