@@ -67,6 +67,12 @@ public class HistoricalPlayerStatsService {
         response.setBalls(stats.getBalls());
         response.setOvers(stats.getOvers());
         response.setRunsConceded(stats.getRunsConceded());
+        response.setNoBalls(stats.getNoBalls());
+        response.setWides(stats.getWides());
+        response.setMaidens(stats.getMaidens());
+        response.setCatches(stats.getCatches());
+        response.setStumps(stats.getStumps());
+        response.setRunOuts(stats.getRunOuts());
         response.setMatchType(stats.getMatchType());
         response.setPlayerId(stats.getPlayer().getPlayerId());
         response.setCreatedBy(stats.getCreatedBy());
@@ -88,6 +94,12 @@ public class HistoricalPlayerStatsService {
             stats.setBalls(updatedStats.getBalls());
             stats.setOvers(updatedStats.getOvers());
             stats.setRunsConceded(updatedStats.getRunsConceded());
+            stats.setNoBalls(updatedStats.getNoBalls());
+            stats.setWides(updatedStats.getWides());
+            stats.setMaidens(updatedStats.getMaidens());
+            stats.setCatches(updatedStats.getCatches());
+            stats.setStumps(updatedStats.getStumps());
+            stats.setRunOuts(updatedStats.getRunOuts());
             stats.setMatchType(updatedStats.getMatchType());
             stats.setUpdatedBy(updatedStats.getUpdatedBy());
             stats.setUpdatedOn(updatedStats.getUpdatedOn());
