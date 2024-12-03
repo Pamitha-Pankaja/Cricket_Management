@@ -12,10 +12,16 @@ import com.example.cricketApplication.payload.response.PlayerStatsResponse;
 import com.example.cricketApplication.repository.MembershipRepository;
 import com.example.cricketApplication.repository.PlayerRepository;
 import com.example.cricketApplication.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +43,11 @@ public class PlayerService {
 
     @Autowired
     private MembershipRepository membershipRepository;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
 
     public Player savePlayer(Player player) {
         if (playerRepository.existsByEmail(player.getEmail())) {
@@ -63,7 +74,7 @@ public class PlayerService {
             .collect(Collectors.toList());
     }
 
-    public PlayerResponse updatePlayer(Long id, Player playerDetails) {
+    public PlayerResponse updatePlayer(Long id, Player playerDetails, MultipartFile imageFile) {
         Player player = playerRepository.findById(id)
                 .orElseThrow(() -> new PlayerNotFoundException("Player not found with ID: " + id));
 
@@ -110,11 +121,27 @@ public class PlayerService {
         player.setBattingStyle(playerDetails.getBattingStyle());
         player.setBowlingStyle(playerDetails.getBowlingStyle());
         player.setStatus(playerDetails.getStatus());
-        player.setImage(playerDetails.getImage());
+        //player.setImage(playerDetails.getImage());
         player.setPlayerRole(playerDetails.getPlayerRole());
         player.setMembership(playerDetails.getMembership());
         player.setUpdatedOn(playerDetails.getUpdatedOn());
         player.setUpdatedBy(playerDetails.getUpdatedBy());
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                String fileName = playerDetails.getUser().getUsername() + ".jpg"; // Use the player's username or another identifier
+                String imagePath = IMAGE_DIRECTORY + fileName;
+
+                // Save the image file locally
+                Files.write(Paths.get(imagePath), imageFile.getBytes());
+
+                // Update player image path
+                player.setImage(fileName);
+            } catch (IOException e) {
+                throw new RuntimeException("Error saving image file: " + e.getMessage(), e);
+            }
+        }
+
         membershipRepository.save(playerDetails.getMembership());
 
         Player updatedPlayer = playerRepository.save(player);
@@ -140,6 +167,19 @@ public class PlayerService {
         playerResponse.setBowlingStyle(player.getBowlingStyle());
         playerResponse.setStatus(player.getStatus());
         playerResponse.setImage(player.getImage());
+        String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/images/")
+                .path(player.getImage())
+                .toUriString();
+        playerResponse.setImage(imageUrl);
+        //playerResponse.setImage("http://rcc.dockyardsoftware.com/upload/"+ player.getImage());
+
+//          String serverName = request.getServerName(); // Get the server name dynamically (localhost or production)
+//          String imageUrl = "http://" + serverName + "/images/" + player.getImage();
+//          playerResponse.setImage(imageUrl);
+
+
+
         playerResponse.setPlayerRole(player.getPlayerRole());
         playerResponse.setStartDate(String.valueOf(player.getMembership().getStartDate()));
         playerResponse.setEndDate(String.valueOf(player.getMembership().getEndDate()));

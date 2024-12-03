@@ -38,4 +38,9 @@ public class PlayerResponse {
     private Date updatedOn;
     // Add a list for 'under' values from the teams
     private List<PlayerResponseWithTeamDetails> teamDetails;
+    private String message;
+    public PlayerResponse(String message) {
+        this.message = message;
+    }
+
 }

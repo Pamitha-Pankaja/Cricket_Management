@@ -8,6 +8,8 @@ import com.example.cricketApplication.repository.PractiseSessionRepository;
 import com.example.cricketApplication.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,10 @@ public class PractiseSessionService {
     @Autowired
     private TeamRepository teamRepository;
 
+    private static final String ACCOUNT_SID = "AC017d20421440805fb53e3ab4b8bb88a3";
+    private static final String AUTH_TOKEN = "bdc71685db25336c5e461c1baec73b6a";
+    private static final String FROM_PHONE_NUMBER = "+17085894572";
+
 //    public PractiseSession addPractiseSession(PractiseSession practiseSession) {
 //        return practiseSessionRepository.save(practiseSession);
 //    }
@@ -35,8 +41,12 @@ public class PractiseSessionService {
         // Set the team for the practise session
         practiseSession.setTeam(team);
 
-        // Save and return the practice session
-        return practiseSessionRepository.save(practiseSession);
+        PractiseSession savedPractiseSession = practiseSessionRepository.save(practiseSession);
+
+        // Send SMS notifications
+        sendSmsNotifications(team, savedPractiseSession);
+
+        return savedPractiseSession;
     }
 
 //    public List<PractiseSession> getAllPractiseSessions() {
@@ -161,6 +171,35 @@ public class PractiseSessionService {
 
         }
         return practiceSessionResponseList;
+    }
+
+
+    private void sendSmsNotifications(Team team, PractiseSession practiseSession) {
+        // Initialize Twilio
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        // Construct the message
+        String messageBody = "New Practice Session Scheduled: "
+                + "\nDate: " + practiseSession.getDate()
+                + "\nTime: " + practiseSession.getStartTime()
+                + "\nTime: " + practiseSession.getEndTime()
+                + "\nVenue: " + practiseSession.getVenue();
+
+        // Send SMS to each player in the team
+        team.getPlayers().forEach(player -> {
+            String playerContact = player.getContactNo();
+            if (playerContact != null && !playerContact.isEmpty()) {
+                sendSms(playerContact, messageBody);
+            }
+        });
+    }
+
+    private void sendSms(String toPhoneNumber, String messageBody) {
+        Message.creator(
+                new com.twilio.type.PhoneNumber(toPhoneNumber),
+                new com.twilio.type.PhoneNumber(FROM_PHONE_NUMBER),
+                messageBody
+        ).create();
     }
 }
 

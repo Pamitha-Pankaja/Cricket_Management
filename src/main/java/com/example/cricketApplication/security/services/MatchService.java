@@ -7,7 +7,11 @@ import com.example.cricketApplication.payload.response.MatchResponse;
 import com.example.cricketApplication.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,9 +24,34 @@ public class MatchService {
     @Autowired
     private MatchRepository matchRepository;
 
+    private static final String LOGO_DIRECTORY = "file:D:/upload/logos/";
+
     // Save a new match
-    public Match saveMatch(Match match) {
-        return matchRepository.save(match);
+//    public Match saveMatch(Match match) {
+//        return matchRepository.save(match);
+//    }
+
+
+    // Save a new match
+    public Match saveMatch(Match match, MultipartFile logoFile) {
+        try {
+            // If logo is provided, save it to the file system
+            if (logoFile != null && !logoFile.isEmpty()) {
+                String fileName = match.getMatchId() + ".jpg"; // Use match ID or another unique identifier
+                String logoPath = LOGO_DIRECTORY + fileName;
+
+                // Save the logo file locally
+                Files.write(Paths.get(logoPath), logoFile.getBytes());
+
+                // Update the match with the logo filename
+                match.setLogo(fileName); // Or you can save the full path if preferred
+            }
+
+            // Save the match entity to the database
+            return matchRepository.save(match);
+        } catch (IOException e) {
+            throw new RuntimeException("Error saving logo file: " + e.getMessage(), e);
+        }
     }
 
     // Get a match by ID
