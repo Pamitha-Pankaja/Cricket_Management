@@ -14,6 +14,7 @@ import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -173,6 +174,12 @@ public class CoachService {
             coachResponse.setAddress(coach.getAddress());
             coachResponse.setDateOfBirth(coach.getDateOfBirth());
             coachResponse.setImage(coach.getImage());
+            String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/images/")
+                    .path(coach.getImage())
+                    .toUriString();
+            coachResponse.setImage(imageUrl);
+
             coachResponse.setDescription(coach.getDescription());
             coachResponse.setUsername(coach.getUser().getUsername());
             coachResponse.setPassword(coach.getUser().getPassword());
