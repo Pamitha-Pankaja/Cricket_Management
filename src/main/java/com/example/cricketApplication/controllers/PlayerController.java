@@ -4,6 +4,7 @@ import com.example.cricketApplication.models.Player;
 import com.example.cricketApplication.payload.response.MessageResponse;
 import com.example.cricketApplication.payload.response.PlayerResponse;
 import com.example.cricketApplication.security.services.PlayerService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,11 +55,32 @@ public class PlayerController {
         return ResponseEntity.ok(players);
     }
 
+//    @PutMapping("/update/{id}")
+//    public ResponseEntity<PlayerResponse> updatePlayer(@PathVariable Long id, @RequestBody Player playerDetails) {
+//        PlayerResponse updatedPlayer = playerService.updatePlayer(id, playerDetails);
+//        return ResponseEntity.ok(updatedPlayer);
+//    }
+
     @PutMapping("/update/{id}")
-    public ResponseEntity<PlayerResponse> updatePlayer(@PathVariable Long id, @RequestBody Player playerDetails) {
-        PlayerResponse updatedPlayer = playerService.updatePlayer(id, playerDetails);
-        return ResponseEntity.ok(updatedPlayer);
+    public ResponseEntity<PlayerResponse> updatePlayer(
+            @PathVariable Long id,
+            @RequestParam("userData") String userData, // The player details as JSON
+            @RequestParam(value = "image", required = false) MultipartFile imageFile) { // The image (optional)
+        try {
+            // Parse the JSON data into the Player object
+            ObjectMapper objectMapper = new ObjectMapper();
+            Player playerDetails = objectMapper.readValue(userData, Player.class);
+
+            // Call the service to update the player with the image (if provided)
+            PlayerResponse updatedPlayer = playerService.updatePlayer(id, playerDetails, imageFile);
+
+            return ResponseEntity.ok(updatedPlayer);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new PlayerResponse("Error: " + e.getMessage()));
+        }
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deletePlayer(@PathVariable Long id) {
