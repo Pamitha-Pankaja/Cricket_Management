@@ -438,9 +438,9 @@ public class AuthController {
             newUser.setEmail(signUpRequest.getEmail());
             newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
 
-            Set<Role> roles = new HashSet<>();
-            roles.add(playerRole);
-            newUser.setRoles(roles);
+            Set<Role> role = new HashSet<>();
+            role.add(playerRole);
+            newUser.setRoles(role);
 
             // Create new player's account
             Player player = new Player(

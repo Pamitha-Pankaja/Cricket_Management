@@ -32,7 +32,7 @@ public class MatchController {
     @PostMapping("/add")
     public ResponseEntity<Match> addMatch(
             @RequestParam("matchData") String matchData, // JSON match data as string
-            @RequestParam(value = "logo", required = false) MultipartFile logoFile) { // Optional logo image file
+            @RequestParam(value = "logo") MultipartFile logoFile) { // Optional logo image file
         try {
             // Parse the match data (JSON) into a Match object
             ObjectMapper objectMapper = new ObjectMapper();
