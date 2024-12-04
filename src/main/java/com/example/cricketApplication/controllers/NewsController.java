@@ -4,6 +4,7 @@ import com.example.cricketApplication.models.Image;
 import com.example.cricketApplication.models.News;
 import com.example.cricketApplication.payload.response.MessageResponse;
 import com.example.cricketApplication.payload.response.NewsResponse;
+import com.example.cricketApplication.security.WebConfig;
 import com.example.cricketApplication.security.services.NewsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/news")
 public class NewsController {
-    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
-
+    private String IMAGE_DIRECTORY = WebConfig.getImageDirectory();
 
     @Autowired
     private NewsService newsService;
