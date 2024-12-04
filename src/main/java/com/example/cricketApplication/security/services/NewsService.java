@@ -5,6 +5,7 @@ import com.example.cricketApplication.models.News;
 import com.example.cricketApplication.payload.response.NewsResponse;
 import com.example.cricketApplication.repository.ImageRepository;
 import com.example.cricketApplication.repository.NewsRepository;
+import com.example.cricketApplication.security.WebConfig;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class NewsService {
     @Autowired
     private ImageRepository imageRepository;
 
-    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
+    private String IMAGE_DIRECTORY = WebConfig.getImageDirectory();
 
     // Method to get all news and convert them to NewsResponse
     public List<NewsResponse> getAllNews() {
