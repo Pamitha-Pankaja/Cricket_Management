@@ -8,6 +8,7 @@ import com.example.cricketApplication.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -160,6 +161,11 @@ public class MatchService {
             matchResponse.setTeamId(match.getTeam().getTeamId());
             matchResponse.setTeamYear(match.getTeam().getYear());
             matchResponse.setLogo(match.getLogo());
+            String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/images/")
+                    .path(match.getLogo())
+                    .toUriString();
+            matchResponse.setLogo(imageUrl);
             matchResponse.setCreatedBy(match.getCreatedBy());
             matchResponse.setUpdatedBy(match.getUpdatedBy());
             matchResponse.setCreatedOn(match.getCreatedOn());
