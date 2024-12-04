@@ -72,11 +72,27 @@ public class NewsController {
     }
 
 
-    @PutMapping("/{newsId}")
-    public ResponseEntity<NewsResponse> updateNews(@PathVariable Long newsId, @RequestBody News updatedNews) {
-        NewsResponse newsResponse = newsService.updateNews(newsId, updatedNews);
-        return ResponseEntity.ok(newsResponse);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateNews(
+            @PathVariable Long id,
+            @RequestParam("newsData") String newsData,
+            @RequestParam(value = "images", required = false) List<MultipartFile> images) {
+        try {
+            // Parse the JSON payload
+            ObjectMapper objectMapper = new ObjectMapper();
+            News updatedNews = objectMapper.readValue(newsData, News.class);
+
+            // Call the service method to update news
+            NewsResponse newsResponse = newsService.updateNews(id, updatedNews, images);
+
+            return ResponseEntity.ok(newsResponse);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new MessageResponse("Error: " + e.getMessage()));
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
