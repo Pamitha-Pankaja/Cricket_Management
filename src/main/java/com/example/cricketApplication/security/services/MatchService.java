@@ -5,6 +5,7 @@ import com.example.cricketApplication.models.Match;
 import com.example.cricketApplication.payload.response.MatchCoachResponse;
 import com.example.cricketApplication.payload.response.MatchResponse;
 import com.example.cricketApplication.repository.MatchRepository;
+import com.example.cricketApplication.security.WebConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +26,7 @@ public class MatchService {
     @Autowired
     private MatchRepository matchRepository;
 
-    private static final String LOGO_DIRECTORY = "D:\\upload\\";
+    private String LOGO_DIRECTORY = WebConfig.getImageDirectory();
 
     // Save a new match
 //    public Match saveMatch(Match match) {
