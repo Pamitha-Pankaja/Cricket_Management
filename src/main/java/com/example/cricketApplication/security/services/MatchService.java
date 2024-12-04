@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,7 +26,7 @@ public class MatchService {
     @Autowired
     private MatchRepository matchRepository;
 
-    private static final String LOGO_DIRECTORY = "file:D:/upload/logos/";
+    private static final String LOGO_DIRECTORY = "D:\\upload\\";
 
     // Save a new match
 //    public Match saveMatch(Match match) {
@@ -38,7 +39,7 @@ public class MatchService {
         try {
             // If logo is provided, save it to the file system
             if (logoFile != null && !logoFile.isEmpty()) {
-                String fileName = match.getMatchId() + ".jpg"; // Use match ID or another unique identifier
+                String fileName = match.getOpposition() + ".jpg"; // Use match ID or another unique identifier
                 String logoPath = LOGO_DIRECTORY + fileName;
 
                 // Save the logo file locally
@@ -54,6 +55,11 @@ public class MatchService {
             throw new RuntimeException("Error saving logo file: " + e.getMessage(), e);
         }
     }
+
+
+
+
+
 
     // Get a match by ID
 //    public Optional<Match> getMatchById(Long matchId) {

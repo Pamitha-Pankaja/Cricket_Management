@@ -126,6 +126,7 @@ public class PlayerService {
         player.setMembership(playerDetails.getMembership());
         player.setUpdatedOn(playerDetails.getUpdatedOn());
         player.setUpdatedBy(playerDetails.getUpdatedBy());
+        //player.setRole(playerDetails.getRole());
 
         if (imageFile != null && !imageFile.isEmpty()) {
             try {

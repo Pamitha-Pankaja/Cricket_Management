@@ -29,26 +29,50 @@ public class MatchController {
 //    }
 
 
+//    @PostMapping("/add")
+//    public ResponseEntity<Match> addMatch(
+//            @RequestParam("matchData") String matchData, // JSON match data as string
+//            @RequestParam(value = "logo") MultipartFile logoFile) { // Optional logo image file
+//        try {
+//            // Parse the match data (JSON) into a Match object
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            Match match = objectMapper.readValue(matchData, Match.class);
+//
+//            // Save the match with the logo
+//            Match savedMatch = matchService.saveMatch(match, logoFile);
+//            return ResponseEntity.ok(savedMatch);
+//
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(null);
+//        }
+//    }
+
     @PostMapping("/add")
     public ResponseEntity<Match> addMatch(
             @RequestParam("matchData") String matchData, // JSON match data as string
-            @RequestParam(value = "logo", required = false) MultipartFile logoFile) { // Optional logo image file
+            @RequestParam(value = "logo") MultipartFile logoFile) { // Optional logo image file
         try {
             // Parse the match data (JSON) into a Match object
             ObjectMapper objectMapper = new ObjectMapper();
             Match match = objectMapper.readValue(matchData, Match.class);
+
+            if (logoFile == null || logoFile.isEmpty()) {
+                throw new RuntimeException("Logo file is missing");
+            }
 
             // Save the match with the logo
             Match savedMatch = matchService.saveMatch(match, logoFile);
             return ResponseEntity.ok(savedMatch);
 
         } catch (Exception e) {
+            // Log the exception for debugging
+            System.err.println("Error occurred: " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
     }
-
-
 
     // Get a match by ID
 //    @GetMapping("/{id}")
