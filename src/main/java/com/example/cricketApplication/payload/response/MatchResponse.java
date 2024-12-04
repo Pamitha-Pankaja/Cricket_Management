@@ -36,4 +36,9 @@ public class MatchResponse {
     private Date createdOn;
     private String updatedBy;
     private Date updatedOn;
+    private List<PlayerResponseWithTeamDetails> teamDetails;
+    private String message;
+    public MatchResponse(String message) {
+        this.message = message;
+    }
 }
