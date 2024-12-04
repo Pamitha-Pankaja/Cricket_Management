@@ -1,20 +1,28 @@
 package com.example.cricketApplication.controllers;
 
+import com.example.cricketApplication.models.Image;
 import com.example.cricketApplication.models.News;
 import com.example.cricketApplication.payload.response.MessageResponse;
 import com.example.cricketApplication.payload.response.NewsResponse;
 import com.example.cricketApplication.security.services.NewsService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+
 @CrossOrigin(origins = "*")
 
 @RestController
 @RequestMapping("/api/news")
 public class NewsController {
+    private static final String IMAGE_DIRECTORY = "C:\\upload\\";
+
 
     @Autowired
     private NewsService newsService;
@@ -31,10 +39,38 @@ public class NewsController {
                 .orElse(ResponseEntity.notFound().build()); // Return 404 Not Found
     }
 
-    @PostMapping
-    public NewsResponse createNews(@RequestBody News news) {
-        return newsService.createNews(news);
+    @PostMapping(value = "/create", consumes = "multipart/form-data")
+    public ResponseEntity<?> createNews(
+            @RequestParam("newsData") String newsData,
+            @RequestParam("images") List<MultipartFile> imageFiles) {
+        try {
+            // Parse the JSON payload
+            ObjectMapper objectMapper = new ObjectMapper();
+            News news = objectMapper.readValue(newsData, News.class);
+
+            // Save images and associate them with the news item
+            Set<Image> images = new HashSet<>();
+            for (MultipartFile file : imageFiles) {
+                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+                String filePath = IMAGE_DIRECTORY + fileName;
+                Files.write(Paths.get(filePath), file.getBytes());
+
+                Image image = new Image();
+                image.setImageUrl(fileName); // Save only the filename or URL
+                image.setNews(news);
+                images.add(image);
+            }
+
+            news.setImages(images);
+            NewsResponse response = newsService.createNews(news);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new MessageResponse("Error: " + e.getMessage()));
+        }
     }
+
 
     @PutMapping("/{newsId}")
     public ResponseEntity<NewsResponse> updateNews(@PathVariable Long newsId, @RequestBody News updatedNews) {

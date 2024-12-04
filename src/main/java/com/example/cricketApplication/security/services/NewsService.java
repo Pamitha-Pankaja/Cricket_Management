@@ -34,9 +34,9 @@ public class NewsService {
 
     public NewsResponse createNews(News news) {
         if (news.getImages() != null) {
-            news.getImages().forEach(image -> image.setNews(news)); // Associate each image with the news item
+            news.getImages().forEach(image -> image.setNews(news));
         }
-        News savedNews =  newsRepository.save(news);
+        News savedNews = newsRepository.save(news);
         return new NewsResponse(savedNews);
     }
 
