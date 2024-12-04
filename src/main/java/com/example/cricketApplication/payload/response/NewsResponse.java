@@ -25,8 +25,11 @@ public class NewsResponse {
     private String body;
     private String link;
     private String author;
+    private LocalDateTime dateTime;
     private String createdBy;
+    private Date createdOn;
     private String updatedBy;
+    private Date updatedOn;
     private List<String> imageUrls;
 
 
@@ -36,8 +39,11 @@ public class NewsResponse {
         this.body = news.getBody();
         this.link = news.getLink();
         this.author = news.getAuthor();
-        this.createdBy = news.getCreatedBy();
+        this.dateTime = news.getDateTime();
         this.updatedBy = news.getUpdatedBy();
+        this.updatedOn = news.getUpdatedOn();
+        this.createdOn = news.getCreatedOn();
+        this.createdBy = news.getCreatedBy();
 
         // Generate URLs for images
         this.imageUrls = news.getImages().stream()
