@@ -21,7 +21,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/news")
 public class NewsController {
-    private static final String IMAGE_DIRECTORY = "C:\\upload\\";
+    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
 
 
     @Autowired

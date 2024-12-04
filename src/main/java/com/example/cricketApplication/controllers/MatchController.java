@@ -126,10 +126,26 @@ public class MatchController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<MatchResponse> updateMatch(@PathVariable Long id, @RequestBody Match matchDetails) {
-        MatchResponse updatedMatch = matchService.updateMatch(id, matchDetails);
-        return ResponseEntity.ok(updatedMatch);
+    public ResponseEntity<MatchResponse> updateMatch(
+            @PathVariable Long id,
+            @RequestParam("matchData") String matchData, // Match details as JSON
+            @RequestParam(value = "logo", required = false) MultipartFile logoFile // Optional logo file
+    ) {
+        try {
+            // Parse the JSON data into the Match object
+            ObjectMapper objectMapper = new ObjectMapper();
+            Match matchDetails = objectMapper.readValue(matchData, Match.class);
+
+            // Update the match using the service
+            MatchResponse updatedMatch = matchService.updateMatch(id, matchDetails, logoFile);
+
+            return ResponseEntity.ok(updatedMatch);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new MatchResponse("Error: " + e.getMessage()));
+        }
     }
+
 
 }
 

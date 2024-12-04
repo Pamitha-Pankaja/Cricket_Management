@@ -13,11 +13,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -112,7 +111,7 @@ public class MatchService {
         matchRepository.deleteById(matchId);
     }
 
-    public MatchResponse updateMatch(Long matchId, Match matchDetails) {
+    public MatchResponse updateMatch(Long matchId, Match matchDetails, MultipartFile logoFile) throws IOException {
         // Fetch the existing match by ID
         Match match = matchRepository.findById(matchId)
                 .orElseThrow(() -> new RuntimeException("Match not found with id: " + matchId));
@@ -128,18 +127,83 @@ public class MatchService {
         match.setMatchCaptain(matchDetails.getMatchCaptain());
         match.setMatchViceCaptain(matchDetails.getMatchViceCaptain());
         match.setTime(matchDetails.getTime());
-        match.setLogo(matchDetails.getLogo());
         match.setCoaches(matchDetails.getCoaches());
         match.setTeam(matchDetails.getTeam());
         match.setUpdatedBy(matchDetails.getUpdatedBy());
         match.setUpdatedOn(matchDetails.getUpdatedOn());
 
+        // Handle the logo file
+        if (logoFile != null && !logoFile.isEmpty()) {
+            String fileName = match.getOpposition() + ".jpg";
+            String logoPath = LOGO_DIRECTORY + fileName;
+            Files.write(Paths.get(logoPath), logoFile.getBytes());
+            match.setLogo(fileName);
+        }
+
         // Save the updated match
         Match updatedMatch = matchRepository.save(match);
 
-        // Return the updated match wrapped in a MatchResponse
-        return RefactorResponse(Collections.singletonList(updatedMatch)).get(0);
+        // Convert to MatchResponse and return
+        return refactorResponse(Collections.singletonList(updatedMatch)).get(0);
     }
+
+    private void saveFile(MultipartFile file, String fileName) {
+        try {
+            Path uploadPath = Paths.get("uploads/");
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+            Files.copy(file.getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to save file: " + e.getMessage());
+        }
+    }
+
+    private List<MatchResponse> refactorResponse(List<Match> matchList) {
+        return matchList.stream().map(match -> {
+            MatchResponse matchResponse = new MatchResponse();
+            matchResponse.setMatchId(match.getMatchId());
+            matchResponse.setDate(match.getDate());
+            matchResponse.setDivision(match.getDivision());
+            matchResponse.setOpposition(match.getOpposition());
+            matchResponse.setTier(match.getTier());
+            matchResponse.setUmpires(match.getUmpires());
+            matchResponse.setVenue(match.getVenue());
+            matchResponse.setMatchCaptain(match.getMatchCaptain());
+            matchResponse.setMatchViceCaptain(match.getMatchViceCaptain());
+            matchResponse.setTime(match.getTime());
+            matchResponse.setType(match.getType());
+            matchResponse.setUnder(match.getTeam().getUnder());
+            matchResponse.setTeamId(match.getTeam().getTeamId());
+            matchResponse.setTeamYear(match.getTeam().getYear());
+
+            // Convert logo to full URL
+            String logoUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/images/")
+                    .path(match.getLogo())
+                    .toUriString();
+            matchResponse.setLogo(logoUrl);
+
+            matchResponse.setCreatedBy(match.getCreatedBy());
+            matchResponse.setUpdatedBy(match.getUpdatedBy());
+            matchResponse.setCreatedOn(match.getCreatedOn());
+            matchResponse.setUpdatedOn(match.getUpdatedOn());
+
+            // Refactor coaches
+            List<MatchCoachResponse> coaches = match.getCoaches().stream()
+                    .map(coach -> {
+                        MatchCoachResponse coachResponse = new MatchCoachResponse();
+                        coachResponse.setCoachId(coach.getCoachId());
+                        coachResponse.setCoachName(coach.getName());
+                        return coachResponse;
+                    })
+                    .collect(Collectors.toList());
+            matchResponse.setCoaches(coaches);
+
+            return matchResponse;
+        }).collect(Collectors.toList());
+    }
+
 
 
     public List<MatchResponse> RefactorResponse(List<Match> matchList) {
