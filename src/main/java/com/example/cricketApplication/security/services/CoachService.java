@@ -53,6 +53,11 @@ public class CoachService {
         coachResponse.setAddress(coach.getAddress());
         coachResponse.setDateOfBirth(coach.getDateOfBirth());
         coachResponse.setImage(coach.getImage());
+        String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/images/")
+                .path(coach.getImage())
+                .toUriString();
+        coachResponse.setImage(imageUrl);
         coachResponse.setDescription(coach.getDescription());
         coachResponse.setUsername(coach.getUser().getUsername());
         coachResponse.setPassword(coach.getUser().getPassword());
@@ -87,6 +92,7 @@ public class CoachService {
 
 
     public Optional<Coach> getCoachByUserId(Long userId) {
+
         return coachRepository.findByUser_Id(userId);
     }
 

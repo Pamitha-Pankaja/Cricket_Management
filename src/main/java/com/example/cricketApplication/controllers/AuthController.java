@@ -14,6 +14,7 @@ import com.example.cricketApplication.models.*;
 import com.example.cricketApplication.payload.response.CoachResponse;
 import com.example.cricketApplication.payload.response.NewsResponse;
 import com.example.cricketApplication.repository.*;
+import com.example.cricketApplication.security.WebConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -73,7 +74,7 @@ public class AuthController {
     @Autowired
     OfficialRepository officialRepository;
 
-    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
+    private String IMAGE_DIRECTORY = WebConfig.getImageDirectory();
 
 
 //    @PostMapping("/signin")
