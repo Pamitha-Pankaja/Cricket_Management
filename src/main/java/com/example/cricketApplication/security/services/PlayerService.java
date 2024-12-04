@@ -12,6 +12,7 @@ import com.example.cricketApplication.payload.response.PlayerStatsResponse;
 import com.example.cricketApplication.repository.MembershipRepository;
 import com.example.cricketApplication.repository.PlayerRepository;
 import com.example.cricketApplication.repository.UserRepository;
+import com.example.cricketApplication.security.WebConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,7 +48,7 @@ public class PlayerService {
     @Autowired
     private HttpServletRequest request;
 
-    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
+    private String IMAGE_DIRECTORY = WebConfig.getImageDirectory();
 
     public Player savePlayer(Player player) {
         if (playerRepository.existsByEmail(player.getEmail())) {
