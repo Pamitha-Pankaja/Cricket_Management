@@ -9,7 +9,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,6 +24,8 @@ public class NewsService {
     private NewsRepository newsRepository;
     @Autowired
     private ImageRepository imageRepository;
+
+    private static final String IMAGE_DIRECTORY = "C:\\upload\\";
 
     // Method to get all news and convert them to NewsResponse
     public List<NewsResponse> getAllNews() {
@@ -85,31 +91,49 @@ public class NewsService {
 //        return new NewsResponse(savedNews);
 //    }
     @Transactional
-    public NewsResponse updateNews(Long id, News newsDetails) {
-        return newsRepository.findById(id).map(news -> {
-            news.setHeading(newsDetails.getHeading());
-            news.setBody(newsDetails.getBody());
-            news.setLink(newsDetails.getLink());
-            news.setDateTime(newsDetails.getDateTime());
-            news.setUpdatedBy(newsDetails.getUpdatedBy());
-            news.setUpdatedOn(newsDetails.getUpdatedOn());
+    public NewsResponse updateNews(Long id, News updatedNews, List<MultipartFile> imageFiles) {
+        return newsRepository.findById(id).map(existingNews -> {
+            // Update basic details
+            existingNews.setHeading(updatedNews.getHeading());
+            existingNews.setBody(updatedNews.getBody());
+            existingNews.setLink(updatedNews.getLink());
+            existingNews.setAuthor(updatedNews.getAuthor());
+            existingNews.setUpdatedBy(updatedNews.getUpdatedBy());
+            existingNews.setUpdatedOn(new Date());
 
-            //deleteImagesByNewsId(id);
-            imageRepository.deleteByNewsId(id);
-            news.getImages().clear();
-            // Add new images
-            if (newsDetails.getImages() != null) {
-                newsDetails.getImages().forEach(image -> {
-                    image.setNews(news); // Associate each new image with this news item
-                    news.getImages().add(image);
-                });
+            // Handle images
+            if (imageFiles != null && !imageFiles.isEmpty()) {
+                // Delete old images
+                imageRepository.deleteByNewsId(existingNews.getId());
+                existingNews.getImages().clear();
+
+                // Add new images
+                for (MultipartFile file : imageFiles) {
+                    try {
+                        // Save the image to the filesystem
+                        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+                        String imagePath = IMAGE_DIRECTORY + fileName;
+                        Files.write(Paths.get(imagePath), file.getBytes());
+
+                        // Create and associate the image with the news
+                        Image image = new Image();
+                        image.setImageUrl(fileName); // Save only the file name
+                        image.setNews(existingNews);
+                        existingNews.getImages().add(image);
+
+                    } catch (IOException e) {
+                        throw new RuntimeException("Error saving image file: " + file.getOriginalFilename(), e);
+                    }
+                }
             }
 
-            News Updatednews = newsRepository.save(news);
-            return new NewsResponse(Updatednews);
+            // Save the updated news entity
+            News savedNews = newsRepository.save(existingNews);
+            return new NewsResponse(savedNews);
 
         }).orElseThrow(() -> new EntityNotFoundException("News not found with id: " + id));
     }
+
 
     @Transactional
     public void deleteImagesByNewsId(Long newsId) {
