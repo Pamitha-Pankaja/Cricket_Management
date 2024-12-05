@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.exolab.castor.types.DateTime;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.math.BigDecimal;
@@ -26,11 +28,12 @@ public class NewsResponse {
     private String body;
     private String link;
     private String author;
-    private LocalDateTime dateTime;
     private String createdBy;
-    private DateTime createdOn;
+    @CreationTimestamp
+    private LocalDateTime createdOn;
     private String updatedBy;
-    private DateTime updatedOn;
+    @UpdateTimestamp
+    private LocalDateTime updatedOn;
     private List<String> imageUrls;
 
 
@@ -40,7 +43,6 @@ public class NewsResponse {
         this.body = news.getBody();
         this.link = news.getLink();
         this.author = news.getAuthor();
-        this.dateTime = news.getDateTime();
         this.updatedBy = news.getUpdatedBy();
         this.updatedOn = news.getUpdatedOn();
         this.createdOn = news.getCreatedOn();
