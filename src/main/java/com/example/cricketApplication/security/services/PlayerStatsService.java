@@ -145,6 +145,7 @@ public class PlayerStatsService {
         existingPlayerStats.setCatches(updatedPlayerStats.getCatches());
         existingPlayerStats.setStumps(updatedPlayerStats.getStumps());
         existingPlayerStats.setRunOuts(updatedPlayerStats.getRunOuts());
+        existingPlayerStats.setRemarks(updatedPlayerStats.getRemarks());
 
         return playerStatsRepository.save(existingPlayerStats);
     }
@@ -176,6 +177,7 @@ public class PlayerStatsService {
             playerStatsResponse.setCatches(playerStats.getCatches());
             playerStatsResponse.setStumps(playerStats.getStumps());
             playerStatsResponse.setRunOuts(playerStats.getRunOuts());
+            playerStatsResponse.setRemarks(playerStats.getRemarks());
 
             PlayerResponse playerResponse = new PlayerResponse();
             playerResponse.setPlayerId(playerStats.getPlayer().getPlayerId());

@@ -33,6 +33,7 @@ public class PlayerStats {
     private int catches;
     private int stumps;
     private int runOuts;
+    private String remarks;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id", nullable = false)
