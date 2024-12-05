@@ -9,12 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebSecurity
 public class WebConfig implements WebMvcConfigurer {
-
-    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
-
-    public static String getImageDirectory() {
-        return IMAGE_DIRECTORY;
-    }
+    private static final String IMAGE_DIRECTORY = "file:D:/upload/";
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

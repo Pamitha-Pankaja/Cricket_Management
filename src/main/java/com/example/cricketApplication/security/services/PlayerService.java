@@ -48,7 +48,7 @@ public class PlayerService {
     @Autowired
     private HttpServletRequest request;
 
-    private String IMAGE_DIRECTORY = WebConfig.getImageDirectory();
+    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
 
     public Player savePlayer(Player player) {
         if (playerRepository.existsByEmail(player.getEmail())) {

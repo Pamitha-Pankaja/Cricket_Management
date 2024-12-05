@@ -74,7 +74,8 @@ public class AuthController {
     @Autowired
     OfficialRepository officialRepository;
 
-    private String IMAGE_DIRECTORY = WebConfig.getImageDirectory();
+//    private String IMAGE_DIRECTORY = WebConfig.getImageDirectory();
+      private static final String IMAGE_DIRECTORY = "D:\\upload\\";
 
 
 //    @PostMapping("/signin")
