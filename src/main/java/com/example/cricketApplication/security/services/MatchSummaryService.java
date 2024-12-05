@@ -134,6 +134,8 @@ public List<MatchSummaryResponse> getAllMatchSummaries() {
             // Fetch and set the "under" age group from the team
             response.setUnder(matchSummary.getMatch().getTeam().getUnder());  // Get the Under age group
             response.setLogo(matchSummary.getMatch().getLogo());
+            response.setTeamId(matchSummary.getMatch().getTeam().getTeamId());
+            response.setTeamYear(matchSummary.getMatch().getTeam().getYear());
             response.setCreatedBy(matchSummary.getCreatedBy());
             response.setUpdatedBy(matchSummary.getUpdatedBy());
             response.setCreatedOn(matchSummary.getCreatedOn());

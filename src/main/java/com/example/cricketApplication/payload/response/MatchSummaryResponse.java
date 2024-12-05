@@ -29,6 +29,8 @@ public class MatchSummaryResponse {
     private Date date;
     private String type;
     private String under;
+    private Long teamId;
+    private int teamYear;
     private String logo;
     private String createdBy;
     private Date createdOn;
