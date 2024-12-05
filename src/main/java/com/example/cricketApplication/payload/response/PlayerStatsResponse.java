@@ -32,6 +32,7 @@ public class PlayerStatsResponse {
     private int catches;
     private int stumps;
     private int runOuts;
+    private String remarks;
 
     // Add player details
     private PlayerResponse player;
