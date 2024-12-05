@@ -26,7 +26,7 @@ public class MatchService {
     @Autowired
     private MatchRepository matchRepository;
 
-    private String LOGO_DIRECTORY = WebConfig.getImageDirectory();
+    private static final String LOGO_DIRECTORY = "D:\\upload\\";
 
     // Save a new match
 //    public Match saveMatch(Match match) {

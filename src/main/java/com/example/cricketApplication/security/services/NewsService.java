@@ -26,7 +26,7 @@ public class NewsService {
     @Autowired
     private ImageRepository imageRepository;
 
-    private String IMAGE_DIRECTORY = WebConfig.getImageDirectory();
+    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
 
     // Method to get all news and convert them to NewsResponse
     public List<NewsResponse> getAllNews() {

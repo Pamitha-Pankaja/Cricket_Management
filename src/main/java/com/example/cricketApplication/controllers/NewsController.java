@@ -22,7 +22,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/news")
 public class NewsController {
-    private String IMAGE_DIRECTORY = WebConfig.getImageDirectory();
+    private static final String IMAGE_DIRECTORY = "D:\\upload\\";
 
     @Autowired
     private NewsService newsService;
