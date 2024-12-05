@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.exolab.castor.types.DateTime;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.math.BigDecimal;
@@ -27,9 +28,9 @@ public class NewsResponse {
     private String author;
     private LocalDateTime dateTime;
     private String createdBy;
-    private Date createdOn;
+    private DateTime createdOn;
     private String updatedBy;
-    private Date updatedOn;
+    private DateTime updatedOn;
     private List<String> imageUrls;
 
 

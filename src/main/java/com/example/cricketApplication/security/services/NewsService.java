@@ -100,7 +100,7 @@ public class NewsService {
             existingNews.setLink(updatedNews.getLink());
             existingNews.setAuthor(updatedNews.getAuthor());
             existingNews.setUpdatedBy(updatedNews.getUpdatedBy());
-            existingNews.setUpdatedOn(new Date());
+            existingNews.setUpdatedOn(updatedNews.getUpdatedOn());
 
             // Handle images
             if (imageFiles != null && !imageFiles.isEmpty()) {
