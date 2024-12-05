@@ -1,6 +1,7 @@
 package com.example.cricketApplication.models;
 
 import jakarta.persistence.*;
+import org.exolab.castor.types.DateTime;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -30,9 +31,9 @@ public class News {
 
     private String author;
     private String createdBy;
-    private Date createdOn;
+    private DateTime createdOn;
     private String updatedBy;
-    private Date updatedOn;
+    private DateTime updatedOn;
 
     // One news item can have multiple images
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
