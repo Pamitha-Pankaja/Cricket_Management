@@ -106,4 +106,14 @@ public class NewsController {
         return ResponseEntity.ok(new MessageResponse("Images deleted successfully."));
     }
 
+    @DeleteMapping("/deleteImage/{imageId}")
+    public ResponseEntity<String> deleteImage(@PathVariable Long imageId) {
+        try {
+            newsService.deleteImageById(imageId);
+            return ResponseEntity.ok("Image with ID " + imageId + " has been deleted.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

@@ -47,6 +47,14 @@ public class NewsService {
         return new NewsResponse(savedNews);
     }
 
+    public void deleteImageById(Long imageId) {
+        if (imageRepository.existsById(imageId)) {
+            imageRepository.deleteById(imageId);
+        } else {
+            throw new IllegalArgumentException("Image with ID " + imageId + " not found.");
+        }
+    }
+
 //    @Transactional
 //    public NewsResponse updateNews(Long newsId, News updatedNews) {
 //        // Retrieve the existing news item
