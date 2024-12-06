@@ -105,8 +105,8 @@ public class NewsService {
             // Handle images
             if (imageFiles != null && !imageFiles.isEmpty()) {
                 // Delete old images
-                imageRepository.deleteByNewsId(existingNews.getId());
-                existingNews.getImages().clear();
+                //imageRepository.deleteByNewsId(existingNews.getId());
+                //existingNews.getImages().clear();
 
                 // Add new images
                 for (MultipartFile file : imageFiles) {
