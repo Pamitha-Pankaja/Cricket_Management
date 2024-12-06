@@ -30,7 +30,8 @@ public class NewsResponse {
     private Date createdOn;
     private String updatedBy;
     private Date updatedOn;
-    private List<ImageResponse> images; // Includes both imageId and URL
+    private List<String> imageUrls; // Includes both imageId and URL
+    // private List<ImageResponse> images;
 
     public NewsResponse(News news) {
         this.id = news.getId();
@@ -43,15 +44,24 @@ public class NewsResponse {
         this.createdOn = news.getCreatedOn();
         this.createdBy = news.getCreatedBy();
 
-        // Generate URLs and map imageId
-        this.images = news.getImages().stream()
-                .map(image -> new ImageResponse(
-                        image.getId(),
-                        ServletUriComponentsBuilder.fromCurrentContextPath()
-                                .path("/images/")
-                                .path(image.getImageUrl())
-                                .toUriString()
-                ))
+        // Generate URLs for images
+        this.imageUrls = news.getImages().stream()
+                .map(image -> ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/images/")
+                        .path(image.getImageUrl())
+                        .toUriString())
                 .collect(Collectors.toList());
+
+
+//        // Generate URLs and map imageId
+//        this.images = news.getImages().stream()
+//                .map(image -> new ImageResponse(
+//                        image.getId(),
+//                        ServletUriComponentsBuilder.fromCurrentContextPath()
+//                                .path("/images/")
+//                                .path(image.getImageUrl())
+//                                .toUriString()
+//                ))
+//                .collect(Collectors.toList());
     }
 }
