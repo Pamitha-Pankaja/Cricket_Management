@@ -8,6 +8,7 @@ import com.example.cricketApplication.repository.NewsRepository;
 import com.example.cricketApplication.security.WebConfig;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,8 +30,15 @@ public class NewsService {
     private static final String IMAGE_DIRECTORY = "D:\\upload\\";
 
     // Method to get all news and convert them to NewsResponse
-    public List<NewsResponse> getAllNews() {
-        return newsRepository.findAll().stream()
+//    public List<NewsResponse> getAllNews() {
+//        return newsRepository.findAll().stream()
+//                .map(NewsResponse::new) // Convert each News entity to NewsResponse
+//                .collect(Collectors.toList());
+//    }
+
+    public List<NewsResponse> getAllNewsSortedByTime() {
+        return newsRepository.findAll(Sort.by(Sort.Direction.DESC, "createdOn"))
+                .stream()
                 .map(NewsResponse::new) // Convert each News entity to NewsResponse
                 .collect(Collectors.toList());
     }
