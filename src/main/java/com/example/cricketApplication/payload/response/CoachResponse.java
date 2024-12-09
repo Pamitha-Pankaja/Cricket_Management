@@ -31,6 +31,10 @@ public class CoachResponse {
     private Date createdOn;
     private String updatedBy;
     private Date updatedOn;
+    private String message;
+    public CoachResponse(String message) {
+        this.message = message;
+    }
 
     // Constructor that takes a Coach object as a parameter
     public CoachResponse(Coach coach) {

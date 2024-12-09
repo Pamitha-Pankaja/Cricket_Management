@@ -27,10 +27,17 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
 
+//    @GetMapping
+//    public List<NewsResponse> getAllNews() {
+//        return newsService.getAllNews();
+//    }
+
     @GetMapping
     public List<NewsResponse> getAllNews() {
-        return newsService.getAllNews();
+        // Ensure the news is sorted by createdOn in descending order
+        return newsService.getAllNewsSortedByTime();
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<NewsResponse> getNewsById(@PathVariable Long id) {
