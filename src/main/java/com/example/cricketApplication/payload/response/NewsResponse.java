@@ -30,9 +30,9 @@ public class NewsResponse {
     private String link;
     private String author;
     private String createdBy;
-//    private Date createdOn;
-@CreationTimestamp
-private LocalDateTime createdOn;
+    //    private Date createdOn;
+    @CreationTimestamp
+    private LocalDateTime createdOn;
 
     @UpdateTimestamp
     private LocalDateTime updatedOn;
