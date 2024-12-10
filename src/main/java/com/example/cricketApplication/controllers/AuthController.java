@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.cricketApplication.models.*;
@@ -39,8 +36,6 @@ import com.example.cricketApplication.payload.response.MessageResponse;
 import com.example.cricketApplication.security.jwt.JwtUtils;
 import com.example.cricketApplication.security.services.UserDetailsImpl;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Base64;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -707,6 +702,26 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("Official registered successfully!"));
     }
+
+
+    @GetMapping("/checkAvailability")
+    public ResponseEntity<?> checkAvailability(
+            @RequestParam(value = "username", required = false) String username,
+            @RequestParam(value = "email", required = false) String email) {
+
+        Map<String, Boolean> response = new HashMap<>();
+
+        if (username != null && !username.isEmpty()) {
+            response.put("usernameExists", userRepository.existsByUsername(username));
+        }
+
+        if (email != null && !email.isEmpty()) {
+            response.put("emailExists", userRepository.existsByEmail(email));
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
 }
 
 
