@@ -722,6 +722,32 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/checkUsernameAvailability")
+    public ResponseEntity<?> checkUsernameAvailability(
+            @RequestParam(value = "username", required = false) String username) {
+
+        Map<String, Boolean> response = new HashMap<>();
+
+        if (username != null && !username.isEmpty()) {
+            response.put("usernameExists", userRepository.existsByUsername(username));
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/checkEmailAvailability")
+    public ResponseEntity<?> checkEmailAvailability(
+            @RequestParam(value = "email", required = false) String email) {
+
+        Map<String, Boolean> response = new HashMap<>();
+
+        if (email != null && !email.isEmpty()) {
+            response.put("emailExists", userRepository.existsByEmail(email));
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
 }
 
 
