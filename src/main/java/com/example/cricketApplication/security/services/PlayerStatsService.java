@@ -189,6 +189,8 @@ public class PlayerStatsService {
             if (playerStats.getMatch() != null) {
                 matchResponseWithStat.setMatchId(String.valueOf(playerStats.getMatch().getMatchId()));
                 matchResponseWithStat.setType(playerStats.getMatch().getType());
+                matchResponseWithStat.setUnder(playerStats.getMatch().getTeam().getUnder());
+                matchResponseWithStat.setYear(playerStats.getMatch().getTeam().getYear());
             }
             playerStatsResponse.setMatch(matchResponseWithStat);
 
