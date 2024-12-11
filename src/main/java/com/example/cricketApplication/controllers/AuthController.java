@@ -649,6 +649,8 @@ public class AuthController {
         admin.setName(signUpRequest.getUsername());
         admin.setContactNo(signUpRequest.getContactNo());
 
+        admin.setUser(newUser);
+
         // Save the user entity with admin role
         userRepository.save(newUser);
         adminRepository.save(admin);
