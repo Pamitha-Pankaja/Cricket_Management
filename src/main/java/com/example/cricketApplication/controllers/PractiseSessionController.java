@@ -105,5 +105,11 @@ public class PractiseSessionController {
         }
     }
 
+    @GetMapping("/player/{playerId}")
+    public ResponseEntity<List<PracticeSessionResponse>> getPractiseSessionsByPlayerId(@PathVariable Long playerId) {
+        List<PracticeSessionResponse> practiseSessions = practiseSessionService.getPractiseSessionsByPlayerId(playerId);
+        return ResponseEntity.ok(practiseSessions);
+    }
+
 
 }
