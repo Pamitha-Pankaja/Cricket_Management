@@ -69,6 +69,9 @@ public class AuthController {
     @Autowired
     OfficialRepository officialRepository;
 
+    @Autowired
+    AdminRepository adminRepository;
+
 //    private String IMAGE_DIRECTORY = WebConfig.getImageDirectory();
       private static final String IMAGE_DIRECTORY = "D:\\upload\\";
 
@@ -642,8 +645,14 @@ public class AuthController {
         roles.add(adminRole);
         newUser.setRoles(roles);
 
+        Admin admin = new Admin();
+        admin.setName(signUpRequest.getUsername());
+        admin.setContactNo(signUpRequest.getContactNo());
+
         // Save the user entity with admin role
         userRepository.save(newUser);
+        adminRepository.save(admin);
+
 
         return ResponseEntity.ok(new MessageResponse("Admin registered successfully!"));
     }
