@@ -128,6 +128,17 @@ public class PractiseSessionService {
         return refactorResponse(updatedPractiseSession);
     }
 
+    // Method to get all practice sessions for a player by playerId
+    public List<PracticeSessionResponse> getPractiseSessionsByPlayerId(Long playerId) {
+        List<PractiseSession> practiceSessions = practiseSessionRepository.findPractiseSessionsByPlayerId(playerId);
+        List<PracticeSessionResponse> practiceSessionResponses = new ArrayList<>();
+        for (PractiseSession practiceSession : practiceSessions) {
+            PracticeSessionResponse practiceSessionResponse = refactorResponse(practiceSession);
+            practiceSessionResponses.add(practiceSessionResponse);
+        }
+        return practiceSessionResponses;
+    }
+
 
     private PracticeSessionResponse refactorResponse(PractiseSession practiseSession) {
         PracticeSessionResponse response = new PracticeSessionResponse();
