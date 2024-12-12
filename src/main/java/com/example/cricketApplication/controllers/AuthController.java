@@ -646,7 +646,7 @@ public class AuthController {
         newUser.setRoles(roles);
 
         Admin admin = new Admin();
-        admin.setName(signUpRequest.getUsername());
+        admin.setName(signUpRequest.getName());
         admin.setContactNo(signUpRequest.getContactNo());
 
         admin.setUser(newUser);
