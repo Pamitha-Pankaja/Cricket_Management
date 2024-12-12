@@ -49,7 +49,7 @@ public class PlayerController {
 //        return ResponseEntity.ok(players);
 //    }
     @GetMapping("/all")
-//@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<PlayerResponse>> getAllPlayers() {
         List<PlayerResponse> players = playerService.getAllPlayerResponses();
         return ResponseEntity.ok(players);
