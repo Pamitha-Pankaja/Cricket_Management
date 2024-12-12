@@ -60,15 +60,49 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
   }
 
   
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.csrf(csrf -> csrf.disable())
+        .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(auth ->
+          auth.requestMatchers("/**","/api/auth/**","/api/matches/**","/api/matchSummary/**","/api/playerStats/**","/api/coaches/**","/api/practiseSessions/**","/api/teams/**","/api/matchSummary","/api/admin/players/**","/api/privileges/**","/api/news/**","/api/videos/**","/api/officials/**","/images/**","/api/admin/**").permitAll()
+//                  .requestMatchers(HttpMethod.POST, "/api/auth/signupPlayer", "/api/auth/signupCoach", "/api/auth/signupOfficial").hasRole("ADMIN")
+        );
+
+    http.authenticationProvider(authenticationProvider());
+
+    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
+  }
+
+
 //  @Bean
 //  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //    http.csrf(csrf -> csrf.disable())
-//        .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-//        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//        .authorizeHttpRequests(auth ->
-//          auth.requestMatchers("/**","/api/auth/**","/api/matches/**","/api/matchSummary/**","/api/playerStats/**","/api/coaches/**","/api/practiseSessions/**","/api/teams/**","/api/matchSummary","/api/admin/players/**","/api/privileges/**","/api/news/**","/api/videos/**","/api/officials/**","/images/**","/api/admin/**").permitAll()
-////                  .requestMatchers(HttpMethod.POST, "/api/auth/signupPlayer", "/api/auth/signupCoach", "/api/auth/signupOfficial").hasRole("ADMIN")
-//        );
+//            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+//            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//            .authorizeHttpRequests(auth ->
+//                    auth.requestMatchers(
+//                                    "/**",
+//                                    "/api/auth/**",
+//                                    "/api/matches/**",
+//                                    "/api/matchSummary/**",
+//                                    "/api/playerStats/**",
+//                                    "/api/coaches/**",
+//                                    "/api/practiseSessions/**",
+//                                    "/api/teams/**",
+//                                    "/api/matchSummary",
+//                                    "/api/privileges/**",
+//                                    "/api/news/**",
+//                                    "/api/videos/**",
+//                                    "/api/officials/**",
+//                                    "/images/**"
+//                            ).permitAll()
+//                            .requestMatchers("/api/admin/players/all").hasAnyRole("USER", "ADMIN", "COACH", "PLAYER", "OFFICIAL") // Allow multiple roles here
+//                            .requestMatchers("/api/admin/**").hasRole("ADMIN")
+//            );
 //
 //    http.authenticationProvider(authenticationProvider());
 //
@@ -77,38 +111,5 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 //    return http.build();
 //  }
 
-
-  @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.csrf(csrf -> csrf.disable())
-            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth ->
-                    auth.requestMatchers(
-                                    "/**",
-                                    "/api/auth/**",
-                                    "/api/matches/**",
-                                    "/api/matchSummary/**",
-                                    "/api/playerStats/**",
-                                    "/api/coaches/**",
-                                    "/api/practiseSessions/**",
-                                    "/api/teams/**",
-                                    "/api/matchSummary",
-                                    "/api/privileges/**",
-                                    "/api/news/**",
-                                    "/api/videos/**",
-                                    "/api/officials/**",
-                                    "/images/**"
-                            ).permitAll()
-                            .requestMatchers("/api/admin/players/all").hasRole("ADMIN")
-                            .requestMatchers("/api/admin/**").hasRole("ADMIN")
-            );
-
-    http.authenticationProvider(authenticationProvider());
-
-    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
-    return http.build();
-  }
 
 }
