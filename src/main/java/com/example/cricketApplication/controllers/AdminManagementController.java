@@ -82,7 +82,7 @@ public class AdminManagementController {
         }
 
         // Update the Admin part
-        admin.setName(updateRequest.getUsername());
+        admin.setName(updateRequest.getName());
         admin.setContactNo(updateRequest.getContactNo());
 
         userRepository.save(user); // Save the user changes
