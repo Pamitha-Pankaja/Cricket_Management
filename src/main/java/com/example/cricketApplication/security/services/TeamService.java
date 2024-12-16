@@ -153,6 +153,7 @@ public class TeamService {
             playerResponse.setUpdatedBy(player.getUpdatedBy());
             playerResponse.setCreatedOn(player.getCreatedOn());
             playerResponse.setUpdatedOn(player.getUpdatedOn());
+            playerResponse.setStatus(player.getStatus());
             playerResponses.add(playerResponse);
         }
         return playerResponses;
