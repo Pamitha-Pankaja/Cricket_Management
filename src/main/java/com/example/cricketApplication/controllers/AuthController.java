@@ -394,6 +394,7 @@ public class AuthController {
 
 
     @PostMapping(value = "/signupPlayer", consumes = "multipart/form-data")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> registerPlayer(
             @RequestParam("userData") String userData,
             @RequestParam("image") MultipartFile imageFile) {
@@ -538,7 +539,9 @@ public class AuthController {
 //        return ResponseEntity.ok(new CoachResponse(coach));
 //    }
 
+
     @PostMapping(value = "/signupCoach", consumes = "multipart/form-data")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> registerCoach(
             @RequestParam("userData") String userData,
             @RequestParam("image") MultipartFile imageFile) {
@@ -612,6 +615,7 @@ public class AuthController {
 
 
     @PostMapping("/signup")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
         // Check if the username already exists
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -663,6 +667,7 @@ public class AuthController {
 
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/signupOfficial")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> registerOfficial(@Valid @RequestBody SignupRequest signUpRequest) {
         // Check if the username already exists
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
