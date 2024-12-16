@@ -180,12 +180,12 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                     .hasAnyRole("ADMIN","COACH","PLAYER","OFFICIAL")
 
                     // PractiseSession endpoints
-                    .requestMatchers(HttpMethod.POST, "/api/practiseSessions/add").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/practiseSessions/add").hasAnyRole("ADMIN","COACH")
                     .requestMatchers(HttpMethod.GET, "/api/practiseSessions/all").hasAnyRole("ADMIN","COACH","PLAYER","OFFICIAL")
                     .requestMatchers(HttpMethod.GET, "/api/practiseSessions/{pracId}").hasAnyRole("ADMIN","COACH","PLAYER","OFFICIAL")
-                    .requestMatchers(HttpMethod.DELETE, "/api/practiseSessions/{pracId}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/practiseSessions/{pracId}").hasAnyRole("ADMIN","COACH")
                     .requestMatchers(HttpMethod.GET, "/api/practiseSessions/coach/{coachId}").hasAnyRole("ADMIN","COACH","PLAYER","OFFICIAL")
-                    .requestMatchers(HttpMethod.PUT, "/api/practiseSessions/update/{pracId}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/practiseSessions/update/{pracId}").hasAnyRole("ADMIN","COACH")
                     .requestMatchers(HttpMethod.GET, "/api/practiseSessions/player/{playerId}").hasAnyRole("ADMIN","COACH","PLAYER","OFFICIAL")
 
                     // Teams endpoints
