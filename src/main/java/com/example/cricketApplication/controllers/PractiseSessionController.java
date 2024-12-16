@@ -28,7 +28,7 @@ public class PractiseSessionController {
 
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH')")
     public ResponseEntity<PractiseSession> addPractiseSession(@RequestBody PractiseSession practiseSession) {
         PractiseSession savedPractiseSession = practiseSessionService.addPractiseSession(practiseSession);
         return ResponseEntity.ok(savedPractiseSession);
@@ -73,7 +73,7 @@ public class PractiseSessionController {
 //    }
 
     @DeleteMapping("/{pracId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH')")
     public ResponseEntity<?> deletePractiseSessionById(@PathVariable Long pracId) {
         try {
             practiseSessionService.deletePractiseSessionById(pracId);
@@ -98,7 +98,7 @@ public class PractiseSessionController {
 
 
     @PutMapping("/update/{pracId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH')")
     public ResponseEntity<PracticeSessionResponse> updatePractiseSession(
             @PathVariable Long pracId,
             @RequestBody PractiseSession practiseSessionDetails) {
