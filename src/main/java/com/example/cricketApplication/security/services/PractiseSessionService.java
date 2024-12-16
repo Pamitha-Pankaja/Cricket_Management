@@ -44,7 +44,7 @@ public class PractiseSessionService {
         PractiseSession savedPractiseSession = practiseSessionRepository.save(practiseSession);
 
         // Send SMS notifications
-        sendSmsNotifications(team, savedPractiseSession);
+        //sendSmsNotifications(team, savedPractiseSession);
 
         return savedPractiseSession;
     }
