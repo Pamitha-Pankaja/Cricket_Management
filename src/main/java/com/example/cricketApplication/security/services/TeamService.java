@@ -109,6 +109,10 @@ public class TeamService {
             teamResponse.setUpdatedBy(team1.getUpdatedBy());
             teamResponse.setCreatedOn(team1.getCreatedOn());
             teamResponse.setUpdatedOn(team1.getUpdatedOn());
+
+            List<PlayerResponse> playerResponses = RefactorPlayerResponse(team1.getPlayers());
+            teamResponse.setPlayers(playerResponses);
+
             teamResponses.add(teamResponse);
         }
         return teamResponses;
@@ -125,6 +129,9 @@ public class TeamService {
         teamResponse.setUpdatedBy(team.getUpdatedBy());
         teamResponse.setCreatedOn(team.getCreatedOn());
         teamResponse.setUpdatedOn(team.getUpdatedOn());
+
+        List<PlayerResponse> playerResponses = RefactorPlayerResponse(team.getPlayers());
+        teamResponse.setPlayers(playerResponses);
         return teamResponse;
     }
 
