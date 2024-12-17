@@ -28,14 +28,22 @@ public class Match {
     private String division; // "Division 1", "Division 2", etc.
     private String type;
     private String umpires;
-    private String matchCaptain;
+    //private String matchCaptain;
     private String time;
     private String logo;
     private String createdBy;
     private Date createdOn;
     private String updatedBy;
     private Date updatedOn;
-    private String matchViceCaptain;
+    //private String matchViceCaptain;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "captain_id", nullable = true, referencedColumnName = "playerId")
+    private Player matchCaptain;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vice_captain_id", nullable = true, referencedColumnName = "playerId")
+    private Player matchViceCaptain;
+
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PlayerStats> playerStats = new HashSet<>();

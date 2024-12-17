@@ -8,10 +8,14 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @lombok.Getter
 @lombok.Setter
 @lombok.NoArgsConstructor
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "playerId")
 @Entity
 @Table(name = "players")
 public class Player {

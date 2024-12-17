@@ -24,8 +24,8 @@ public class MatchResponse {
     private String division; // "Division 1", "Division 2", etc.
     private String type;
     private String umpires;
-    private String matchCaptain;
-    private String matchViceCaptain;
+    private Long matchCaptain;
+    private Long matchViceCaptain;
     private String time;
     private String under;
     private Long teamId;
