@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,12 +28,9 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
 
-//    @GetMapping
-//    public List<NewsResponse> getAllNews() {
-//        return newsService.getAllNews();
-//    }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
     public List<NewsResponse> getAllNews() {
         // Ensure the news is sorted by createdOn in descending order
         return newsService.getAllNewsSortedByTime();
@@ -40,6 +38,7 @@ public class NewsController {
 
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
     public ResponseEntity<NewsResponse> getNewsById(@PathVariable Long id) {
         return newsService.getNewsById(id)
                 .map(ResponseEntity::ok) // Return 200 OK with the NewsResponse
@@ -47,6 +46,7 @@ public class NewsController {
     }
 
     @PostMapping(value = "/create", consumes = "multipart/form-data")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> createNews(
             @RequestParam("newsData") String newsData,
             @RequestParam("images") List<MultipartFile> imageFiles) {
@@ -80,6 +80,7 @@ public class NewsController {
 
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> updateNews(
             @PathVariable Long id,
             @RequestParam("newsData") String newsData,
@@ -102,11 +103,13 @@ public class NewsController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
         newsService.deleteNews(id);
         return ResponseEntity.noContent().build();
     }
     @PostMapping("/deleteImages/{newsId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteImages(@PathVariable Long newsId) {
         // Call the service method to delete images
         newsService.deleteImagesByNewsId(newsId);
@@ -114,6 +117,7 @@ public class NewsController {
     }
 
     @DeleteMapping("/deleteImage/{imageId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deleteImage(@PathVariable Long imageId) {
         try {
             newsService.deleteImageById(imageId);

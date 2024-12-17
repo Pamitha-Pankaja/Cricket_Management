@@ -82,7 +82,7 @@ public class AdminManagementController {
         }
 
         // Update the Admin part
-        admin.setName(updateRequest.getUsername());
+        admin.setName(updateRequest.getName());
         admin.setContactNo(updateRequest.getContactNo());
 
         userRepository.save(user); // Save the user changes
@@ -96,8 +96,9 @@ public class AdminManagementController {
     public ResponseEntity<?> deleteAdmin(@PathVariable Long adminId) {
         Admin admin = adminRepository.findById(adminId)
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
-
         adminRepository.delete(admin);
+        User user = admin.getUser();
+        userRepository.delete(user);
         return ResponseEntity.ok(new MessageResponse("Admin deleted successfully!"));
     }
 }

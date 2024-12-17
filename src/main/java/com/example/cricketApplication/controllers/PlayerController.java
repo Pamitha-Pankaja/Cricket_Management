@@ -31,13 +31,14 @@ public class PlayerController {
 
 
     @PostMapping("/add")
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
         Player savedPlayer = playerService.savePlayer(player);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPlayer);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
     public ResponseEntity<PlayerResponse> getPlayerById(@PathVariable Long id) {
         PlayerResponse playerResponse = playerService.getPlayerResponseById(id);
         return ResponseEntity.ok(playerResponse);
@@ -49,11 +50,12 @@ public class PlayerController {
 //        return ResponseEntity.ok(players);
 //    }
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
     public ResponseEntity<List<PlayerResponse>> getAllPlayers() {
         List<PlayerResponse> players = playerService.getAllPlayerResponses();
         return ResponseEntity.ok(players);
     }
+
 
 //    @PutMapping("/update/{id}")
 //    public ResponseEntity<PlayerResponse> updatePlayer(@PathVariable Long id, @RequestBody Player playerDetails) {
@@ -62,6 +64,7 @@ public class PlayerController {
 //    }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<PlayerResponse> updatePlayer(
             @PathVariable Long id,
             @RequestParam("userData") String userData, // The player details as JSON
@@ -83,6 +86,7 @@ public class PlayerController {
 
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deletePlayer(@PathVariable Long id) {
         playerService.deletePlayer(id);
         return ResponseEntity.noContent().build();
@@ -121,5 +125,8 @@ public class PlayerController {
 //        }
 //    }
 }
+
+
+
 
 

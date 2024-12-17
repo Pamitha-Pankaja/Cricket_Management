@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,6 +50,7 @@ public class MatchController {
 //    }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Match> addMatch(
             @RequestParam("matchData") String matchData, // JSON match data as string
             @RequestParam(value = "logo") MultipartFile logoFile) { // Optional logo image file
@@ -83,6 +85,7 @@ public class MatchController {
 //    }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
     public ResponseEntity<List<MatchResponse>> getMatchById(@PathVariable Long id) {
         Match match = matchService.getMatchById(id);
                 //.orElseThrow(() -> new RuntimeException("Match not found with id: " + id));
@@ -97,6 +100,7 @@ public class MatchController {
     }
 
     @GetMapping("/{matchId}/hasRequiredSummaries")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
     public ResponseEntity<Boolean> hasRequiredMatchSummaries(@PathVariable Long matchId) {
         boolean hasRequiredSummaries = matchService.hasRequiredMatchSummaries(matchId);
         return ResponseEntity.ok(hasRequiredSummaries);
@@ -112,6 +116,7 @@ public class MatchController {
 //    }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
     public ResponseEntity<List<MatchResponse>> getAllMatches() {
         List<MatchResponse> matchResponses = matchService.getAllMatches();
         return ResponseEntity.ok(matchResponses);
@@ -120,12 +125,14 @@ public class MatchController {
 
     // Delete a match by ID
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteMatch(@PathVariable Long id) {
         matchService.deleteMatch(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MatchResponse> updateMatch(
             @PathVariable Long id,
             @RequestParam("matchData") String matchData, // Match details as JSON
@@ -148,4 +155,13 @@ public class MatchController {
 
 
 }
+
+
+
+
+
+
+
+
+
 
