@@ -13,8 +13,11 @@ public class TeamResponse {
 
     private String under; // "Under 13", "Under 15", etc.
     private int year;
-    private String captain;
-    private String ViceCaptain;
+//    private String captain;
+//    private String ViceCaptain;
+
+    private Long captain;
+    private Long ViceCaptain;
     private String createdBy;
     private Date createdOn;
     private String updatedBy;
