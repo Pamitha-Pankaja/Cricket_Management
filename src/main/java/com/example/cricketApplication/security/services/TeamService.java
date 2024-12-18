@@ -171,12 +171,12 @@ public class TeamService {
 //            }
 
             if (team1.getCaptain() != null) {
-                teamResponse.setCaptain(team1.getCaptain().getPlayerId());
+                teamResponse.setCaptain(team1.getCaptain().getName());
             }
 
             // Set viceCaptain if exists
             if (team1.getViceCaptain() != null) {
-                teamResponse.setViceCaptain(team1.getViceCaptain().getPlayerId());
+                teamResponse.setViceCaptain(team1.getViceCaptain().getName());
             }
 
             teamResponse.setUnder(team1.getUnder());
@@ -210,12 +210,12 @@ public class TeamService {
 //        }
 
         if (team.getCaptain() != null) {
-            teamResponse.setCaptain(team.getCaptain().getPlayerId());
+            teamResponse.setCaptain(team.getCaptain().getName());
         }
 
         // Set viceCaptain if exists
         if (team.getViceCaptain() != null) {
-            teamResponse.setViceCaptain(team.getViceCaptain().getPlayerId());
+            teamResponse.setViceCaptain(team.getViceCaptain().getName());
         }
 
         teamResponse.setUnder(team.getUnder());
