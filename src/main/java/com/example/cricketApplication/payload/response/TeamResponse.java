@@ -15,6 +15,9 @@ public class TeamResponse {
     private int year;
     private String captain;
     private String ViceCaptain;
+
+//    private Long captain;
+//    private Long ViceCaptain;
     private String createdBy;
     private Date createdOn;
     private String updatedBy;
