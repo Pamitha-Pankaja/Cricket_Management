@@ -615,7 +615,7 @@ public class AuthController {
 
 
     @PostMapping("/signup")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
         // Check if the username already exists
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {

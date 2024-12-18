@@ -93,7 +93,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                             "/api/auth/signin",
                             "/api/auth/checkAvailability",
                             "/api/auth/checkUsernameAvailability",
-                            "/api/auth/checkEmailAvailability"
+                            "/api/auth/checkEmailAvailability",
+                            "/api/auth/**"
                     ).permitAll()
 
                             // Auth endpoints requiring admin role
