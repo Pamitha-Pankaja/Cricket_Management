@@ -248,6 +248,7 @@ public class TeamService {
             playerResponse.setCreatedOn(player.getCreatedOn());
             playerResponse.setUpdatedOn(player.getUpdatedOn());
             playerResponse.setStatus(player.getStatus());
+            playerResponse.setDateOfBirth(player.getDateOfBirth());
             playerResponses.add(playerResponse);
         }
         return playerResponses;
