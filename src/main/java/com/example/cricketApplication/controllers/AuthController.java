@@ -137,6 +137,7 @@ public class AuthController {
         Long playerId = null;
         Long coachId = null;
         Long officialId = null;
+        Long adminId = null;
 
         // Check if the user has the ROLE_PLAYER
         if (roles.contains("ROLE_PLAYER")) {
@@ -167,6 +168,12 @@ public class AuthController {
             officialId = official.getId();  // Store officialId
         }
 
+        if (roles.contains("ROLE_ADMIN")) {
+            Admin admin = adminRepository.findByUser(user)
+                    .orElseThrow(() -> new RuntimeException("Error: Admin not found."));
+            adminId = admin.getAdminId();  // Store officialId
+        }
+
         // Generate JWT token if all checks passed
         String jwt = jwtUtils.generateJwtToken(authentication);
 
@@ -177,7 +184,8 @@ public class AuthController {
                 roles,
                 playerId,  // Include playerId
                 coachId,   // Include coachId
-                officialId // Include officialId
+                officialId, // Include officialId
+                adminId
         ));
     }
 
