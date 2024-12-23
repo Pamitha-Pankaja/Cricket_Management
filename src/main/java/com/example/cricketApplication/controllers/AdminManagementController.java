@@ -36,6 +36,7 @@ public class AdminManagementController {
 
     // 1. Get all admins
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<AdminResponse>> getAllAdmins() {
         List<AdminResponse> admins = adminRepository.findAll().stream()
                 .map(admin -> new AdminResponse(
@@ -53,6 +54,7 @@ public class AdminManagementController {
 
     // 2. Update an admin
     @PutMapping("/{adminId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> updateAdmin(@PathVariable Long adminId, @RequestBody SignupRequest updateRequest) {
         Admin admin = adminRepository.findById(adminId)
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
@@ -93,6 +95,7 @@ public class AdminManagementController {
 
     // 3. Delete an admin
     @DeleteMapping("/{adminId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteAdmin(@PathVariable Long adminId) {
         Admin admin = adminRepository.findById(adminId)
                 .orElseThrow(() -> new RuntimeException("Admin not found"));

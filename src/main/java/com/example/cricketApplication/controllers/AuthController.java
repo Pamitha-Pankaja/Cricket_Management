@@ -729,6 +729,7 @@ public class AuthController {
 
 
     @GetMapping("/checkAvailability")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> checkAvailability(
             @RequestParam(value = "username", required = false) String username,
             @RequestParam(value = "email", required = false) String email) {
@@ -747,6 +748,7 @@ public class AuthController {
     }
 
     @GetMapping("/checkUsernameAvailability")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> checkUsernameAvailability(
             @RequestParam(value = "username", required = false) String username) {
 
@@ -760,6 +762,7 @@ public class AuthController {
     }
 
     @GetMapping("/checkEmailAvailability")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> checkEmailAvailability(
             @RequestParam(value = "email", required = false) String email) {
 

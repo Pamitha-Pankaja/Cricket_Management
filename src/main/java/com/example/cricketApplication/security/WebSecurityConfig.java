@@ -98,10 +98,8 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
                     .requestMatchers(
                             "/api/videos/**",
                             "/images/**",
-                            "/api/auth/signin",
-                            "/api/auth/checkAvailability",
-                            "/api/auth/checkUsernameAvailability",
-                            "/api/auth/checkEmailAvailability"
+                            "/api/auth/signin"
+
 //                            "/api/auth/**"
                     ).permitAll()
 
@@ -118,6 +116,15 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
                             .requestMatchers(HttpMethod.POST, "/api/auth/signupCoach").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.POST, "/api/auth/signup").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.POST, "/api/auth/signupOfficial").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.GET, "/api/auth/checkAvailability").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.GET, "/api/auth/checkUsernameAvailability").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.GET, "/api/auth/checkEmailAvailability").hasRole("ADMIN")
+
+
+                            .requestMatchers(HttpMethod.GET, "/api/admin/all").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.PUT, "/api/admin/{adminId}").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.DELETE, "/api/admin/{adminId}").hasRole("ADMIN")
+
 
                             // Auth logout endpoint (usually authenticated users only)
                             .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated()
