@@ -25,6 +25,7 @@ public class CoachController {
     private CoachService coachService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Coach> addCoach(@RequestBody Coach coach) {
         Coach savedCoach = coachService.addCoach(coach);
         return ResponseEntity.ok(savedCoach);
@@ -116,4 +117,8 @@ public class CoachController {
 
 
 }
+
+
+
+
 

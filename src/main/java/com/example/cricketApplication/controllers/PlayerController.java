@@ -21,7 +21,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000",allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/admin/players")
 public class PlayerController {
@@ -50,7 +51,7 @@ public class PlayerController {
 //        return ResponseEntity.ok(players);
 //    }
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
+
     public ResponseEntity<List<PlayerResponse>> getAllPlayers() {
         List<PlayerResponse> players = playerService.getAllPlayerResponses();
         return ResponseEntity.ok(players);
@@ -125,6 +126,7 @@ public class PlayerController {
 //        }
 //    }
 }
+
 
 
 

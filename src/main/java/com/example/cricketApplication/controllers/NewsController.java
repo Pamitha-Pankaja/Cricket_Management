@@ -30,7 +30,6 @@ public class NewsController {
 
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
     public List<NewsResponse> getAllNews() {
         // Ensure the news is sorted by createdOn in descending order
         return newsService.getAllNewsSortedByTime();
@@ -128,3 +127,8 @@ public class NewsController {
     }
 
 }
+
+
+
+
+
