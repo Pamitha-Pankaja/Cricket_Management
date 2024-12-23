@@ -54,7 +54,7 @@ public class MatchSummaryController {
 
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
+
     public ResponseEntity<?> getMatchSummaryById(@PathVariable Long id) {
         Optional<MatchSummary> matchSummary = matchSummaryService.getMatchSummaryById(id);
         if (matchSummary.isPresent()) {
@@ -73,7 +73,7 @@ public class MatchSummaryController {
 //    }
 
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
+
     public ResponseEntity<List<MatchSummaryResponse>> getAllMatchSummaries() {
         List<MatchSummaryResponse> matchSummaryResponses = matchSummaryService.getAllMatchSummaries();
         return ResponseEntity.ok(matchSummaryResponses);
@@ -94,7 +94,7 @@ public class MatchSummaryController {
     }
 
     @GetMapping("/match/{matchId}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
+
     public ResponseEntity<List<MatchSummaryResponse>> getMatchSummariesByMatchId(@PathVariable Long matchId) {
         List<MatchSummaryResponse> matchSummaries = matchSummaryService.getMatchSummariesByMatchId(matchId);
         if (!matchSummaries.isEmpty()) {
@@ -118,6 +118,9 @@ public class MatchSummaryController {
         }
     }
 }
+
+
+
 
 
 

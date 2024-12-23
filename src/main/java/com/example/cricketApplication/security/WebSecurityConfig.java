@@ -20,13 +20,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
 // (securedEnabled = true,
 // jsr250Enabled = true,
 // prePostEnabled = true) // by default
-public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecurityConfigurerAdapter {
   @Autowired
   UserDetailsServiceImpl userDetailsService;
 
@@ -83,6 +90,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
             .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
@@ -93,9 +101,17 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                             "/api/auth/signin",
                             "/api/auth/checkAvailability",
                             "/api/auth/checkUsernameAvailability",
-                            "/api/auth/checkEmailAvailability",
-                            "/api/auth/**"
+                            "/api/auth/checkEmailAvailability"
+//                            "/api/auth/**"
                     ).permitAll()
+
+                            .requestMatchers(HttpMethod.GET,
+                                    "/api/matches/all",
+                                    "/api/matchSummary/**",
+                                    "/api/news",
+                                    "/api/admin/players/all",
+                                    "/api/playerStats/match/player-stats/**"
+                            ).permitAll()
 
                             // Auth endpoints requiring admin role
                             .requestMatchers(HttpMethod.POST, "/api/auth/signupPlayer").hasRole("ADMIN")
@@ -121,8 +137,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                     .requestMatchers(HttpMethod.POST, "/api/matches/add").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET,
                             "/api/matches/{id}",
-                            "/api/matches/{matchId}/hasRequiredSummaries",
-                            "/api/matches/all")
+                            "/api/matches/{matchId}/hasRequiredSummaries")
                     .hasAnyRole("ADMIN","COACH","PLAYER","OFFICIAL")
                     .requestMatchers(HttpMethod.DELETE, "/api/matches/delete/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/matches/update/{id}").hasRole("ADMIN")
@@ -131,14 +146,13 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                     .requestMatchers(HttpMethod.POST, "/api/matchSummary/add").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET,
                             "/api/matchSummary/{id}",
-                            "/api/matchSummary/all",
                             "/api/matchSummary/match/{matchId}")
                     .hasAnyRole("ADMIN","COACH","PLAYER","OFFICIAL")
                     .requestMatchers(HttpMethod.DELETE, "/api/matchSummary/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/matchSummary/update/{id}").hasRole("ADMIN")
 
                     // News endpoints
-                    .requestMatchers(HttpMethod.GET, "/api/news", "/api/news/{id}")
+                    .requestMatchers(HttpMethod.GET, "/api/news/{id}")
                     .hasAnyRole("ADMIN", "COACH", "PLAYER", "OFFICIAL")
                     .requestMatchers(HttpMethod.POST, "/api/news/create").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/news/{id}").hasRole("ADMIN")
@@ -196,7 +210,6 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                     .requestMatchers(HttpMethod.DELETE, "/api/teams/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/teams/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/teams/{id}/players").hasAnyRole("ADMIN","COACH","PLAYER","OFFICIAL")
-
                     // Any other request requires authentication
                     //.anyRequest().authenticated()
             );
@@ -207,15 +220,28 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
     return http.build();
   }
 
+  private CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+    configuration.setAllowedHeaders(List.of("*"));
+    configuration.setExposedHeaders(List.of("Authorization"));
+    configuration.setAllowCredentials(true);
 
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+  }
 
-
-
-
-
-
-
-
-
-
+//  @Override
+//  public void addCorsMappings(CorsRegistry registry) {
+//    registry
+//            .addMapping("/**") // or your specific endpoints
+//            .allowedOrigins("http://localhost:3000")
+//            .allowedMethods("GET", "POST", "PUT", "DELETE")
+//            .allowedHeaders("*")
+//            .exposedHeaders("Authorization") // if you need to read the Authorization header in response
+//            .allowCredentials(true);
+//    WebMvcConfigurer.super.addCorsMappings(registry);
+//  }
 }

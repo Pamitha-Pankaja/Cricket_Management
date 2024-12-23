@@ -131,7 +131,7 @@ public class PlayerStatsController {
 
 
     @GetMapping("/match/player-stats")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
+
     public ResponseEntity<List<PlayerStatsResponse>> getPlayerStatsForMatch(
             @RequestParam("matchId") Long matchId) {
         List<PlayerStatsResponse> playerStatsResponses = playerStatsService.getPlayerStatsForMatch(matchId);
@@ -169,9 +169,6 @@ public class PlayerStatsController {
 
 
 }
-
-
-
 
 
 

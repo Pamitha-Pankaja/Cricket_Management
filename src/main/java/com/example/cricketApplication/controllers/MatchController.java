@@ -192,7 +192,7 @@ public class MatchController {
 //    }
 
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
+
     public ResponseEntity<List<MatchResponse>> getAllMatches() {
         List<MatchResponse> matchResponses = matchService.getAllMatches();
         return ResponseEntity.ok(matchResponses);
@@ -266,6 +266,8 @@ public class MatchController {
     }
 
 }
+
+
 
 
 
