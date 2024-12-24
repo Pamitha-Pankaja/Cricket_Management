@@ -98,7 +98,8 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
                     .requestMatchers(
                             "/api/videos/**",
                             "/images/**",
-                            "/api/auth/signin"
+                            "/api/auth/signin",
+                            "/api/auth/logout"
 
 //                            "/api/auth/**"
                     ).permitAll()
@@ -127,7 +128,7 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
 
 
                             // Auth logout endpoint (usually authenticated users only)
-                            .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated()
+                            //.requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated()
 
                     // Coach endpoints
                     .requestMatchers(HttpMethod.POST, "/api/coaches/add").authenticated()
