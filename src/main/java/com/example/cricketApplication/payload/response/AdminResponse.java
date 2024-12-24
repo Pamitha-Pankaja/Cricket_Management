@@ -1,4 +1,7 @@
 package com.example.cricketApplication.payload.response;
+
+import java.util.Date;
+
 @lombok.Getter
 @lombok.Setter
 @lombok.NoArgsConstructor
@@ -11,4 +14,8 @@ public class AdminResponse {
     private String email;
     private String password;
     private String username;
+    private String createdBy;
+    private Date createdOn;
+    private String updatedBy;
+    private Date updatedOn;
 }

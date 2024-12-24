@@ -45,7 +45,11 @@ public class AdminManagementController {
                         admin.getContactNo(),
                         admin.getUser().getEmail(),
                         null, // Do not send password in the response
-                        admin.getUser().getUsername()
+                        admin.getUser().getUsername(),
+                        admin.getCreatedBy(),
+                        admin.getCreatedOn(),
+                        admin.getUpdatedBy(),
+                        admin.getUpdatedOn()
                 ))
                 .collect(Collectors.toList());
 
@@ -86,6 +90,10 @@ public class AdminManagementController {
         // Update the Admin part
         admin.setName(updateRequest.getName());
         admin.setContactNo(updateRequest.getContactNo());
+        admin.setCreatedBy(updateRequest.getCreatedBy());
+        admin.setCreatedOn(updateRequest.getCreatedOn());
+        admin.setUpdatedBy(updateRequest.getUpdatedBy());
+        admin.setUpdatedOn(updateRequest.getUpdatedOn());
 
         userRepository.save(user); // Save the user changes
         adminRepository.save(admin); // Save the admin changes
