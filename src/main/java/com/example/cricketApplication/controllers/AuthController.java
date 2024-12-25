@@ -660,6 +660,9 @@ public class AuthController {
         Admin admin = new Admin();
         admin.setName(signUpRequest.getName());
         admin.setContactNo(signUpRequest.getContactNo());
+        admin.setCreatedBy(signUpRequest.getCreatedBy());
+        admin.setCreatedOn(signUpRequest.getCreatedOn());
+
 
         admin.setUser(newUser);
 
