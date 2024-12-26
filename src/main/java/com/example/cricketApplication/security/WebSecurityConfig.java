@@ -94,6 +94,7 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                            .requestMatchers("/","/static/**","/index.html","/initial-about-us").permitAll()
                     // Public endpoints (if any adjust as needed)
                     .requestMatchers(
                             "/api/videos/**",
@@ -230,7 +231,7 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
 
   private CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+    configuration.setAllowedOrigins(List.of("http://localhost:8080","http://rcc.dockyardsoftware.com"));
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
     configuration.setAllowedHeaders(List.of("*"));
     configuration.setExposedHeaders(List.of("Authorization"));
@@ -240,6 +241,9 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
     source.registerCorsConfiguration("/**", configuration);
     return source;
   }
+
+
+
 
 //  @Override
 //  public void addCorsMappings(CorsRegistry registry) {
