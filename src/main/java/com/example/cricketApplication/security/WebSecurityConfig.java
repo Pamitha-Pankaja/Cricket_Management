@@ -94,7 +94,7 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                            .requestMatchers("/","/static/**","/index.html","/initial-about-us").permitAll()
+                            .requestMatchers("/","/static/**","/index.html","/initial-about-us","/login","/initial-news","/initial-news/:id","/role").permitAll()
                     // Public endpoints (if any adjust as needed)
                     .requestMatchers(
                             "/api/videos/**",
@@ -244,7 +244,7 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
 
 
 
-
+ // http://rcc.dockyardsoftware.com
 //  @Override
 //  public void addCorsMappings(CorsRegistry registry) {
 //    registry
