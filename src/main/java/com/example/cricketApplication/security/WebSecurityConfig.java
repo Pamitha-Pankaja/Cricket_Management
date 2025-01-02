@@ -108,7 +108,7 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
                             .requestMatchers(HttpMethod.GET,
                                     "/api/matches/all",
                                     "/api/matchSummary/**",
-                                    "/api/news",
+                                    "/api/news/**",
                                     "/api/admin/players/all",
                                     "/api/playerStats/match/player-stats/**"
                             ).permitAll()
@@ -161,8 +161,8 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
                     .requestMatchers(HttpMethod.PUT, "/api/matchSummary/update/{id}").hasRole("ADMIN")
 
                     // News endpoints
-                    .requestMatchers(HttpMethod.GET, "/api/news/{id}")
-                    .hasAnyRole("ADMIN", "COACH", "PLAYER", "OFFICIAL")
+//                    .requestMatchers(HttpMethod.GET, "/api/news/{id}")
+//                    .hasAnyRole("ADMIN", "COACH", "PLAYER", "OFFICIAL")
                     .requestMatchers(HttpMethod.POST, "/api/news/create").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/news/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/api/news/{id}").hasRole("ADMIN")
@@ -231,7 +231,7 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
 
   private CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("http://localhost:8080","http://rcc.dockyardsoftware.com"));
+    configuration.setAllowedOrigins(List.of("http://rcc.dtselife.com"));
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
     configuration.setAllowedHeaders(List.of("*"));
     configuration.setExposedHeaders(List.of("Authorization"));
