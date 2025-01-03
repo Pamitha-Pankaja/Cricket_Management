@@ -21,8 +21,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-//@CrossOrigin(origins = "*")
-@CrossOrigin(origins = "http://localhost:3000",allowedHeaders = "*")
+@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "http://localhost:3000",allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/admin/players")
 public class PlayerController {
