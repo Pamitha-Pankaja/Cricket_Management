@@ -137,8 +137,9 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                     .requestMatchers(HttpMethod.PUT, "/api/matchSummary/update/{id}").hasRole("ADMIN")
 
                     // News endpoints
-                    .requestMatchers(HttpMethod.GET, "/api/news", "/api/news/{id}")
-                    .hasAnyRole("ADMIN", "COACH", "PLAYER", "OFFICIAL")
+//                    .requestMatchers(HttpMethod.GET, "/api/news", "/api/news/{id}")
+//                    .hasAnyRole("ADMIN", "COACH", "PLAYER", "OFFICIAL")
+                    .requestMatchers(HttpMethod.GET, "/api/news", "/api/news/{id}").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/news/create").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/news/{id}").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/api/news/{id}").hasRole("ADMIN")

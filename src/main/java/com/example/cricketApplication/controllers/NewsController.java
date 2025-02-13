@@ -30,7 +30,7 @@ public class NewsController {
 
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
     public List<NewsResponse> getAllNews() {
         // Ensure the news is sorted by createdOn in descending order
         return newsService.getAllNewsSortedByTime();
@@ -38,7 +38,7 @@ public class NewsController {
 
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACH', 'ROLE_PLAYER', 'ROLE_OFFICIAL')")
     public ResponseEntity<NewsResponse> getNewsById(@PathVariable Long id) {
         return newsService.getNewsById(id)
                 .map(ResponseEntity::ok) // Return 200 OK with the NewsResponse
