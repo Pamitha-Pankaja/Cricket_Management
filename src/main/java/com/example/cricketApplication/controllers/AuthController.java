@@ -677,58 +677,66 @@ public class AuthController {
 
 
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/signupOfficial")
+    @PostMapping(value = "/signupOfficial", consumes = "multipart/form-data")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> registerOfficial(@Valid @RequestBody SignupRequest signUpRequest) {
-        // Check if the username already exists
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+    public ResponseEntity<?> registerOfficial(
+            @RequestParam("userData") String userData,
+            @RequestParam("image") MultipartFile imageFile) {
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            SignupRequest signUpRequest = objectMapper.readValue(userData, SignupRequest.class);
+
+            // Check if username/email already exists
+            if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+                return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+            }
+            if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+                return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+            }
+
+            // Save image
+            String fileName = signUpRequest.getUsername() + ".jpg";
+            String imagePath = IMAGE_DIRECTORY + fileName;
+            Files.write(Paths.get(imagePath), imageFile.getBytes());
+
+            // Create User
+            User newUser = new User();
+            newUser.setUsername(signUpRequest.getUsername());
+            newUser.setEmail(signUpRequest.getEmail());
+            newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
+
+            // Set role
+            Role officialRole = roleRepository.findByName(ERole.ROLE_OFFICIAL)
+                    .orElseGet(() -> {
+                        Role newRole = new Role(ERole.ROLE_OFFICIAL);
+                        roleRepository.save(newRole);
+                        return newRole;
+                    });
+
+            Set<Role> roles = new HashSet<>();
+            roles.add(officialRole);
+            newUser.setRoles(roles);
+
+            // Create Official
+            Official official = new Official();
+            official.setName(signUpRequest.getName());
+            official.setContactNo(signUpRequest.getContactNo());
+            official.setPosition(signUpRequest.getPosition());
+            official.setCreatedBy(signUpRequest.getCreatedBy());
+            official.setCreatedOn(signUpRequest.getCreatedOn());
+            official.setImage(fileName); // <-- Store file name
+            official.setUser(newUser);
+
+            userRepository.save(newUser);
+            officialRepository.save(official);
+
+            return ResponseEntity.ok(new MessageResponse("Official registered successfully!"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("Error: " + e.getMessage()));
         }
-
-        // Check if the email already exists
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
-        }
-
-        // Create and set user entity
-        User newUser = new User();
-        newUser.setUsername(signUpRequest.getUsername());
-        newUser.setEmail(signUpRequest.getEmail());
-        newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
-
-        // Set default role for official
-        Role officialRole = roleRepository.findByName(ERole.ROLE_OFFICIAL)
-                .orElseGet(() -> {
-                    Role newRole = new Role(ERole.ROLE_OFFICIAL);
-                    roleRepository.save(newRole);
-                    return newRole;
-                });
-
-        Set<Role> roles = new HashSet<>();
-        roles.add(officialRole);
-        newUser.setRoles(roles);
-
-        // Create new official account
-        Official official = new Official();
-        official.setName(signUpRequest.getName());
-        official.setContactNo(signUpRequest.getContactNo());
-        official.setPosition(signUpRequest.getPosition());
-        official.setCreatedBy(signUpRequest.getCreatedBy());
-        official.setCreatedOn(signUpRequest.getCreatedOn());
-
-        // Link the official to the user entity
-        official.setUser(newUser);
-
-        // Save the user and official entities
-        userRepository.save(newUser);
-        officialRepository.save(official);
-
-        return ResponseEntity.ok(new MessageResponse("Official registered successfully!"));
     }
+
 
 
     @GetMapping("/checkAvailability")

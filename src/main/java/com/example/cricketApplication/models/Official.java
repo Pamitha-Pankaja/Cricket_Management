@@ -34,6 +34,9 @@ public class Official {
     @Size(max = 100)
     private String position;
 
+    @Column(name = "image")
+    private String image;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;
