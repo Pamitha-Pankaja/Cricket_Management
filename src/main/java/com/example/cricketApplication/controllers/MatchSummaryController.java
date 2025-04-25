@@ -73,7 +73,6 @@ public class MatchSummaryController {
 //    }
 
     @GetMapping("/all")
-
     public ResponseEntity<List<MatchSummaryResponse>> getAllMatchSummaries() {
         List<MatchSummaryResponse> matchSummaryResponses = matchSummaryService.getAllMatchSummaries();
         return ResponseEntity.ok(matchSummaryResponses);
