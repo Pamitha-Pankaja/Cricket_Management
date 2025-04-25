@@ -15,8 +15,13 @@ public class OfficialResponse {
     private String position;
     private String password;
     private String username;
+    private String image;
     private String createdBy;
     private Date createdOn;
     private String updatedBy;
     private Date updatedOn;
+    private String message;
+    public OfficialResponse(String message) {
+        this.message = message;
+    }
 }
