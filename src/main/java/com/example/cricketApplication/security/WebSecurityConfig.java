@@ -231,7 +231,7 @@ public class WebSecurityConfig implements WebMvcConfigurer { // extends WebSecur
 
   private CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("http://rcc.dtselife.com"));
+    configuration.setAllowedOrigins(List.of("https://rcc.dtselife.com"));
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
     configuration.setAllowedHeaders(List.of("*"));
     configuration.setExposedHeaders(List.of("Authorization"));
